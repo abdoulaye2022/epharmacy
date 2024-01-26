@@ -16,35 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `customers`
---
-
-DROP TABLE IF EXISTS `customers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `customers` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `firtname` varchar(100) NOT NULL,
-  `lastname` varchar(100) NOT NULL,
-  `adress` varchar(125) NOT NULL,
-  `province` varchar(125) NOT NULL,
-  `postal_code` varchar(100) NOT NULL,
-  `phone` varchar(100) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `customers`
---
-
-LOCK TABLES `customers` WRITE;
-/*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `customers` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `invoice_elements`
 --
 
@@ -54,12 +25,12 @@ DROP TABLE IF EXISTS `invoice_elements`;
 CREATE TABLE `invoice_elements` (
   `id` int NOT NULL AUTO_INCREMENT,
   `invoice_id` int NOT NULL,
-  `products_id` int NOT NULL,
+  `stocks_id` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_invoice_element_invoice` (`invoice_id`),
-  KEY `fk_invoice_element_products` (`products_id`),
+  KEY `fk_invoice_element_stocks` (`stocks_id`),
   CONSTRAINT `fk_invoice_element_invoice` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`),
-  CONSTRAINT `fk_invoice_element_products` FOREIGN KEY (`products_id`) REFERENCES `products` (`id`)
+  CONSTRAINT `fk_invoice_element_stocks` FOREIGN KEY (`stocks_id`) REFERENCES `products` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -84,11 +55,8 @@ CREATE TABLE `invoices` (
   `montant` varchar(50) NOT NULL,
   `tax` varchar(50) NOT NULL,
   `users_id` int NOT NULL,
-  `customers_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_invoice_users` (`users_id`),
-  KEY `fk_invoice_customers` (`customers_id`),
-  CONSTRAINT `fk_invoice_customers` FOREIGN KEY (`customers_id`) REFERENCES `customers` (`id`),
   CONSTRAINT `fk_invoice_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -155,6 +123,56 @@ CREATE TABLE `roles` (
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stock_products`
+--
+
+DROP TABLE IF EXISTS `stock_products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `stock_products` (
+  `stock_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  KEY `fk_stock_id` (`stock_id`),
+  KEY `fk_product_id` (`product_id`),
+  CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  CONSTRAINT `fk_stock_id` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stock_products`
+--
+
+LOCK TABLES `stock_products` WRITE;
+/*!40000 ALTER TABLE `stock_products` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stock_products` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stocks`
+--
+
+DROP TABLE IF EXISTS `stocks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `stocks` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `expire_date` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stocks`
+--
+
+LOCK TABLES `stocks` WRITE;
+/*!40000 ALTER TABLE `stocks` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stocks` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -251,4 +269,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-01-25  9:35:43
+-- Dump completed on 2024-01-26  9:58:14
