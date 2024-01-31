@@ -1,83 +1,66 @@
--- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost    Database: epharmacy
--- ------------------------------------------------------
--- Server version	8.0.34
+-- Host: 127.0.0.1:3306
+-- Generation Time: Jan 31, 2024 at 06:56 PM
+-- Server version: 8.0.31
+-- PHP Version: 8.2.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Table structure for table `invoice_elements`
+-- Database: `epharmacy`
 --
 
-DROP TABLE IF EXISTS `invoice_elements`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `invoice_elements` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `invoice_id` int NOT NULL,
-  `stocks_id` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_invoice_element_invoice` (`invoice_id`),
-  KEY `fk_invoice_element_stocks` (`stocks_id`),
-  CONSTRAINT `fk_invoice_element_invoice` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`),
-  CONSTRAINT `fk_invoice_element_stocks` FOREIGN KEY (`stocks_id`) REFERENCES `products` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `invoice_elements`
---
-
-LOCK TABLES `invoice_elements` WRITE;
-/*!40000 ALTER TABLE `invoice_elements` DISABLE KEYS */;
-/*!40000 ALTER TABLE `invoice_elements` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `invoices`
 --
 
 DROP TABLE IF EXISTS `invoices`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `invoices` (
+CREATE TABLE IF NOT EXISTS `invoices` (
   `id` int NOT NULL AUTO_INCREMENT,
   `montant` varchar(50) NOT NULL,
   `tax` varchar(50) NOT NULL,
   `users_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_invoice_users` (`users_id`),
-  CONSTRAINT `fk_invoice_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
+  KEY `fk_invoice_users` (`users_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `invoices`
+-- Table structure for table `invoice_elements`
 --
 
-LOCK TABLES `invoices` WRITE;
-/*!40000 ALTER TABLE `invoices` DISABLE KEYS */;
-/*!40000 ALTER TABLE `invoices` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `invoice_elements`;
+CREATE TABLE IF NOT EXISTS `invoice_elements` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `invoice_id` int NOT NULL,
+  `stocks_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_invoice_element_invoice` (`invoice_id`),
+  KEY `fk_invoice_element_stocks` (`stocks_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `products`
 --
 
 DROP TABLE IF EXISTS `products`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `products` (
+CREATE TABLE IF NOT EXISTS `products` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
@@ -86,103 +69,68 @@ CREATE TABLE `products` (
   `warehouse_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_products_supplier` (`supplier_id`),
-  KEY `fk_products_warehouse` (`warehouse_id`),
-  CONSTRAINT `fk_products_supplier` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`),
-  CONSTRAINT `fk_products_warehouse` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouses` (`id`)
+  KEY `fk_products_warehouse` (`warehouse_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `products`
---
-
-LOCK TABLES `products` WRITE;
-/*!40000 ALTER TABLE `products` DISABLE KEYS */;
-/*!40000 ALTER TABLE `products` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `roles`
 --
 
 DROP TABLE IF EXISTS `roles`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `roles` (
+CREATE TABLE IF NOT EXISTS `roles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `description` varchar(225) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `roles`
 --
 
-LOCK TABLES `roles` WRITE;
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `roles` (`id`, `name`, `description`) VALUES
+(1, 'Admin', ''),
+(2, 'Agent', ''),
+(3, 'Customer', '');
 
---
--- Table structure for table `stock_products`
---
-
-DROP TABLE IF EXISTS `stock_products`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `stock_products` (
-  `stock_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  KEY `fk_stock_id` (`stock_id`),
-  KEY `fk_product_id` (`product_id`),
-  CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-  CONSTRAINT `fk_stock_id` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `stock_products`
---
-
-LOCK TABLES `stock_products` WRITE;
-/*!40000 ALTER TABLE `stock_products` DISABLE KEYS */;
-/*!40000 ALTER TABLE `stock_products` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `stocks`
 --
 
 DROP TABLE IF EXISTS `stocks`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `stocks` (
+CREATE TABLE IF NOT EXISTS `stocks` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `expire_date` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `stocks`
+-- Table structure for table `stock_products`
 --
 
-LOCK TABLES `stocks` WRITE;
-/*!40000 ALTER TABLE `stocks` DISABLE KEYS */;
-/*!40000 ALTER TABLE `stocks` ENABLE KEYS */;
-UNLOCK TABLES;
+DROP TABLE IF EXISTS `stock_products`;
+CREATE TABLE IF NOT EXISTS `stock_products` (
+  `stock_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  KEY `fk_stock_id` (`stock_id`),
+  KEY `fk_product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `suppliers`
 --
 
 DROP TABLE IF EXISTS `suppliers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `suppliers` (
+CREATE TABLE IF NOT EXISTS `suppliers` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `adress` varchar(125) DEFAULT NULL,
@@ -192,81 +140,94 @@ CREATE TABLE `suppliers` (
   `email` varchar(125) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `suppliers`
---
-
-LOCK TABLES `suppliers` WRITE;
-/*!40000 ALTER TABLE `suppliers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `suppliers` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `firstname` varchar(100) NOT NULL,
   `lastname` varchar(100) NOT NULL,
+  `designation` varchar(100) DEFAULT NULL,
   `adress` varchar(100) DEFAULT NULL,
+  `city` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `province` varchar(100) DEFAULT NULL,
-  `postal_code` varchar(100) DEFAULT NULL,
-  `phone` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(100) NOT NULL,
+  `country` varchar(100) NOT NULL,
+  `postal_code` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `email` varchar(125) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `actif` int NOT NULL DEFAULT '1',
   `role_id` int NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_users_role` (`role_id`),
-  CONSTRAINT `fk_users_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  KEY `fk_users_role` (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
+INSERT INTO `users` (`id`, `firstname`, `lastname`, `designation`, `adress`, `city`, `province`, `country`, `postal_code`, `phone`, `email`, `password`, `actif`, `role_id`) VALUES
+(2, 'Abdoulaye', 'Mohamed', 'Developer', '357 pascal avenue', 'Moncton', 'New Brunswick', 'country', 'E1A2C6', '5068506548', 'admin@gmail.com', '$2y$10$mxu4KE3tqTdy8s34o1eTgu/pDFDcIptUbVh2MkC97XK24HRu02MKC', 1, 1),
+(3, 'Ali', 'Sani', '', '', '', '', 'AF', '', '', 'ali@gmail.com', '$2y$10$e4AgGMSRhC953MQipX.WuesW8XWFHDaJZnOu.UIQ/uZbgj6NPgzk.', 1, 2),
+(4, 'Fati', 'Amadou', 'Secretaire', '45 rue govin', 'Bathurst', 'New Brunswick', 'CA', 'E1A2C6', '5068598659', 'fati@gmail.com', '$2y$10$6TzYXmFt9GRReZVf4lWR8e8Pbi6MTa5p92d.8REmOV3bT5039PQzy', 1, 3);
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `warehouses`
 --
 
 DROP TABLE IF EXISTS `warehouses`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `warehouses` (
+CREATE TABLE IF NOT EXISTS `warehouses` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `warehouses`
+-- Constraints for dumped tables
 --
 
-LOCK TABLES `warehouses` WRITE;
-/*!40000 ALTER TABLE `warehouses` DISABLE KEYS */;
-/*!40000 ALTER TABLE `warehouses` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+--
+-- Constraints for table `invoices`
+--
+ALTER TABLE `invoices`
+  ADD CONSTRAINT `fk_invoice_users` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`);
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Constraints for table `invoice_elements`
+--
+ALTER TABLE `invoice_elements`
+  ADD CONSTRAINT `fk_invoice_element_invoice` FOREIGN KEY (`invoice_id`) REFERENCES `invoices` (`id`),
+  ADD CONSTRAINT `fk_invoice_element_stocks` FOREIGN KEY (`stocks_id`) REFERENCES `products` (`id`);
+
+--
+-- Constraints for table `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `fk_products_supplier` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`),
+  ADD CONSTRAINT `fk_products_warehouse` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouses` (`id`);
+
+--
+-- Constraints for table `stock_products`
+--
+ALTER TABLE `stock_products`
+  ADD CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `fk_stock_id` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`);
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `fk_users_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`);
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2024-01-26  9:58:14
