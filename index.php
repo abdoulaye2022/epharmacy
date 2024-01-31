@@ -66,11 +66,18 @@ require_once("./controllers/AuthController.php");
                                     <p class="text-muted">Sign in to continue to e-pharmacy.</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form action="index.html">
+                                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                                        <?php if($error != "") { ?>
+                                            <div class="mb-3" style="color: red; text-align: center;">
+                                                <div class="alert alert-danger alert-borderless shadow mb-xl-0" role="alert">
+                                                    <?php echo $error; ?>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
 
                                         <div class="mb-3">
                                             <label for="email" class="form-label">E-mail</label>
-                                            <input type="text" class="form-control" id="email" placeholder="Enter e-mail">
+                                            <input type="text" class="form-control" name="email" id="email" placeholder="Enter e-mail">
                                         </div>
 
                                         <div class="mb-3">
@@ -79,7 +86,7 @@ require_once("./controllers/AuthController.php");
                                             </div>
                                             <label class="form-label" for="password-input">Password</label>
                                             <div class="position-relative auth-pass-inputgroup mb-3">
-                                                <input type="password" class="form-control pe-5 password-input" placeholder="Enter password" id="password-input">
+                                                <input type="password" name="password" class="form-control pe-5 password-input" placeholder="Enter password" id="password-input">
                                                 <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted shadow-none password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
                                             </div>
                                         </div>
@@ -98,10 +105,8 @@ require_once("./controllers/AuthController.php");
                                                 <h5 class="fs-13 mb-4 title">Sign In with</h5>
                                             </div>
                                             <div>
-                                                <button type="button" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-facebook-fill fs-16"></i></button>
-                                                <button type="button" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-google-fill fs-16"></i></button>
-                                                <button type="button" class="btn btn-dark btn-icon waves-effect waves-light"><i class="ri-github-fill fs-16"></i></button>
-                                                <button type="button" class="btn btn-info btn-icon waves-effect waves-light"><i class="ri-twitter-fill fs-16"></i></button>
+                                                <a href="<?php echo $client->createAuthUrl(); ?>" type="button" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-google-fill fs-16"></i></a>
+                                                <button type="button" class="btn btn-dark btn-icon waves-effect waves-light"><i class="bx bxl-windows fs-16"></i></button>
                                             </div>
                                         </div>
                                     </form>
@@ -111,9 +116,9 @@ require_once("./controllers/AuthController.php");
                         </div>
                         <!-- end card -->
 
-                        <div class="mt-4 text-center">
+                       <!--  <div class="mt-4 text-center">
                             <p class="mb-0">Don't have an account ? <a href="auth-signup-basic.html" class="fw-semibold text-primary text-decoration-underline"> Signup </a> </p>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
@@ -149,12 +154,19 @@ require_once("./controllers/AuthController.php");
     <script src="assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
     <script src="assets/js/plugins.js"></script>
 
-    <!-- particles js -->
-    <script src="assets/libs/particles.js/particles.js"></script>
-    <!-- particles app js -->
-    <script src="assets/js/pages/particles.app.js"></script>
-    <!-- password-addon init -->
-    <script src="assets/js/pages/password-addon.init.js"></script>
+    <!-- prismjs plugin -->
+    <script src="assets/libs/prismjs/prism.js"></script>
+    <script src="assets/libs/list.js/list.min.js"></script>
+    <script src="assets/libs/list.pagination.js/list.pagination.min.js"></script>
+
+    <!-- listjs init -->
+    <script src="assets/js/pages/listjs.init.js"></script>
+
+    <!-- Sweet Alerts js -->
+    <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
+    <!-- App js -->
+    <script src="assets/js/app.js"></script>
 </body>
 
 </html>

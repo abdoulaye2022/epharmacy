@@ -33,4 +33,6 @@ class DB {
         return $this->pdo;
     }
 }
+
+date_default_timezone_set("America/Halifax");
 ?>
