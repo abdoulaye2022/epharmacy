@@ -40,6 +40,7 @@
                         <i class="mdi mdi-speedometer"></i> <span data-key="t-dashboards">Dashboards</span>
                     </a>
                 </li> <!-- end Dashboard Menu -->
+                <?php if($auth->isAdmin()) { ?>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarUsers" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarUsers">
                         <i class=" ri-team-line"></i> <span>Users</span>
@@ -55,7 +56,9 @@
                         </ul>
                     </div>
                 </li>
+                <?php } ?>
 
+                <?php if($auth->isAdmin() || $auth->isAgent()) { ?>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarProducts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarProducts">
                         <i class="ri-product-hunt-line"></i> <span>Products</span>
@@ -71,7 +74,9 @@
                         </ul>
                     </div>
                 </li>
+                <?php } ?>
 
+                <?php if($auth->isAdmin() || $auth->isAgent()) { ?>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarStock" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarStock">
                         <i class="ri-stock-line"></i> <span>Stocks</span>
@@ -87,6 +92,7 @@
                         </ul>
                     </div>
                 </li>
+                <?php } ?>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="widgets.html">

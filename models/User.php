@@ -94,8 +94,24 @@ class User
 		}
 	}
 
-	public function updatePassword () {
-		
+	public function updatePassword ($id, $password) {
+		$stmt = $this->_cn->prepare("UPDATE `users` SET `password`=:password WHERE `id`=:id");
+		$stmt->bindParam(':id', $id);
+		$stmt->bindParam(':password', $password);
+
+		if ($stmt->execute()) {
+		    return true;
+		}
+	}
+
+	public function updateImages ($id, $image) {
+		$stmt = $this->_cn->prepare("UPDATE `users` SET `image`=:image WHERE `id`=:id");
+		$stmt->bindParam(':id', $id);
+		$stmt->bindParam(':image', $image);
+
+		if ($stmt->execute()) {
+		    return true;
+		}
 	}
 
 }
