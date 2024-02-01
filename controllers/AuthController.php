@@ -12,11 +12,8 @@ if(isset($_POST['email'], $_POST['password'])) {
 			if(password_verify($password, $user['password'])) {
 
 				if(!$auth->userAccountIsBlock($email)) {
-					if($user['role_id'] == 1 || $user['role_id'] == 2) {
+					if($user['role_id'] == 1 || $user['role_id'] == 2 || $user['role_id'] == 3) {
 						header("location: dashboard.php");
-						exit();
-					} else if($user['role_id'] == 3) {
-						header("location: home.php");
 						exit();
 					} else {
 						$error = "An error occurred. Please try again.";
@@ -34,5 +31,4 @@ if(isset($_POST['email'], $_POST['password'])) {
 		$error = "All fields are required.";
 	}
 }
-
 ?>

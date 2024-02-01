@@ -106,7 +106,7 @@ require_once("./controllers/AuthController.php");
                                             </div>
                                             <div>
                                                 <a href="<?php echo $client->createAuthUrl(); ?>" type="button" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-google-fill fs-16"></i></a>
-                                                <button type="button" class="btn btn-dark btn-icon waves-effect waves-light"><i class="bx bxl-windows fs-16"></i></button>
+                                                <a href="<?php echo $login_url . "?" . http_build_query($params); ?>" type="button" class="btn btn-dark btn-icon waves-effect waves-light"><i class="bx bxl-windows fs-16"></i></a>
                                             </div>
                                         </div>
                                     </form>
