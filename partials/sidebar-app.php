@@ -51,7 +51,7 @@
                                 <a href="users.php" class="nav-link"> Users list </a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-chat.html" class="nav-link"> Connection history </a>
+                                <a href="connection_history.php" class="nav-link"> Connection history </a>
                             </li>
                         </ul>
                     </div>
