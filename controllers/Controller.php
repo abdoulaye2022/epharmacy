@@ -92,7 +92,7 @@ require_once "models/Auth.php";
 require_once "models/User.php";
 require_once "models/Profil.php";
 
-if (!isset($_SESSION['id']) && $_SERVER['REQUEST_URI'] != "/epharmacy/index.php" && $_GET['code'] == null) {
+if (!isset($_SESSION['id']) && $_SERVER['REQUEST_URI'] != "/epharmacy/index.php" && isset($_GET['code']) && $_GET['code'] == null) {
    	header("location: index.php");
    	exit();
 };
