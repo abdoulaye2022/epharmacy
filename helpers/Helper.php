@@ -22,6 +22,11 @@ class Helper
 		if(in_array(intval($integer), [1, 2, 3]))
 			return intval($integer);
 	}
+	
+	function isValidProduct ($integer) {
+		if(in_array(intval($integer), [1, 2, 3]))
+			return intval($integer);
+	}
 
 	function validateInteger ($integer) {
 		return intval($integer);
