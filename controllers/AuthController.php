@@ -13,6 +13,12 @@ if(isset($_POST['email'], $_POST['password'])) {
 
 				if(!$auth->userAccountIsBlock($email)) {
 					if($user['role_id'] == 1 || $user['role_id'] == 2 || $user['role_id'] == 3) {
+						$login_date = date("Y-m-d H:i:s");
+						$logout_date = date("Y-m-d H:i:s");
+						$onsite_time = "00:00:00";
+						$_SESSION['login_date'] = $login_date;
+
+						$_SESSION['connection_id'] = $connectionHistory->login($user['id'], $login_date, $logout_date, $onsite_time);
 						header("location: dashboard.php");
 						exit();
 					} else {

@@ -111,4 +111,5 @@ if(isset($_POST['btnblock'],)) {
 }
 
 $users = $user->getAll();
+$connectionHistorys = $connectionHistory->getAll();
 ?>
