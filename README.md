@@ -2,6 +2,8 @@
 L'application de gestion de stock phamaceutique
 
 Set up project
+version du php 8.2.0
+version de mysql 8.0.31
 
 1) Dans le dossier www ou htdocs 
 	git clone https://github.com/abdoulaye2022/epharmacy.git
