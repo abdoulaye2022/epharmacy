@@ -1,5 +1,5 @@
 <?php
-require_once("./controllers/ProductsController.php");
+require_once("./controllers/UserController.php");
 ?>
 <!doctype html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">

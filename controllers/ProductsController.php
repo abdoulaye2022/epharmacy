@@ -16,9 +16,9 @@ if (isset($_POST['add_product'])) {
 
             // TODO: Add product logic here
             if ($helper->isValidProduct($role_id)) {
-                if (!$user->nameExist($email)) {
-                    if ($user->create($name, $description, $designation, $adress, $city, $province, $country, $postal_code, $phone, $email, $pawwordHash, $role_id)) {
-                        $success = "User is added successfully.";
+                if (!$product->nameExist($email)) {
+                    if ($product->create($name, $description, $quantity, $supplier_id, $warehouse_id)) {
+                        $success = "Product is added successfully.";
                     } else {
                         $error = "An error occurred. Please try again.";
                     }
@@ -50,7 +50,7 @@ if (isset($_POST['edit_product'])) {
             $warehouse_id = $helper->validateString($_POST['warehouse_id']);
 
             if ($helper->isValidProduct($role_id)) {
-                if ($user->update($id, $name, $description, $quantity, $supplier_id, $warehouse_id)) {
+                if ($product->update($id, $name, $description, $quantity, $supplier_id, $warehouse_id)) {
                     $success = "Product is updated successfully.";
                 } else {
                     $error = "An error occurred. Please try again.";
@@ -66,5 +66,5 @@ if (isset($_POST['edit_product'])) {
     }
 }
 
-$users = $user->getAll();
+$products = $product->getAll();
 ?>

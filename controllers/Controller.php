@@ -10,6 +10,10 @@ $client = new Google_Client();
 $client->setClientId($_ENV['CLIENT_ID_GOOGLE']);
 $client->setClientSecret($_ENV['SECRET_CLIENT_GOOGLE']);
 $client->setRedirectUri($_ENV['REDIRECT_URL_GOOGLE']);
+$client->setClientId($_ENV['CLIENT_ID_OUTLOOK']);
+$client->setClientSecret($_ENV['SECRET_ID_OUTLOOK']);
+$client->setRedirectUri($_ENV['REDIRECT_URL_OUTLOOK']);
+
 $client->addScope('openid profile email');
 
 $login_url = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
@@ -31,10 +35,10 @@ $sso_email = null;
 if(isset($_GET['code']) && !isset($_GET['state'])) {
 	$code = $_GET['code'];
 
-	// Échanger le code d'autorisation contre un jeton d'accès
+	// ï¿½changer le code d'autorisation contre un jeton d'accï¿½s
 		$token = $client->fetchAccessTokenWithAuthCode($code);
 
-	// Récupérer l'adresse e-mail de l'utilisateur
+	// Rï¿½cupï¿½rer l'adresse e-mail de l'utilisateur
 	if (isset($token['id_token'])) {
 	    $payload = $client->verifyIdToken($token['id_token']);  
 	    $sso_email = $payload['email'];
