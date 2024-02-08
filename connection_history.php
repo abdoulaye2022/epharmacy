@@ -142,13 +142,13 @@ require_once("./controllers/UserController.php");
                                                         </th>
                                                         <th class="sort" data-sort="customer_name">First Name</th>
                                                         <th class="sort" data-sort="customer_name">Last Name</th>
-                                                        <th class="sort" data-sort="customer_name">Connection Date</th>
+                                                        <th class="sort" data-sort="customer_name">Log In Date</th>
                                                         <th class="sort" data-sort="customer_name">Logout date</th>
                                                          <th class="sort" data-sort="date">Onsite Time</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="form-check-all">
-                                                    <?php while($row = $users->fetch(PDO::FETCH_ASSOC)) { ?>
+                                                    <?php while($row = $connectionHistorys->fetch(PDO::FETCH_ASSOC)) { ?>
                                                     <tr>
                                                         <th scope="row">
                                                             <div class="form-check">
@@ -158,183 +158,15 @@ require_once("./controllers/UserController.php");
                                                         <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
                                                         <td class="firstname"><?php echo $row['firstname']; ?></td>
                                                         <td class="lastname"><?php echo $row['lastname']; ?></td>
-                                                        <td class="lastname"><?php echo $row['designation']; ?></td>
-                                                        <td class="date"><?php echo $row['email']; ?></td>
-                                                        <td class="phone"><?php echo $row['phone']; ?></td>
+                                                        <td class="lastname"><?php echo $row['login_date']; ?></td>
+                                                        <td class="date"><?php echo $row['logout_date']; ?></td>
+                                                        <td class="phone"><?php echo $row['onsite_time']; ?></td>
                                                     </tr>
 
-                                                    <!-- Modal edit user -->
-                                                    <div class="modal fade" id="eidtModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header bg-light p-3">
-                                                                    <h5 class="modal-title" id="eidtModal_<?php echo $row['id']; ?>">Edit user</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-                                                                </div>
-                                                                <?php $role = new Profil($cn); $roles = $role->getAll(); ?>
-                                                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="tablelist-form" autocomplete="off">
-                                                                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                                    <input type="hidden" name="old_password" value="<?php echo $row['password']; ?>">
-                                                                    <div class="modal-body">
-                                                                        <div class="card-body">
-                                                                            <div class="live-preview">
-                                                                                <div class="row">
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="firstNameinput" class="form-label">First Name <span style="color: red;">*</span></label>
-                                                                                            <input type="text" class="form-control" name="firstname" placeholder="Enter your firstname" id="firstNameinput" value="<?php echo $row['firstname']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!--end col-->
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="lastname" class="form-label">Last Name<span style="color: red;">*</span></label>
-                                                                                            <input type="text" class="form-control" name="lastname" placeholder="Enter your lastname" id="lastname" value="<?php echo $row['lastname']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!--end col-->
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="designation" class="form-label">Connection Date</label>
-                                                                                            <input type="text" class="form-control" name="designation" placeholder="Enter company name" id="compnayNameinput" value="<?php echo $row['designation']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <!-- <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="ForminputState" class="form-label">Profil <span style="color: red;">*</span></label>
-                                                                                            <select id="ForminputState" class="js-example-basic-single form-control" name="role_id">
-                                                                                                <?php while ($role = $roles->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                                                                    <option value="<?php echo $role['id']; ?>" <?php echo($row['role_id'] == $role['id'] ? 'selected' : null); ?>><?php echo $role['name']; ?></option>
-                                                                                                <?php } ?>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div> -->
-                                                                                    <!--end col-->
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="phone" class="form-label">Phone Number</label>
-                                                                                            <input type="tel" class="form-control" name="phone" placeholder="+(245) 451 45123" value="<?php echo $row['phone']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!--end col-->
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="email" class="form-label">Email Address <span style="color: red;">*</span></label>
-                                                                                            <input type="email" class="form-control" placeholder="example@gamil.com" name="email" value="<?php echo $row['email']; ?>" disabled>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!--end col-->
-                                                                                    <div class="col-md-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="adress" class="form-label">Address</label>
-                                                                                            <input type="text" class="form-control" placeholder="Address 1" name="adress" value="<?php echo $row['adress']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!--end col-->
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="city" class="form-label">City</label>
-                                                                                            <input type="text" class="form-control" placeholder="Enter your city" name="city" value="<?php echo $row['city']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!--end col-->
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="province" class="form-label">Province</label>
-                                                                                            <input type="text" class="form-control" placeholder="Enter your province" id="province" name="province" value="<?php echo $row['province']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!--end col-->
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="editCountry" class="form-label">Country</label>
-                                                                                            <select id="editCountry" class="js-example-basic-single form-control" name="country">
-                                                                                                <?php foreach ($countries as $key => $value) { ?>
-                                                                                                    <option value="<?php echo $key; ?>" <?php echo ($row['country'] == $key ? "selected" : null); ?>><?php echo $value; ?></option>
-                                                                                                <?php } ?>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!--end col-->
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="postal_code" class="form-label">Postal code</label>
-                                                                                            <input type="text" class="form-control" placeholder="Enter your postal_code" name="postal_code" value="<?php echo $row['postal_code']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <!--end col-->
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="password" class="form-label">Password <span style="color: red;">*</span></label>
-                                                                                            <input type="password" class="form-control" placeholder="Enter your password" name="password" value="<?php echo $row['password']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-
-                                                                                    <!--end col-->
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="confirm_password" class="form-label">Confirm Password <span style="color: red;">*</span></label>
-                                                                                            <input type="password" class="form-control" placeholder="Enter your confirm password" name="confirm_password" value="<?php echo $row['password']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <!--end row-->
-                                                                            </div>
-                                                                            <div class="d-none code-view">
-                                                                                <pre class="language-markup" style="height: 375px;">
-                                                                            </pre>
-                                                                            </div>
-                                                                        </div>
-                                                                        
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <div class="hstack gap-2 justify-content-end">
-                                                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                            <button type="submit" class="btn btn-success" name="edit_user" id="edit-btn">Save</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade zoomIn" id="blockModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="mt-2 text-center">
-                                                                        <lord-icon src="https://cdn.lordicon.com/vihyezfv.json" trigger="loop" colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
-                                                                        <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                                                                            <h4>Are you Sure ?</h4>
-                                                                            <p class="text-muted mx-4 mb-0">
-                                                                            <?php echo ($row['actif'] ? 'Are you sure you want to block this user account ?' : 'Are you sure you want to unlock this user account ?'); ?>
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                                                                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                                                                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                                            <input type="hidden" name="block" value="<?php echo ($row['actif'] ? '0' : '1'); ?>">
-                                                                            <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                                                                            <button type="submit" name="btnblock" class="btn w-sm btn-danger">
-                                                                                <?php echo ($row['actif'] ? 'Yes, Blocked It!' : 'Yes, Unlocked It!'); ?></button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end modal -->
                                                     <?php } ?>
                                                 </tbody>
                                             </table>
-                                            <?php if($users->rowCount() == 0) { ?>
+                                            <?php if($connectionHistorys->rowCount() == 0) { ?>
                                             <div class="noresult" style="display: inline-block; width: 100%;">
                                                 <div class="text-center">
                                                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
@@ -346,158 +178,10 @@ require_once("./controllers/UserController.php");
                                             </div>
                                             <?php } ?>
                                         </div>
-
-                                        <div class="d-flex justify-content-end">
-                                            <div class="pagination-wrap hstack gap-2">
-                                                <a class="page-item pagination-prev disabled" href="#">
-                                                    Previous
-                                                </a>
-                                                <ul class="pagination listjs-pagination mb-0"></ul>
-                                                <a class="page-item pagination-next" href="#">
-                                                    Next
-                                                </a>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div><!-- end card -->
                             </div>
                             <!-- end col -->
-                        </div>
-                    </div>
-
-                    <!-- Modal add user -->
-                    <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header bg-light p-3">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add user</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-                                </div>
-                                <?php $role = new Profil($cn); $roles = $role->getAll(); ?>
-                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="tablelist-form" autocomplete="off">
-                                    <div class="modal-body">
-                                        <div class="card-body">
-                                            <div class="live-preview">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="firstNameinput" class="form-label">First Name <span style="color: red;">*</span></label>
-                                                            <input type="text" class="form-control" name="firstname" placeholder="Enter your firstname" id="firstNameinput">
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="lastname" class="form-label">Last Name <span style="color: red;">*</span></label>
-                                                            <input type="text" class="form-control" name="lastname" placeholder="Enter your lastname" id="lastname">
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="designation" class="form-label">Designation</label>
-                                                            <input type="text" class="form-control" name="designation" placeholder="Enter company name" id="compnayNameinput">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="ForminputState" class="form-label">Profil <span style="color: red;">*</span></label>
-                                                            <select id="ForminputState" class="js-example-basic-single form-control" name="role_id">
-                                                                <?php while ($role = $roles->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                                    <option value="<?php echo $role['id']; ?>"><?php echo $role['name']; ?></option>
-                                                                <?php } ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="phone" class="form-label">Phone Number</label>
-                                                            <input type="tel" class="form-control" name="phone" placeholder="+(245) 451 45123">
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="email" class="form-label">Email Address <span style="color: red;">*</span></label>
-                                                            <input type="email" class="form-control" placeholder="example@gamil.com" name="email">
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="adress" class="form-label">Address</label>
-                                                            <input type="text" class="form-control" placeholder="Address 1" name="adress">
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="city" class="form-label">City</label>
-                                                            <input type="text" class="form-control" placeholder="Enter your city" name="city">
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="province" class="form-label">Province</label>
-                                                            <input type="text" class="form-control" placeholder="Enter your province" id="province" name="province">
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="addCounrty" class="form-label">Country</label>
-                                                            <select id="addCounrty" class="js-example-basic-single form-control" name="country">
-                                                                <?php foreach ($countries as $key => $value) { ?>
-                                                                    <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
-                                                                <?php } ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <!--end col-->
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="postal_code" class="form-label">Postal code</label>
-                                                            <input type="text" class="form-control" placeholder="Enter your postal_code" name="postal_code">
-                                                        </div>
-                                                    </div>
-
-                                                    <!--end col-->
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="password" class="form-label">Password <span style="color: red;">*</span></label>
-                                                            <input type="password" class="form-control" placeholder="Enter your password" name="password">
-                                                        </div>
-                                                    </div>
-
-                                                    <!--end col-->
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <label for="confirm_password" class="form-label">Confirm Password <span style="color: red;">*</span></label>
-                                                            <input type="password" class="form-control" placeholder="Enter your confirm password" name="confirm_password">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--end row-->
-                                            </div>
-                                            <div class="d-none code-view">
-                                                <pre class="language-markup" style="height: 375px;">
-                                            </pre>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="hstack gap-2 justify-content-end">
-                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-success" name="add_user" id="add-btn">Add Customer</button>
-                                            <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                         </div>
                     </div>
 
@@ -543,9 +227,6 @@ require_once("./controllers/UserController.php");
     <script src="assets/libs/prismjs/prism.js"></script>
     <script src="assets/libs/list.js/list.min.js"></script>
     <script src="assets/libs/list.pagination.js/list.pagination.min.js"></script>
-
-    <!-- listjs init -->
-    <script src="assets/js/pages/listjs.init.js"></script>
 
     <!-- Sweet Alerts js -->
     <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>

@@ -95,6 +95,10 @@ require_once "helpers/Helper.php";
 require_once "models/Auth.php";
 require_once "models/User.php";
 require_once "models/Profil.php";
+require_once "models/ConnectionHistory.php";
+require_once "models/Product.php";
+require_once "models/Supplier.php";
+require_once "models/Warehouse.php";
 
 if (!isset($_SESSION['id']) && $_SERVER['REQUEST_URI'] != "/epharmacy/index.php" && isset($_GET['code']) && $_GET['code'] == null) {
    	header("location: index.php");
@@ -108,6 +112,10 @@ $cn = $db->getConnection();
 $helper = new Helper();
 $auth = new Auth($cn);
 $user = new User($cn);
+$connectionHistory = new ConnectionHistory($cn);
+$product = new Product($cn);
+$supplier = new Supplier($cn);
+$warehouse = new Warehouse($cn);
 
 $error = "";
 
@@ -119,11 +127,9 @@ if(isset($sso_email) && !empty($sso_email)) {
 
 		if($user) {
 			if(!$auth->userAccountIsBlock($email)) {
-				if($user['role_id'] == 1 || $user['role_id'] == 2) {
+				if($user['role_id'] == 1 || $user['role_id'] == 2 || $user['role_id'] == 3) {
+					$connectionHistory->login($user['id']);
 					header("location: dashboard.php");
-					exit();
-				} else if($user['role_id'] == 3) {
-					header("location: home.php");
 					exit();
 				} else {
 					$error = "An error occurred. Please try again.";

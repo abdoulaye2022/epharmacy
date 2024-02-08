@@ -68,3 +68,4 @@ if (isset($_POST['edit_product'])) {
 
 $products = $product->getAll();
 ?>
+

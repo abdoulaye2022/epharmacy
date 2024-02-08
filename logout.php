@@ -1,5 +1,17 @@
 <?php
-session_start();
+require_once("./controllers/AuthController.php");
+
+if(isset($_SESSION['login_date'], $_SESSION['connection_id']) && !empty($_SESSION['login_date']) && !empty($_SESSION['connection_id'])) {
+    $login_date = new DateTime($_SESSION['login_date']);
+    $logout_date = new DateTime();
+
+    $diff = $login_date->diff($logout_date);
+
+    $onsite_time = $diff->format("%h:%i:%s");
+    $dateTimeString = $logout_date->format('Y-m-d H:i:s');
+
+    $connectionHistory->logout($dateTimeString, $onsite_time, $_SESSION['connection_id']);
+}
 
 $_SESSION = array();
 
