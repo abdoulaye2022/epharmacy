@@ -1,5 +1,5 @@
 <?php
-require_once("./controllers/UserController.php");
+require_once("./controllers/WarehouseController.php");
 ?>
 <!doctype html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
@@ -79,12 +79,12 @@ require_once("./controllers/UserController.php");
 					<div class="row">
 					    <div class="col-12">
 					        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-					            <h4 class="mb-sm-0">Users list</h4>
+					            <h4 class="mb-sm-0">Warehouse list</h4>
 
 					            <div class="page-title-right">
 					                <ol class="breadcrumb m-0">
 					                    <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-					                    <li class="breadcrumb-item active">Users</li>
+					                    <li class="breadcrumb-item active">Warehouses</li>
 					                </ol>
 					            </div>
 
@@ -98,7 +98,7 @@ require_once("./controllers/UserController.php");
                             <div class="card">
 
                                 <div class="card-body">
-                                    <div id="customerList">
+                                    <div id="warehouseList">
                                         <div class="row g-4 mb-3">
                                             <div class="col-sm-auto">
                                                 <div>
@@ -141,12 +141,14 @@ require_once("./controllers/UserController.php");
                                                             </div>
                                                         </th>
                                                         <th class="sort" data-sort="name">Name</th>
-                                                        <th class="sort" data-sort="description">Description</th>
-                                                         <th class="sort" data-sort="quantity">Quantity</th>
+                                                        <th class="sort" data-sort="adress">Adress</th>
+                                                         <th class="sort" data-sort="city">City</th>
+                                                         <th class="sort" data-sort="province">Province</th>
+                                                         <th class="sort" data-sort="country">Country</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="form-check-all">
-                                                    <?php while($row = $users->fetch(PDO::FETCH_ASSOC)) { ?>
+                                                    <?php while($row = $warehouses->fetch(PDO::FETCH_ASSOC)) { ?>
                                                     <tr>
                                                         <th scope="row">
                                                             <div class="form-check">
@@ -155,40 +157,36 @@ require_once("./controllers/UserController.php");
                                                         </th>
                                                         <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
                                                         <td class="name"><?php echo $row['name']; ?></td>
-                                                        <td class="description"><?php echo $row['description']; ?></td>
-                                                        <td class="quantity"><?php echo $row['quantity']; ?></td>
+                                                        <td class="adress"><?php echo $row['adress']; ?></td>
+                                                        <td class="city"><?php echo $row['city']; ?></td>
+                                                        <td class="province"><?php echo $row['province']; ?></td>
+                                                        <td class="country"><?php echo $row['country']; ?></td>
                                                         <td>
                                                             <div class="d-flex gap-2">
                                                                 <div class="edit">
                                                                     <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
                                                                 </div>
-                                                                <?php if($row['actif']) { ?>
-                                                                     <div class="remove">
-                                                                        <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#blockModal_<?php echo $row['id']; ?>"><i class="bx bx-lock-alt "></i> Block</button>
-                                                                    </div>
-                                                                <?php } else { ?>
-                                                                    <div class="remove">
-                                                                        <button class="btn btn-sm btn-default remove-item-btn" data-bs-toggle="modal" data-bs-target="#blockModal_<?php echo $row['id']; ?>"><i class=" bx bx-lock-open-alt"></i> Unblock</button>
-                                                                    </div>
-                                                                <?php } ?>
-                                                               
-                                                                
                                                             </div>
                                                         </td>
                                                     </tr>
 
-                                                    <!-- Modal edit user -->
+                                                    <!-- Modal edit Warehouse -->
                                                     <div class="modal fade" id="eidtModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
                                                             <div class="modal-content">
                                                                 <div class="modal-header bg-light p-3">
-                                                                    <h5 class="modal-title" id="eidtModal_<?php echo $row['id']; ?>">Edit user</h5>
+                                                                    <h5 class="modal-title" id="eidtModal_<?php echo $row['id']; ?>">Edit warehouse</h5>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                                                                 </div>
-                                                                <?php $role = new Profil($cn); $roles = $role->getAll(); ?>
+                                                                <?php# $role = new Profil($cn); $roles = $role->getAll(); ?>
                                                                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="tablelist-form" autocomplete="off">
                                                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                                    <input type="hidden" name="old_password" value="<?php echo $row['password']; ?>">
+                                                                     <?php
+                                                                    #$supplier = new Supplier($cn);
+                                                                    #$warehouse = new Warehouse($cn);
+                                                                    #$suppliers = $supplier->getAll();
+                                                                    #$warehouses = $warehouse->getAll();
+                                                                    ?>
                                                                     <div class="modal-body">
                                                                         <div class="card-body">
                                                                             <div class="live-preview">
@@ -196,23 +194,42 @@ require_once("./controllers/UserController.php");
                                                                                     <div class="col-md-6">
                                                                                         <div class="mb-3">
                                                                                             <label for="nameinput" class="form-label">Name <span style="color: red;">*</span></label>
-                                                                                            <input type="text" class="form-control" name="name" placeholder="Enter the product name" id="nameinput" value="<?php echo $row['name']; ?>">
+                                                                                            <input type="text" class="form-control" name="name" placeholder="Enter the warehouse name" id="nameinput" value="<?php echo $row['name']; ?>">
                                                                                         </div>
                                                                                     </div>
                                                                                     <!--end col-->
                                                                                     <div class="col-md-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="description" class="form-label">Description <span style="color: red;">*</span></label>
-                                                                                            <input type="text" class="form-control" name="description" placeholder="Enter a description" id="descriptioninput" value="<?php echo $row['description']; ?>">
+                                                                                            <label for="description" class="form-label">Adress <span style="color: red;">*</span></label>
+                                                                                            <input type="text" class="form-control" name="adress" placeholder="Enter an adress" id="adressinput" value="<?php echo $row['adress']; ?>">
                                                                                         </div>
                                                                                     </div>
                                                                                     <!--end col-->
                                                                                     <div class="col-md-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="quantity" class="form-label">Quantity</label>
-                                                                                            <input type="text" class="form-control" name="quantity" placeholder="Enter a quantity" id="quantityinput" value="<?php echo $row['quantity']; ?>">
+                                                                                            <label for="city" class="form-label">City</label>
+                                                                                            <input type="text" class="form-control" name="city" placeholder="Enter a city" id="cityinput" value="<?php echo $row['city']; ?>">
                                                                                         </div>
                                                                                     </div>
+                                                                                <!--end row-->
+                                                                                <div class="col-md-6">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="province" class="form-label">Province</label>
+                                                                                            <input type="text" class="form-control" name="province" placeholder="Enter a province" id="provinceinput" value="<?php echo $row['province']; ?>">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                <!--end row-->
+                                                                                <div class="col-lg-4">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="country" class="form-label">Country</label>
+                                                                                        <select class="form-control" id="countryInput" name="country">
+                                                                                            <option>country</option>
+                                                                                            <?php foreach ($countries as $key => $value) { ?>
+                                                                                                <option value="<?php echo $key; ?>" <?php $_SESSION['country'] == $key ? "selected" : null ?>><?php echo $value; ?></option>
+                                                                                            <?php } ?>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
                                                                                 <!--end row-->
                                                                             </div>
                                                                             <div class="d-none code-view">
@@ -225,7 +242,7 @@ require_once("./controllers/UserController.php");
                                                                     <div class="modal-footer">
                                                                         <div class="hstack gap-2 justify-content-end">
                                                                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                            <button type="submit" class="btn btn-success" name="edit_user" id="edit-btn">Save</button>
+                                                                            <button type="submit" class="btn btn-success" name="edit_warehouse" id="edit-btn">Save</button>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -245,19 +262,7 @@ require_once("./controllers/UserController.php");
                                                                         <lord-icon src="https://cdn.lordicon.com/vihyezfv.json" trigger="loop" colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
                                                                         <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
                                                                             <h4>Are you Sure ?</h4>
-                                                                            <p class="text-muted mx-4 mb-0">
-                                                                            <?php echo ($row['actif'] ? 'Are you sure you want to block this user account ?' : 'Are you sure you want to unlock this user account ?'); ?>
-                                                                            </p>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                                                                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                                                                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                                            <input type="hidden" name="block" value="<?php echo ($row['actif'] ? '0' : '1'); ?>">
-                                                                            <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                                                                            <button type="submit" name="btnblock" class="btn w-sm btn-danger">
-                                                                                <?php echo ($row['actif'] ? 'Yes, Blocked It!' : 'Yes, Unlocked It!'); ?></button>
-                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -267,7 +272,7 @@ require_once("./controllers/UserController.php");
                                                     <?php } ?>
                                                 </tbody>
                                             </table>
-                                            <?php if($users->rowCount() == 0) { ?>
+                                            <?php if($warehouses->rowCount() == 0) { ?>
                                             <div class="noresult" style="display: inline-block; width: 100%;">
                                                 <div class="text-center">
                                                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
@@ -298,15 +303,14 @@ require_once("./controllers/UserController.php");
                         </div>
                     </div>
 
-                    <!-- Modal add user -->
+                    <!-- Modal add warehouse -->
                     <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header bg-light p-3">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add user</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Add warehouse</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                                 </div>
-                                <?php $role = new Profil($cn); $roles = $role->getAll(); ?>
                                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="tablelist-form" autocomplete="off">
                                     <div class="modal-body">
                                         <div class="card-body">
@@ -315,21 +319,40 @@ require_once("./controllers/UserController.php");
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
                                                             <label for="name" class="form-label">Name <span style="color: red;">*</span></label>
-                                                            <input type="text" class="form-control" name="name" placeholder="Enter the product name" id="nameinput">
+                                                            <input type="text" class="form-control" name="name" placeholder="Enter the warehouse name" id="nameinput">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <label for="description" class="form-label">Description<span style="color: red;">*</span></label>
-                                                            <input type="text" class="form-control" name="description" placeholder="Enter your description" id="description">
+                                                            <label for="adress" class="form-label">Adress<span style="color: red;">*</span></label>
+                                                            <input type="text" class="form-control" name="adress" placeholder="Enter your adress" id="adress">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
                                                     <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <label for="quantity" class="form-label">Designation</label>
-                                                            <input type="text" class="form-control" name="quantity" placeholder="Enter quantity" id="quantityinput">
+                                                            <label for="city" class="form-label">City</label>
+                                                            <input type="text" class="form-control" name="city" placeholder="Enter city" id="cityinput">
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="province" class="form-label">Province</label>
+                                                            <input type="text" class="form-control" name="province" placeholder="Enter province" id="provinceinput">
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-3">
+                                                            <label for="country" class="form-label">Country</label>
+                                                            <select class="form-control" id="countryInput" name="country">
+                                                                <option>country</option>
+                                                                <?php foreach ($countries as $key => $value) { ?>
+                                                                    <option value="<?php echo $key; ?>" <?php $_SESSION['country'] == $key ? "selected" : null ?>><?php echo $value; ?></option>
+                                                                <?php } ?>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <!--end col-->
@@ -346,7 +369,7 @@ require_once("./controllers/UserController.php");
                                     <div class="modal-footer">
                                         <div class="hstack gap-2 justify-content-end">
                                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-success" name="add_user" id="add-btn">Add Customer</button>
+                                            <button type="submit" class="btn btn-success" name="add_warehouse" id="add-btn">Add Warehouse</button>
                                             <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
                                         </div>
                                     </div>
