@@ -1,6 +1,5 @@
 <?php
-require_once("./controllers/ProductController.php");
-#require_once("./controllers/ProductsController.php");
+require_once("./controllers/WarehouseController.php");
 ?>
 <!doctype html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
@@ -80,12 +79,12 @@ require_once("./controllers/ProductController.php");
 					<div class="row">
 					    <div class="col-12">
 					        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-					            <h4 class="mb-sm-0">Products list</h4>
+					            <h4 class="mb-sm-0">Warehouse list</h4>
 
 					            <div class="page-title-right">
 					                <ol class="breadcrumb m-0">
 					                    <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-					                    <li class="breadcrumb-item active">Users</li>
+					                    <li class="breadcrumb-item active">Warehouses</li>
 					                </ol>
 					            </div>
 
@@ -99,7 +98,7 @@ require_once("./controllers/ProductController.php");
                             <div class="card">
 
                                 <div class="card-body">
-                                    <div>
+                                    <div id="warehouseList">
                                         <div class="row g-4 mb-3">
                                             <div class="col-sm-auto">
                                                 <div>
@@ -142,15 +141,14 @@ require_once("./controllers/ProductController.php");
                                                             </div>
                                                         </th>
                                                         <th class="sort" data-sort="name">Name</th>
-                                                        <th class="sort" data-sort="description">Description</th>
-                                                        <th class="sort" data-sort="quantity">Code Product</th>
-                                                        <th class="sort" data-sort="quantity">Suplier</th>
-                                                        <th class="sort" data-sort="quantity">Warehouse</th>
-                                                        <th class="sort" data-sort="quantity">Actions</th>
+                                                        <th class="sort" data-sort="adress">Adress</th>
+                                                         <th class="sort" data-sort="city">City</th>
+                                                         <th class="sort" data-sort="province">Province</th>
+                                                         <th class="sort" data-sort="country">Country</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="form-check-all">
-                                                    <?php while($row = $products->fetch(PDO::FETCH_ASSOC)) { ?>
+                                                    <?php while($row = $warehouses->fetch(PDO::FETCH_ASSOC)) { ?>
                                                     <tr>
                                                         <th scope="row">
                                                             <div class="form-check">
@@ -159,119 +157,84 @@ require_once("./controllers/ProductController.php");
                                                         </th>
                                                         <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
                                                         <td class="name"><?php echo $row['name']; ?></td>
-                                                        <td class="description"><?php echo $row['description']; ?></td>
-                                                        <td class="quantity"><?php echo $row['code_product']; ?></td>
-                                                        <td class="quantity"><?php echo $row['supplier_name']; ?></td>
-                                                        <td class="quantity"><?php echo $row['warehouse_name']; ?></td>
+                                                        <td class="adress"><?php echo $row['adress']; ?></td>
+                                                        <td class="city"><?php echo $row['city']; ?></td>
+                                                        <td class="province"><?php echo $row['province']; ?></td>
+                                                        <td class="country"><?php echo $row['country']; ?></td>
                                                         <td>
                                                             <div class="d-flex gap-2">
                                                                 <div class="edit">
-                                                                    <button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#viewModal_<?php echo $row['id']; ?>">View</button>
-                                                                </div>
-                                                                <div class="edit">
-                                                                    <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#edittModal_<?php echo $row['id']; ?>">Edit</button>
-                                                                </div>
-                                                                <div class="remove">
-                                                                    <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteModal_<?php echo $row['id']; ?>"><i class="bx bxs-trash"></i> Delete</button>
+                                                                    <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                     </tr>
 
-                                                     <!-- Modal view user -->
-                                                    <div class="modal fade" id="viewModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
+                                                    <!-- Modal edit Warehouse -->
+                                                    <div class="modal fade" id="eidtModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
                                                             <div class="modal-content">
                                                                 <div class="modal-header bg-light p-3">
-                                                                    <h5 class="modal-title">View product</h5>
+                                                                    <h5 class="modal-title" id="eidtModal_<?php echo $row['id']; ?>">Edit warehouse</h5>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                                                                 </div>
-                                                                <div style="display: flex; align-items: center;flex-direction: column;">
-                                                                    <img src="assets/images/products/<?php echo ($row['image'] != '' ? $row['image'] : "no_image.jpg"); ?>" class="figure-img img-fluid rounded" alt="..." style="height: 250px; width: 80%;">
-                                                                    <h3>Name : <?php echo $row['name']; ?></h3>
-                                                                    <p>Description : <?php echo $row['description']; ?></p>
-                                                                    <p>Code product : <?php echo $row['code_product']; ?></p>
-                                                                    <p>Supplier : <?php echo $row['supplier_name']; ?></p>
-                                                                    <p>Warehouse : <?php echo $row['warehouse_name']; ?></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Modal edit user -->
-                                                    <div class="modal fade" id="edittModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header bg-light p-3">
-                                                                    <h5 class="modal-title">Edit product</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-                                                                </div>
-                                                                <?php $role = new Profil($cn); $roles = $role->getAll(); ?>
-                                                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="tablelist-form" autocomplete="off" enctype="multipart/form-data">
+                                                                <?php# $role = new Profil($cn); $roles = $role->getAll(); ?>
+                                                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="tablelist-form" autocomplete="off">
                                                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                                    <?php
-                                                                    $supplier = new Supplier($cn);
-                                                                    $warehouse = new Warehouse($cn);
-                                                                    $suppliers = $supplier->getAll();
-                                                                    $warehouses = $warehouse->getAll();
+                                                                     <?php
+                                                                    #$supplier = new Supplier($cn);
+                                                                    #$warehouse = new Warehouse($cn);
+                                                                    #$suppliers = $supplier->getAll();
+                                                                    #$warehouses = $warehouse->getAll();
                                                                     ?>
                                                                     <div class="modal-body">
                                                                         <div class="card-body">
                                                                             <div class="live-preview">
                                                                                 <div class="row">
-                                                                                    <div class="col-md-12">
+                                                                                    <div class="col-md-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="name" class="form-label">Name <span style="color: red;">*</span></label>
-                                                                                            <input type="text" class="form-control" name="name" placeholder="Enter the product name" id="nameinput" value="<?php echo $row['name']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="code_product" class="form-label">Code product <span style="color: red;">*</span></label>
-                                                                                            <input type="text" class="form-control" name="code_product" placeholder="Enter code product" id="quantityinput" value="<?php echo $row['code_product']; ?>">
+                                                                                            <label for="nameinput" class="form-label">Name <span style="color: red;">*</span></label>
+                                                                                            <input type="text" class="form-control" name="name" placeholder="Enter the warehouse name" id="nameinput" value="<?php echo $row['name']; ?>">
                                                                                         </div>
                                                                                     </div>
                                                                                     <!--end col-->
-                                                                                    <div class="col-md-12">
+                                                                                    <div class="col-md-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="description" class="form-label">Description</label>
-                                                                                            <textarea type="text" class="form-control" name="description" placeholder="Enter description" id="description"><?php echo $row['description']; ?></textarea>
+                                                                                            <label for="description" class="form-label">Adress <span style="color: red;">*</span></label>
+                                                                                            <input type="text" class="form-control" name="adress" placeholder="Enter an adress" id="adressinput" value="<?php echo $row['adress']; ?>">
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-md-12">
+                                                                                    <!--end col-->
+                                                                                    <div class="col-md-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="supplier_id" class="form-label">Supplier <span style="color: red;">*</span></label>
-                                                                                            <select class="js-example-basic-single form-control" name="supplier_id">
-                                                                                                <option value="">select supplier</option>
-                                                                                                <?php while($supplier = $suppliers->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                                                                    <option value="<?php echo $supplier['id']; ?>" <?php echo ($row['supplier_id'] == $supplier['id'] ? "selected" : null); ?>><?php echo $supplier['name']; ?></option>
-                                                                                                <?php } ?>
-                                                                                            </select>
+                                                                                            <label for="city" class="form-label">City</label>
+                                                                                            <input type="text" class="form-control" name="city" placeholder="Enter a city" id="cityinput" value="<?php echo $row['city']; ?>">
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-md-12">
+                                                                                <!--end row-->
+                                                                                <div class="col-md-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="warehouse_id" class="form-label">Warehouse <span style="color: red;">*</span></label>
-                                                                                            <select class="js-example-basic-single form-control" name="warehouse_id">
-                                                                                                <option value="">select warehouse</option>
-                                                                                                <?php while($warehouse = $warehouses->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                                                                    <option value="<?php echo $warehouse['id']; ?>" <?php echo ($row['id'] == $warehouse['id'] ? "selected" : null); ?>><?php echo $warehouse['name']; ?></option>
-                                                                                                <?php } ?>
-                                                                                            </select>
+                                                                                            <label for="province" class="form-label">Province</label>
+                                                                                            <input type="text" class="form-control" name="province" placeholder="Enter a province" id="provinceinput" value="<?php echo $row['province']; ?>">
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="product_img" class="form-label">Images</label>
-                                                                                            <?php if($row['image'] != "") { ?>
-                                                                                            <input type="text" class="form-control" value="<?php echo $row['image']; ?>" readonly>
+                                                                                <!--end row-->
+                                                                                <div class="col-lg-4">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="country" class="form-label">Country</label>
+                                                                                        <select class="form-control" id="countryInput" name="country">
+                                                                                            <option>country</option>
+                                                                                            <?php foreach ($countries as $key => $value) { ?>
+                                                                                                <option value="<?php echo $key; ?>" <?php $_SESSION['country'] == $key ? "selected" : null ?>><?php echo $value; ?></option>
                                                                                             <?php } ?>
-                                                                                            <input type="file" name="product_img" class="form-control">
-                                                                                        </div>
+                                                                                        </select>
                                                                                     </div>
                                                                                 </div>
+                                                                                <!--end row-->
+                                                                            </div>
                                                                             <div class="d-none code-view">
-                                                                                <pre class="language-markup" style="height: 375px;"></pre>
+                                                                                <pre class="language-markup" style="height: 375px;">
+                                                                            </pre>
                                                                             </div>
                                                                         </div>
                                                                         
@@ -279,8 +242,7 @@ require_once("./controllers/ProductController.php");
                                                                     <div class="modal-footer">
                                                                         <div class="hstack gap-2 justify-content-end">
                                                                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                            <button type="submit" class="btn btn-success" name="edit_product" id="add-edi">Save</button>
-                                                                            <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
+                                                                            <button type="submit" class="btn btn-success" name="edit_warehouse" id="edit-btn">Save</button>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -289,7 +251,7 @@ require_once("./controllers/ProductController.php");
                                                     </div>
 
                                                     <!-- Modal -->
-                                                    <div class="modal fade zoomIn" id="deleteModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
+                                                    <div class="modal fade zoomIn" id="blockModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -300,17 +262,7 @@ require_once("./controllers/ProductController.php");
                                                                         <lord-icon src="https://cdn.lordicon.com/vihyezfv.json" trigger="loop" colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
                                                                         <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
                                                                             <h4>Are you Sure ?</h4>
-                                                                            <p class="text-muted mx-4 mb-0">
-                                                                            Are you sure you want to block
-                                                                            </p>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                                                                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                                                                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                                            <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                                                                            <button type="submit" name="btnblock" class="btn w-sm btn-danger">Yes, Delete It!</button>
-                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -320,7 +272,7 @@ require_once("./controllers/ProductController.php");
                                                     <?php } ?>
                                                 </tbody>
                                             </table>
-                                            <?php if($products->rowCount() == 0) { ?>
+                                            <?php if($warehouses->rowCount() == 0) { ?>
                                             <div class="noresult" style="display: inline-block; width: 100%;">
                                                 <div class="text-center">
                                                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
@@ -333,7 +285,7 @@ require_once("./controllers/ProductController.php");
                                             <?php } ?>
                                         </div>
 
-                                       <!--  <div class="d-flex justify-content-end">
+                                        <div class="d-flex justify-content-end">
                                             <div class="pagination-wrap hstack gap-2">
                                                 <a class="page-item pagination-prev disabled" href="#">
                                                     Previous
@@ -343,7 +295,7 @@ require_once("./controllers/ProductController.php");
                                                     Next
                                                 </a>
                                             </div>
-                                        </div> -->
+                                        </div>
                                     </div>
                                 </div><!-- end card -->
                             </div>
@@ -351,75 +303,65 @@ require_once("./controllers/ProductController.php");
                         </div>
                     </div>
 
-                    <!-- Modal add user -->
+                    <!-- Modal add warehouse -->
                     <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header bg-light p-3">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add product</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Add warehouse</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                                 </div>
-                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="tablelist-form" autocomplete="off" enctype="multipart/form-data">
-                                    <?php
-                                    $supplier = new Supplier($cn);
-                                    $warehouse = new Warehouse($cn);
-                                    $suppliers = $supplier->getAll();
-                                    $warehouses = $warehouse->getAll();
-                                    ?>
+                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="tablelist-form" autocomplete="off">
                                     <div class="modal-body">
                                         <div class="card-body">
                                             <div class="live-preview">
                                                 <div class="row">
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                         <div class="mb-3">
                                                             <label for="name" class="form-label">Name <span style="color: red;">*</span></label>
-                                                            <input type="text" class="form-control" name="name" placeholder="Enter the product name" id="nameinput">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="code_product" class="form-label">Code product <span style="color: red;">*</span></label>
-                                                            <input type="text" class="form-control" name="code_product" placeholder="Enter code product" id="quantityinput">
+                                                            <input type="text" class="form-control" name="name" placeholder="Enter the warehouse name" id="nameinput">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <label for="description" class="form-label">Description</label>
-                                                            <textarea type="text" class="form-control" name="description" placeholder="Enter description" id="description"></textarea>
+                                                            <label for="adress" class="form-label">Adress<span style="color: red;">*</span></label>
+                                                            <input type="text" class="form-control" name="adress" placeholder="Enter your adress" id="adress">
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <!--end col-->
+                                                    <div class="col-md-6">
                                                         <div class="mb-3">
-                                                            <label for="supplier_id" class="form-label">Supplier <span style="color: red;">*</span></label>
-                                                            <select class="js-example-basic-single form-control" name="supplier_id">
-                                                                <option value="">select supplier</option>
-                                                                <?php while($supplier = $suppliers->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                                    <option value="<?php echo $supplier['id']; ?>"><?php echo $supplier['name']; ?></option>
+                                                            <label for="city" class="form-label">City</label>
+                                                            <input type="text" class="form-control" name="city" placeholder="Enter city" id="cityinput">
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-md-6">
+                                                        <div class="mb-3">
+                                                            <label for="province" class="form-label">Province</label>
+                                                            <input type="text" class="form-control" name="province" placeholder="Enter province" id="provinceinput">
+                                                        </div>
+                                                    </div>
+                                                    <!--end col-->
+                                                    <div class="col-lg-4">
+                                                        <div class="mb-3">
+                                                            <label for="country" class="form-label">Country</label>
+                                                            <select class="form-control" id="countryInput" name="country">
+                                                                <option>country</option>
+                                                                <?php foreach ($countries as $key => $value) { ?>
+                                                                    <option value="<?php echo $key; ?>" <?php $_SESSION['country'] == $key ? "selected" : null ?>><?php echo $value; ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="warehouse_id" class="form-label">Warehouse <span style="color: red;">*</span></label>
-                                                            <select class="js-example-basic-single form-control" name="warehouse_id">
-                                                                <option value="">select warehouse</option>
-                                                                <?php while($warehouse = $warehouses->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                                    <option value="<?php echo $warehouse['id']; ?>"><?php echo $warehouse['name']; ?></option>
-                                                                <?php } ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="product_img" class="form-label">Images</label>
-                                                            <input type="file" name="product_img" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                    <!--end col-->
+                                                    
+                                                <!--end row-->
+                                            </div>
                                             <div class="d-none code-view">
-                                                <pre class="language-markup" style="height: 375px;"></pre>
+                                                <pre class="language-markup" style="height: 375px;">
+                                            </pre>
                                             </div>
                                         </div>
                                         
@@ -427,7 +369,7 @@ require_once("./controllers/ProductController.php");
                                     <div class="modal-footer">
                                         <div class="hstack gap-2 justify-content-end">
                                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-success" name="add_product" id="add-btn">Save</button>
+                                            <button type="submit" class="btn btn-success" name="add_warehouse" id="add-btn">Add Warehouse</button>
                                             <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
                                         </div>
                                     </div>
@@ -491,6 +433,9 @@ require_once("./controllers/ProductController.php");
     <script src="assets/libs/prismjs/prism.js"></script>
     <script src="assets/libs/list.js/list.min.js"></script>
     <script src="assets/libs/list.pagination.js/list.pagination.min.js"></script>
+
+    <!-- listjs init -->
+    <script src="assets/js/pages/listjs.init.js"></script>
 
     <!-- Sweet Alerts js -->
     <script src="assets/libs/sweetalert2/sweetalert2.min.js"></script>

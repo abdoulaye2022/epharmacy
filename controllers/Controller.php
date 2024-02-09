@@ -10,6 +10,10 @@ $client = new Google_Client();
 $client->setClientId($_ENV['CLIENT_ID_GOOGLE']);
 $client->setClientSecret($_ENV['SECRET_CLIENT_GOOGLE']);
 $client->setRedirectUri($_ENV['REDIRECT_URL_GOOGLE']);
+$client->setClientId($_ENV['CLIENT_ID_OUTLOOK']);
+$client->setClientSecret($_ENV['SECRET_ID_OUTLOOK']);
+$client->setRedirectUri($_ENV['REDIRECT_URL_OUTLOOK']);
+
 $client->addScope('openid profile email');
 
 $login_url = "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
@@ -31,10 +35,10 @@ $sso_email = null;
 if(isset($_GET['code']) && !isset($_GET['state'])) {
 	$code = $_GET['code'];
 
-	// Échanger le code d'autorisation contre un jeton d'accès
+	// ï¿½changer le code d'autorisation contre un jeton d'accï¿½s
 		$token = $client->fetchAccessTokenWithAuthCode($code);
 
-	// Récupérer l'adresse e-mail de l'utilisateur
+	// Rï¿½cupï¿½rer l'adresse e-mail de l'utilisateur
 	if (isset($token['id_token'])) {
 	    $payload = $client->verifyIdToken($token['id_token']);  
 	    $sso_email = $payload['email'];
@@ -91,6 +95,10 @@ require_once "helpers/Helper.php";
 require_once "models/Auth.php";
 require_once "models/User.php";
 require_once "models/Profil.php";
+require_once "models/ConnectionHistory.php";
+require_once "models/Product.php";
+require_once "models/Supplier.php";
+require_once "models/Warehouse.php";
 
 if (!isset($_SESSION['id']) && $_SERVER['REQUEST_URI'] != "/epharmacy/index.php" && isset($_GET['code']) && $_GET['code'] == null) {
    	header("location: index.php");
@@ -104,6 +112,10 @@ $cn = $db->getConnection();
 $helper = new Helper();
 $auth = new Auth($cn);
 $user = new User($cn);
+$connectionHistory = new ConnectionHistory($cn);
+$product = new Product($cn);
+$supplier = new Supplier($cn);
+$warehouse = new Warehouse($cn);
 
 $error = "";
 
@@ -115,11 +127,9 @@ if(isset($sso_email) && !empty($sso_email)) {
 
 		if($user) {
 			if(!$auth->userAccountIsBlock($email)) {
-				if($user['role_id'] == 1 || $user['role_id'] == 2) {
+				if($user['role_id'] == 1 || $user['role_id'] == 2 || $user['role_id'] == 3) {
+					$connectionHistory->login($user['id']);
 					header("location: dashboard.php");
-					exit();
-				} else if($user['role_id'] == 3) {
-					header("location: home.php");
 					exit();
 				} else {
 					$error = "An error occurred. Please try again.";

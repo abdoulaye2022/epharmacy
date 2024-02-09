@@ -28,6 +28,12 @@ class Helper
 			return intval($integer);
 	}
 
+	public function isValidWarehouse($integer) {
+        if (in_array(intval($integer), [1, 2, 3])) {
+            return intval($integer);
+        }
+	}
+
 	function validateInteger ($integer) {
 		return intval($integer);
 	}
