@@ -6,6 +6,7 @@ class DB {
     private $database;
     private $charset;
     private $pdo;
+    private $port = '3306';
 
     public function __construct($host, $username, $password, $database, $charset = 'utf8') {
         $this->host = $host;
@@ -18,7 +19,7 @@ class DB {
     }
 
     private function connect() {
-        $dsn = "mysql:host={$this->host};dbname={$this->database};charset={$this->charset}";
+        $dsn = "mysql:host={$this->host};port=($this->port); dbname={$this->database};charset={$this->charset}";
 
         try {
             $this->pdo = new PDO($dsn, $this->username, $this->password);

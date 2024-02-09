@@ -79,12 +79,12 @@ require_once("./controllers/UserController.php");
 					<div class="row">
 					    <div class="col-12">
 					        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-					            <h4 class="mb-sm-0">Connection History</h4>
+					            <h4 class="mb-sm-0">Suppliers List</h4>
 
 					            <div class="page-title-right">
 					                <ol class="breadcrumb m-0">
 					                    <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-					                    <li class="breadcrumb-item active">Users</li>
+					                    <li class="breadcrumb-item active">Products</li>
 					                </ol>
 					            </div>
 
@@ -101,7 +101,7 @@ require_once("./controllers/UserController.php");
                                     <div id="customerList">
                                         <div class="row g-4 mb-3">
                                             <div class="col-sm-auto">
-                                                <!-- <div>
+                                              <!--   <div>
                                                     <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add</button>
                                                     <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
                                                 </div> -->
@@ -121,46 +121,69 @@ require_once("./controllers/UserController.php");
                                                     </div>
                                                 <?php } ?>
                                             </div>
-                                            <!-- <div class="col-sm">
+                                            <div class="col-sm">
                                                 <div class="d-flex justify-content-sm-end">
                                                     <div class="search-box ms-2">
                                                         <input type="text" class="form-control search" placeholder="Search...">
                                                         <i class="ri-search-line search-icon"></i>
                                                     </div>
                                                 </div>
-                                            </div> -->
+                                            </div>
                                         </div>
 
                                         <div class="table-responsive table-card mt-3 mb-1">
                                             <table class="table align-middle table-nowrap">
                                                 <thead class="table-light">
                                                     <tr>
-                                                        <th scope="col" style="width: 50px;">
-                                                            <div class="form-check">
-                                                                <!-- <input class="form-check-input" type="checkbox" id="checkAll" value="option"> -->
-                                                            </div>
-                                                        </th>
-                                                        <th class="sort" data-sort="customer_name">First Name</th>
-                                                        <th class="sort" data-sort="customer_name">Last Name</th>
-                                                        <th class="sort" data-sort="customer_name">Connection Date</th>
-                                                        <th class="sort" data-sort="customer_name">Logout date</th>
-                                                         <th class="sort" data-sort="date">Onsite Time</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody class="form-check-all">
-                                                    <?php while($row = $users->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                    <tr>
-                                                        <th scope="row">
-                                                           <!--  <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
+                                                        <!-- <th scope="col" style="width: 50px;"> -->
+                                                            <!-- <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" id="checkAll" value="option">
                                                             </div> -->
                                                         </th>
+                                                        <th class="sort" data-sort="customer_name">ID</th>
+                                                        <th class="sort" data-sort="customer_name">Name</th>
+                                                         <th class="sort" data-sort="date">Address</th>
+                                                        <th class="sort" data-sort="email">Province</th>
+                                                        <th class="sort" data-sort="phone">Postal Code</th>
+                                                        <th class="sort" data-sort="status">Phone</th>
+                                                        <th class="sort" data-sort="status">Email</th>
+                                                        <!-- <th class="sort" data-sort="action">Action</th> -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php while($row = $users->fetch(PDO::FETCH_ASSOC)) { ?>
+                                                    <tr>
+                                                        <!-- <th scope="row">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
+                                                            </div>
+                                                        </th> -->
                                                         <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
                                                         <td class="firstname"><?php echo $row['firstname']; ?></td>
                                                         <td class="lastname"><?php echo $row['lastname']; ?></td>
                                                         <td class="lastname"><?php echo $row['designation']; ?></td>
                                                         <td class="date"><?php echo $row['email']; ?></td>
                                                         <td class="phone"><?php echo $row['phone']; ?></td>
+                                                        <td class="phone"><?php echo $row['name']; ?></td>
+                                                        <!-- <td class="status"><span class="badge badge-soft-success text-uppercase">Active</span></td> -->
+                                                        <td>
+                                                            <div class="d-flex gap-2">
+                                                                <!-- <div class="edit">
+                                                                    <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
+                                                                </div> -->
+                                                                <?php if($row['actif']) { ?>
+                                                                   <!--   <div class="remove">
+                                                                        <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#blockModal_<?php echo $row['id']; ?>"><i class="bx bx-lock-alt "></i> Block</button>
+                                                                    </div> -->
+                                                                <?php } else { ?>
+                                                                    <!-- <div class="remove">
+                                                                        <button class="btn btn-sm btn-default remove-item-btn" data-bs-toggle="modal" data-bs-target="#blockModal_<?php echo $row['id']; ?>"><i class=" bx bx-lock-open-alt"></i> Unblock</button>
+                                                                    </div> -->
+                                                                <?php } ?>
+                                                               
+                                                                
+                                                            </div>
+                                                        </td>
                                                     </tr>
 
                                                     <!-- Modal edit user -->
@@ -188,19 +211,19 @@ require_once("./controllers/UserController.php");
                                                                                     <!--end col-->
                                                                                     <div class="col-md-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="lastname" class="form-label">Last Name<span style="color: red;">*</span></label>
+                                                                                            <label for="lastname" class="form-label">Last Name <span style="color: red;">*</span></label>
                                                                                             <input type="text" class="form-control" name="lastname" placeholder="Enter your lastname" id="lastname" value="<?php echo $row['lastname']; ?>">
                                                                                         </div>
                                                                                     </div>
                                                                                     <!--end col-->
                                                                                     <div class="col-md-6">
                                                                                         <div class="mb-3">
-                                                                                            <label for="designation" class="form-label">Connection Date</label>
+                                                                                            <label for="designation" class="form-label">Designation</label>
                                                                                             <input type="text" class="form-control" name="designation" placeholder="Enter company name" id="compnayNameinput" value="<?php echo $row['designation']; ?>">
                                                                                         </div>
                                                                                     </div>
 
-                                                                                    <!-- <div class="col-md-6">
+                                                                                    <div class="col-md-6">
                                                                                         <div class="mb-3">
                                                                                             <label for="ForminputState" class="form-label">Profil <span style="color: red;">*</span></label>
                                                                                             <select id="ForminputState" class="js-example-basic-single form-control" name="role_id">
@@ -209,7 +232,7 @@ require_once("./controllers/UserController.php");
                                                                                                 <?php } ?>
                                                                                             </select>
                                                                                         </div>
-                                                                                    </div> -->
+                                                                                    </div>
                                                                                     <!--end col-->
                                                                                     <div class="col-md-6">
                                                                                         <div class="mb-3">
