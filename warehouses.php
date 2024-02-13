@@ -7,7 +7,7 @@ require_once("./controllers/WarehouseController.php");
 <head>
 
     <meta charset="utf-8" />
-    <title>Notre template</title>
+    <title>Warehouse List</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -178,15 +178,8 @@ require_once("./controllers/WarehouseController.php");
                                                                     <h5 class="modal-title" id="eidtModal_<?php echo $row['id']; ?>">Edit warehouse</h5>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                                                                 </div>
-                                                                <?php# $role = new Profil($cn); $roles = $role->getAll(); ?>
                                                                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="tablelist-form" autocomplete="off">
                                                                     <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                                     <?php
-                                                                    #$supplier = new Supplier($cn);
-                                                                    #$warehouse = new Warehouse($cn);
-                                                                    #$suppliers = $supplier->getAll();
-                                                                    #$warehouses = $warehouse->getAll();
-                                                                    ?>
                                                                     <div class="modal-body">
                                                                         <div class="card-body">
                                                                             <div class="live-preview">
