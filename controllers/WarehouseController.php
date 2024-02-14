@@ -15,7 +15,7 @@ if(isset($_POST['add_warehouse'])) {
 					$country = $helper->validateString($_POST['country']);
 
 					if($helper->isValidWarehouse($integer)) {
-							if($warehouse->create ($name, $adress, $city, $province)) {
+							if($warehouse->create ($name, $adress, $city, $province, $country)) {
 								$success = "Warehouse is updated successfully.";
 							} else {
 								$error = "An error occurred. Please try again.";
@@ -41,7 +41,7 @@ if(isset($_POST['edit_warehouse'])) {
 					$country = $helper->validateString($_POST['country']);
 
 					if($helper->isValidWarehouse($id)) {
-							if($warehouse->create ($name, $adress, $city, $province)) {
+							if($warehouse->create ($name, $adress, $city, $province, $country)) {
 								$success = "Warehouse is added successfully.";
 							} else {
 								$error = "An error occurred. Please try again.";
