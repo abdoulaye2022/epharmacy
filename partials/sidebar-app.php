@@ -69,7 +69,7 @@
                                 <a href="products.php" class="nav-link"> Products list </a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-chat.html" class="nav-link"> Suppliers list </a>
+                                <a href="suppliers.php" class="nav-link"> Suppliers list </a>
                             </li>
                             <li class="nav-item">
                                 <a href="warehouses.php" class="nav-link"> Warehouses list </a>
