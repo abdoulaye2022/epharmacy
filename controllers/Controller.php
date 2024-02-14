@@ -99,6 +99,8 @@ require_once "models/ConnectionHistory.php";
 require_once "models/Product.php";
 require_once "models/Supplier.php";
 require_once "models/Warehouse.php";
+require_once "models/Stock.php";
+require_once "models/StockProduct.php";
 
 if (!isset($_SESSION['id']) && $_SERVER['REQUEST_URI'] != "/epharmacy/index.php" && isset($_GET['code']) && $_GET['code'] == null) {
    	header("location: index.php");
@@ -116,6 +118,8 @@ $connectionHistory = new ConnectionHistory($cn);
 $product = new Product($cn);
 $supplier = new Supplier($cn);
 $warehouse = new Warehouse($cn);
+$stock = new Stock($cn);
+$stockProduct = new StockProduct($cn);
 
 $error = "";
 

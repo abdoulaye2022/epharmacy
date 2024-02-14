@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 06, 2024 at 02:55 PM
+-- Generation Time: Feb 14, 2024 at 03:23 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.2.0
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `connection_history` (
   `onsite_time` time DEFAULT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `connection_history`
@@ -46,7 +46,14 @@ INSERT INTO `connection_history` (`id`, `login_date`, `logout_date`, `onsite_tim
 (2, '2024-02-05 20:20:50', '2024-02-05 20:20:50', '00:00:00', 2),
 (3, '2024-02-05 20:24:41', '2024-02-05 20:26:19', '00:01:38', 2),
 (4, '2024-02-05 20:26:46', '2024-02-05 23:25:00', '02:58:14', 2),
-(5, '2024-02-05 23:40:27', '2024-02-05 23:40:27', '00:00:00', 2);
+(5, '2024-02-05 23:40:27', '2024-02-05 23:40:27', '00:00:00', 2),
+(6, '2024-02-08 09:06:42', '2024-02-08 09:21:44', '00:15:02', 2),
+(7, '2024-02-08 09:32:35', '2024-02-08 09:57:24', '00:24:49', 2),
+(8, '2024-02-08 10:08:52', '2024-02-08 10:11:39', '00:02:47', 2),
+(9, '2024-02-08 10:12:36', '2024-02-08 10:12:36', '00:00:00', 2),
+(10, '2024-02-12 02:22:56', '2024-02-12 02:22:56', '00:00:00', 2),
+(11, '2024-02-13 03:50:58', '2024-02-13 03:50:58', '00:00:00', 2),
+(12, '2024-02-13 18:04:26', '2024-02-13 18:04:26', '00:00:00', 2);
 
 -- --------------------------------------------------------
 
@@ -98,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   PRIMARY KEY (`id`),
   KEY `fk_products_supplier` (`supplier_id`),
   KEY `fk_products_warehouse` (`warehouse_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `products`
@@ -106,7 +113,8 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 INSERT INTO `products` (`id`, `name`, `description`, `code_product`, `supplier_id`, `warehouse_id`, `image`) VALUES
 (1, 'Tilenol', '', 'T4567', 1, 1, 'Ball.png'),
-(2, 'Paracetamol2', 'Test', 'P768', 1, 2, 'last4.png');
+(2, 'Paracetamol2', 'Test', 'P768', 1, 2, 'last4.png'),
+(3, 'Advile', 'Anti inflamatoire', 'A678', 2, 1, 'advile.jfif');
 
 -- --------------------------------------------------------
 
@@ -143,21 +151,40 @@ CREATE TABLE IF NOT EXISTS `stocks` (
   `name` varchar(50) NOT NULL,
   `expire_date` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `stocks`
+--
+
+INSERT INTO `stocks` (`id`, `name`, `expire_date`) VALUES
+(1, 'A20248', '2024-02-16'),
+(2, 'A278', '2024-03-09');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stock_products`
+-- Table structure for table `stock_product`
 --
 
-DROP TABLE IF EXISTS `stock_products`;
-CREATE TABLE IF NOT EXISTS `stock_products` (
+DROP TABLE IF EXISTS `stock_product`;
+CREATE TABLE IF NOT EXISTS `stock_product` (
   `stock_id` int NOT NULL,
   `product_id` int NOT NULL,
+  `quantity` int NOT NULL,
   KEY `fk_stock_id` (`stock_id`),
   KEY `fk_product_id` (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `stock_product`
+--
+
+INSERT INTO `stock_product` (`stock_id`, `product_id`, `quantity`) VALUES
+(1, 1, 22),
+(2, 2, 8),
+(1, 2, 10),
+(1, 3, 5);
 
 -- --------------------------------------------------------
 
@@ -239,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `warehouses` (
   `province` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `country` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `warehouses`
@@ -247,7 +274,8 @@ CREATE TABLE IF NOT EXISTS `warehouses` (
 
 INSERT INTO `warehouses` (`id`, `name`, `adress`, `city`, `province`, `country`) VALUES
 (1, 'Central Pharmacy', NULL, 'Moncton', NULL, NULL),
-(2, 'Regional Warehouse', NULL, 'Dieppe', NULL, NULL);
+(2, 'Regional Warehouse', NULL, 'Dieppe', NULL, NULL),
+(3, 'Romeo2', '23 rue cord', 'Dieppe', 'New Brunswick', 'CX');
 
 --
 -- Constraints for dumped tables
@@ -274,9 +302,9 @@ ALTER TABLE `products`
   ADD CONSTRAINT `fk_products_warehouse` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouses` (`id`);
 
 --
--- Constraints for table `stock_products`
+-- Constraints for table `stock_product`
 --
-ALTER TABLE `stock_products`
+ALTER TABLE `stock_product`
   ADD CONSTRAINT `fk_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `fk_stock_id` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`);
 

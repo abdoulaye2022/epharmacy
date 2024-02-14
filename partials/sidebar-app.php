@@ -87,7 +87,7 @@
                     <div class="collapse menu-dropdown" id="sidebarStock">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="apps-calendar.html" class="nav-link"> Products list </a>
+                                <a href="stocks.php" class="nav-link">Stock list </a>
                             </li>
                             <li class="nav-item">
                                 <a href="apps-chat.html" class="nav-link"> Supliers list </a>

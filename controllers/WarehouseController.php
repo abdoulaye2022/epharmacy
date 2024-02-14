@@ -7,21 +7,17 @@ $success = "";
 // Add warehouse
 if(isset($_POST['add_warehouse'])) {
 	if(isset($_POST['name'], $_POST['adress'], $_POST['city'], $_POST['province'], $_POST['country'])) {
-		if(!empty($_POST['name']) && !empty($_POST['adress']) && !empty($_POST['city']) && !empty($_POST['province']) && !empty($_POST['country'])) {
+		if(!empty($_POST['name'])) {
 					$name = $helper->validateString($_POST['name']);
 					$adress = $helper->validateString($_POST['adress']);
 					$city = $helper->validateString($_POST['city']);
 					$province = $helper->validateString($_POST['province']);
 					$country = $helper->validateString($_POST['country']);
 
-					if($helper->isValidWarehouse($integer)) {
-							if($warehouse->create ($name, $adress, $city, $province, $country)) {
-								$success = "Warehouse is updated successfully.";
-							} else {
-								$error = "An error occurred. Please try again.";
-							}
+					if($warehouse->create($name, $adress, $city, $province, $country)) {
+						$success = "Warehouse is updated successfully.";
 					} else {
-						$error = "Cannot add warehouse.";
+						$error = "An error occurred. Please try again.";
 					}
             } else {
                 $error = "Please complete all required fields.";
@@ -31,27 +27,22 @@ if(isset($_POST['add_warehouse'])) {
 
 // Update warehouse
 if(isset($_POST['edit_warehouse'])) {
-	if(isset($_POST['name'], $_POST['adress'], $_POST['city'], $_POST['province'], $_POST['country'])) {
-		if(!empty($_POST['name']) && !empty($_POST['adress']) && !empty($_POST['city']) && !empty($_POST['province']) && !empty($_POST['country'])) {
-			if($helper->isValidEmail($_POST['email'])) {
-					$name = $helper->validateString($_POST['name']);
-					$adress = $helper->validateString($_POST['adress']);
-					$city = $helper->validateString($_POST['city']);
-					$province = $helper->validateString($_POST['province']);
-					$country = $helper->validateString($_POST['country']);
+	if(isset($_POST['id'], $_POST['name'], $_POST['adress'], $_POST['city'], $_POST['province'], $_POST['country'])) {
+		if(!empty($_POST['id']) && !empty($_POST['name'])) {
+			$id =  $helper->validateInteger($_POST['id']);
+			$name = $helper->validateString($_POST['name']);
+			$adress = $helper->validateString($_POST['adress']);
+			$city = $helper->validateString($_POST['city']);
+			$province = $helper->validateString($_POST['province']);
+			$country = $helper->validateString($_POST['country']);
 
-					if($helper->isValidWarehouse($id)) {
-							if($warehouse->create ($name, $adress, $city, $province, $country)) {
-								$success = "Warehouse is added successfully.";
-							} else {
-								$error = "An error occurred. Please try again.";
-							}
-					} else {
-						$error = "Cannot update warehouse.";
-					}
-            } else {
-                $error = "Please complete all required fields.";
-            }
+			if($warehouse->update($id, $name, $adress, $city, $province, $country)) {
+				$success = "Warehouse is updated successfully.";
+			} else {
+				$error = "An error occurred. Please try again.";
+			} 
+        } else {
+            $error = "Please complete all required fields.";
         }
 	}
 }

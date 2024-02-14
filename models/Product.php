@@ -63,5 +63,13 @@ class Product
         }
     }
 
+    public function getAllProductNotInOfStock ($stock_id) {
+        $stmt = $this->_cn->prepare("SELECT * FROM `products` WHERE `id` NOT IN (SELECT `product_id` FROM `stock_product` WHERE `stock_id` = :stock_id)");
+        $stmt->bindParam(':stock_id', $stock_id);
+
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+    }
 }
 ?>
