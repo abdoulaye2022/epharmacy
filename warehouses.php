@@ -239,6 +239,13 @@ require_once("./controllers/WarehouseController.php");
                                                                             <button type="submit" class="btn btn-success" name="edit_warehouse" id="edit-btn">Save</button>
                                                                         </div>
                                                                     </div>
+                                                                    <div class="modal-footer">
+                                                                        <div class="hstack gap-2 justify-content-end">
+                                                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                            <button type="submit" class="btn btn-danger" name="delete_warehouse">Delete</button>
+                                                                        </div>
+                                                                    </div>
+
                                                                 </form>
                                                             </div>
                                                         </div>
