@@ -101,10 +101,10 @@ require_once("./controllers/UserController.php");
                                     <div id="customerList">
                                         <div class="row g-4 mb-3">
                                             <div class="col-sm-auto">
-                                              <!--   <div>
+                                                <div>
                                                     <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add</button>
                                                     <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                                                </div> -->
+                                                </div>
                                             </div>
                                             <div class="col-sm-8">
                                                 <?php if($error != "") { ?>
@@ -168,17 +168,17 @@ require_once("./controllers/UserController.php");
                                                         <!-- <td class="status"><span class="badge badge-soft-success text-uppercase">Active</span></td> -->
                                                         <td>
                                                             <div class="d-flex gap-2">
-                                                                <!-- <div class="edit">
+                                                                <div class="edit">
                                                                     <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
-                                                                </div> -->
+                                                                </div>
                                                                 <?php if($row['actif']) { ?>
-                                                                   <!--   <div class="remove">
-                                                                        <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#blockModal_<?php echo $row['id']; ?>"><i class="bx bx-lock-alt "></i> Block</button>
-                                                                    </div> -->
+                                                                    <div class="remove">
+                                                                    <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteModal_<?php echo $row['id']; ?>"><i class="bx bxs-trash"></i> Delete</button>
+                                                                </div>
                                                                 <?php } else { ?>
-                                                                    <!-- <div class="remove">
-                                                                        <button class="btn btn-sm btn-default remove-item-btn" data-bs-toggle="modal" data-bs-target="#blockModal_<?php echo $row['id']; ?>"><i class=" bx bx-lock-open-alt"></i> Unblock</button>
-                                                                    </div> -->
+                                                                    <div class="remove">
+                                                                    <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteModal_<?php echo $row['id']; ?>"><i class="bx bxs-trash"></i> Delete</button>
+                                                                </div>
                                                                 <?php } ?>
                                                                
                                                                 
