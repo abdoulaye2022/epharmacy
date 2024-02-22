@@ -8,13 +8,17 @@ if(isset($_POST['add_stock'])) {
 	if(isset($_POST['name'], $_POST['expiration_date'])) {
 		if(!empty($_POST['name']) && !empty($_POST['expiration_date'])) {
 			if($helper->validerDate($_POST['expiration_date'], 'Y-m-d')) {
-				$expiration_date = $helper->validateString($_POST['expiration_date'], 'Y-m-d');
-				$name = $helper->validateString($_POST['name']);
+				if($_POST['expiration_date'] > date('Y-m-d')) {
+					$expiration_date = $helper->validateString($_POST['expiration_date'], 'Y-m-d');
+					$name = $helper->validateString($_POST['name']);
 
-				if($stock->create($name, $expiration_date)) {
-					$success = "Stock was added successfully.";
+					if($stock->create($name, $expiration_date)) {
+						$success = "Stock was added successfully.";
+					} else {
+						$error = "An error occurred. Please try again.";
+					}
 				} else {
-					$error = "An error occurred. Please try again.";
+					$error = "Expiration date must be in the future.";
 				}
 			} else {
 				$error = "Expiration date is invalid.";

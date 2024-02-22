@@ -145,6 +145,7 @@ require_once("./controllers/WarehouseController.php");
                                                          <th class="sort" data-sort="city">City</th>
                                                          <th class="sort" data-sort="province">Province</th>
                                                          <th class="sort" data-sort="country">Country</th>
+                                                         <th class="sort" data-sort="country">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="form-check-all">
@@ -175,7 +176,7 @@ require_once("./controllers/WarehouseController.php");
                                                         <div class="modal-dialog modal-dialog-centered">
                                                             <div class="modal-content">
                                                                 <div class="modal-header bg-light p-3">
-                                                                    <h5 class="modal-title" id="eidtModal_<?php echo $row['id']; ?>">Edit warehouse</h5>
+                                                                    <h5 class="modal-title" id="editModal_<?php echo $row['id']; ?>">Edit warehouse</h5>
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
                                                                 </div>
                                                                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="tablelist-form" autocomplete="off">
@@ -184,41 +185,41 @@ require_once("./controllers/WarehouseController.php");
                                                                         <div class="card-body">
                                                                             <div class="live-preview">
                                                                                 <div class="row">
-                                                                                    <div class="col-md-6">
+                                                                                    <div class="col-md-12">
                                                                                         <div class="mb-3">
                                                                                             <label for="nameinput" class="form-label">Name <span style="color: red;">*</span></label>
                                                                                             <input type="text" class="form-control" name="name" placeholder="Enter the warehouse name" id="nameinput" value="<?php echo $row['name']; ?>">
                                                                                         </div>
                                                                                     </div>
                                                                                     <!--end col-->
-                                                                                    <div class="col-md-6">
+                                                                                    <div class="col-md-12">
                                                                                         <div class="mb-3">
-                                                                                            <label for="description" class="form-label">Adress <span style="color: red;">*</span></label>
+                                                                                            <label for="description" class="form-label">Adress</label>
                                                                                             <input type="text" class="form-control" name="adress" placeholder="Enter an adress" id="adressinput" value="<?php echo $row['adress']; ?>">
                                                                                         </div>
                                                                                     </div>
                                                                                     <!--end col-->
-                                                                                    <div class="col-md-6">
+                                                                                    <div class="col-md-12">
                                                                                         <div class="mb-3">
                                                                                             <label for="city" class="form-label">City</label>
                                                                                             <input type="text" class="form-control" name="city" placeholder="Enter a city" id="cityinput" value="<?php echo $row['city']; ?>">
                                                                                         </div>
                                                                                     </div>
                                                                                 <!--end row-->
-                                                                                <div class="col-md-6">
+                                                                                <div class="col-md-12">
                                                                                         <div class="mb-3">
                                                                                             <label for="province" class="form-label">Province</label>
                                                                                             <input type="text" class="form-control" name="province" placeholder="Enter a province" id="provinceinput" value="<?php echo $row['province']; ?>">
                                                                                         </div>
                                                                                     </div>
                                                                                 <!--end row-->
-                                                                                <div class="col-lg-4">
+                                                                                <div class="col-lg-12">
                                                                                     <div class="mb-3">
                                                                                         <label for="country" class="form-label">Country</label>
                                                                                         <select class="form-control" id="countryInput" name="country">
-                                                                                            <option>country</option>
+                                                                                            <option value="">Select country</option>
                                                                                             <?php foreach ($countries as $key => $value) { ?>
-                                                                                                <option value="<?php echo $key; ?>" <?php $_SESSION['country'] == $key ? "selected" : null ?>><?php echo $value; ?></option>
+                                                                                                <option value="<?php echo $key; ?>" <?php $row['country'] == $key ? "selected" : null ?>><?php echo $value; ?></option>
                                                                                             <?php } ?>
                                                                                         </select>
                                                                                     </div>
@@ -316,41 +317,41 @@ require_once("./controllers/WarehouseController.php");
                                         <div class="card-body">
                                             <div class="live-preview">
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         <div class="mb-3">
                                                             <label for="name" class="form-label">Name <span style="color: red;">*</span></label>
                                                             <input type="text" class="form-control" name="name" placeholder="Enter the warehouse name" id="nameinput">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         <div class="mb-3">
-                                                            <label for="adress" class="form-label">Adress<span style="color: red;">*</span></label>
+                                                            <label for="adress" class="form-label">Adress</label>
                                                             <input type="text" class="form-control" name="adress" placeholder="Enter your adress" id="adress">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         <div class="mb-3">
                                                             <label for="city" class="form-label">City</label>
                                                             <input type="text" class="form-control" name="city" placeholder="Enter city" id="cityinput">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-12">
                                                         <div class="mb-3">
                                                             <label for="province" class="form-label">Province</label>
                                                             <input type="text" class="form-control" name="province" placeholder="Enter province" id="provinceinput">
                                                         </div>
                                                     </div>
                                                     <!--end col-->
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-12">
                                                         <div class="mb-3">
                                                             <label for="country" class="form-label">Country</label>
                                                             <select class="form-control" id="countryInput" name="country">
-                                                                <option>country</option>
+                                                                <option>Select country</option>
                                                                 <?php foreach ($countries as $key => $value) { ?>
-                                                                    <option value="<?php echo $key; ?>" <?php $_SESSION['country'] == $key ? "selected" : null ?>><?php echo $value; ?></option>
+                                                                    <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </div>
@@ -364,7 +365,6 @@ require_once("./controllers/WarehouseController.php");
                                             </pre>
                                             </div>
                                         </div>
-                                        
                                     </div>
                                     <div class="modal-footer">
                                         <div class="hstack gap-2 justify-content-end">
