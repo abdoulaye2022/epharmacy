@@ -13,13 +13,13 @@ class Warehouse
 	}
 
 	public function create ($name, $adress, $city, $province, $country) {
-		$stmt = $this->_cn->prepare("INSERT INTO `warehouses`(`name`, `adress`, `city`, `province`, `country`) VALUES(:name, :adress, :city, :province, :country)");
+		$stmt = $this->_cn->prepare("INSERT INTO `ware`(`name`, `adresss`, `city`, `province`, `country`) VALUES(:name, :adress, :city, :province, :country)");
 
-		$stmt->bindParam(':name', $name, PDO::PARAM_STR);
-		$stmt->bindParam(':adress', $adress, PDO::PARAM_STR);
-		$stmt->bindParam(':city', $city, PDO::PARAM_STR);
-		$stmt->bindParam(':province', $province, PDO::PARAM_STR);
-		$stmt->bindParam(':country', $country, PDO::PARAM_STR);
+		$stmt->bindParam(':name', $name);
+		$stmt->bindParam(':province', $adress);
+		$stmt->bindParam(':city', $city);
+		$stmt->bindParam(':province', $province);
+		$stmt->bindParam(':country', $country);
 
 		if ($stmt->execute()) {
 		    return true;

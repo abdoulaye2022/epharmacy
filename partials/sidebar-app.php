@@ -87,7 +87,7 @@
                     <div class="collapse menu-dropdown" id="sidebarStock">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="stocks.php" class="nav-link">Stock list </a>
+                                <a href="apps-calendar.html" class="nav-link"> Products list </a>
                             </li>
                             <li class="nav-item">
                                 <a href="apps-chat.html" class="nav-link"> Supliers list </a>
@@ -99,7 +99,6 @@
 
                 <?php if($auth->isAdmin() || $auth->isAgent() || $auth->isCustomer()) { ?>
                 <li class="nav-item">
-<<<<<<< HEAD
                     <a class="nav-link menu-link" href="#sidebarOrders" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarOrders">
                         <i class="ri-stock-line"></i> <span>Orders</span>
                     </a>
@@ -110,15 +109,6 @@
                             </li>
                             <li class="nav-item">
                                 <a href="new_order.php" class="nav-link">Make Order</a>
-=======
-                    <a class="nav-link menu-link" href="#sidebarOrder" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarOrder">
-                        <i class="ri-shopping-cart-line"></i> <span>Orders</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarOrder">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="orders.php" class="nav-link">Order list </a>
->>>>>>> 254b82252a010061308b24273d7cc14567ae3a54
                             </li>
                         </ul>
                     </div>

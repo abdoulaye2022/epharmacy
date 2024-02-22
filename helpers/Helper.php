@@ -5,25 +5,25 @@
 class Helper
 {
 	
-	public function isValidEmail($email) {
+	function isValidEmail($email) {
 	    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 	}
 
-	public function validateString ($string) {
+	function validateString ($string) {
 		return htmlspecialchars(htmlentities(trim($string)));
 	}
 
-	public function greethings () {
+	function greethings () {
 		$heure = date("G");
 		return ($heure < 12 ? "Morning" : "Evening");
 	}
 
-	public function isValidProfil ($integer) {
+	function isValidProfil ($integer) {
 		if(in_array(intval($integer), [1, 2, 3]))
 			return intval($integer);
 	}
 	
-	public function isValidProduct ($integer) {
+	function isValidProduct ($integer) {
 		if(in_array(intval($integer), [1, 2, 3]))
 			return intval($integer);
 	}
@@ -34,7 +34,7 @@ class Helper
         }
 	}
 
-	public function validateInteger ($integer) {
+	function validateInteger ($integer) {
 		return intval($integer);
 	}
 
