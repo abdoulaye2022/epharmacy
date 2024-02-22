@@ -1,3 +1,12 @@
+<?php
+if(isset($_SESSION['cart_id'])) {
+    $itemsCartProduct = $cartProduct->getAll($_SESSION['cart_id']);
+}
+$carts = $cart->getCart($_SESSION['id']);
+if(isset($_SESSION['cart_id'])) {
+    $countCartProduct = $cartProduct->countCartProduct($_SESSION['cart_id']);
+}
+?>
 <script>
   window.addEventListener('beforeunload', function() {
     // Effectuez une requête AJAX vers votre serveur pour exécuter le script PHP
@@ -13,7 +22,7 @@
             <div class="d-flex">
                 <!-- LOGO -->
                 <div class="navbar-brand-box horizontal-logo">
-                    <a href="index.html" class="logo logo-dark">
+                    <a href="dashboard.php" class="logo logo-dark">
                         <span class="logo-sm">
                             <!-- <img src="assets/images/logo-sm.png" alt="" height="22"> -->
                         </span>
@@ -22,7 +31,7 @@
                         </span>
                     </a>
 
-                    <a href="index.html" class="logo logo-light">
+                    <a href="dashboard.php" class="logo logo-light">
                         <span class="logo-sm">
                             <!-- <img src="assets/images/logo-sm.png" alt="" height="22"> -->
                         </span>
@@ -55,8 +64,8 @@
                             </div>
 
                             <div class="dropdown-item bg-transparent text-wrap">
-                                <a href="index.html" class="btn btn-soft-secondary btn-sm btn-rounded">how to setup <i class="mdi mdi-magnify ms-1"></i></a>
-                                <a href="index.html" class="btn btn-soft-secondary btn-sm btn-rounded">buttons <i class="mdi mdi-magnify ms-1"></i></a>
+                                <a href="dashboard.php" class="btn btn-soft-secondary btn-sm btn-rounded">how to setup <i class="mdi mdi-magnify ms-1"></i></a>
+                                <a href="dashboard.php" class="btn btn-soft-secondary btn-sm btn-rounded">buttons <i class="mdi mdi-magnify ms-1"></i></a>
                             </div>
                             <!-- item-->
                             <div class="dropdown-header mt-2">
@@ -233,7 +242,15 @@
                 <div class="dropdown topbar-head-dropdown ms-1 header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" id="page-header-cart-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                         <i class='bx bx-shopping-bag fs-22'></i>
-                        <span class="position-absolute topbar-badge cartitem-badge fs-10 translate-middle badge rounded-pill bg-info">5</span>
+                        <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-info">
+                            <?php
+                            if(isset($countCartProduct)) {
+                                echo $countCartProduct->rowCount();
+                            } else {
+                                echo "0";
+                            }
+                            ?>
+                        </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end p-0 dropdown-menu-cart" aria-labelledby="page-header-cart-dropdown">
                         <div class="p-3 border-top-0 border-start-0 border-end-0 border-dashed border">
@@ -242,54 +259,68 @@
                                     <h6 class="m-0 fs-16 fw-semibold"> My Cart</h6>
                                 </div>
                                 <div class="col-auto">
-                                    <span class="badge badge-soft-warning fs-13"><span class="cartitem-badge">7</span>
+                                    <?php if(isset($_SESSION['cart_id']) && $itemsCartProduct->rowCount()) { ?>
+                                        <span class="badge badge-soft-warning fs-13"><span><?php echo $itemsCartProduct->rowCount(); ?></span>
                                         items</span>
+                                    <?php } else { ?>
+                                        <span class="badge badge-soft-warning fs-13"><span>0</span>
+                                        items</span>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
                         <div data-simplebar style="max-height: 300px;">
                             <div class="p-2">
-                                <div class="text-center empty-cart" id="empty-cart">
-                                    <div class="avatar-md mx-auto my-3">
-                                        <div class="avatar-title bg-soft-info text-info fs-36 rounded-circle">
-                                            <i class='bx bx-cart'></i>
+                                <?php if(isset($_SESSION['cart_id']) && $itemsCartProduct->rowCount()) { 
+                                    $total = 0;
+                                    $count_items = 0;
+                                    ?>
+                                    <?php while ($row = $itemsCartProduct->fetch(PDO::FETCH_ASSOC)) {
+                                        if($count_items < 4) {
+                                    ?>
+                                    <div class="d-block dropdown-item dropdown-item-cart text-wrap px-3 py-2">
+                                        <div class="d-flex align-items-center">
+                                            <img src="assets/images/products/<?php echo ($row['image'] != '' ? $row['image'] : "no_image.jpg"); ?>" class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
+                                            <div class="flex-1">
+                                                <h6 class="mt-0 mb-1 fs-14">
+                                                    <a href="apps-ecommerce-product-details.html" class="text-reset"><?php echo $row['name']; ?></a>
+                                                </h6>
+                                                <p class="mb-0 fs-12 text-muted">
+                                                    Quantity: <span><?php echo $row['quantity']; ?> x $<?php echo $row['price']; ?></span>
+                                                </p>
+                                            </div>
+                                            <div class="px-2">
+                                                <h5 class="m-0 fw-normal">$<span class="cart-item-price"><?php echo ($row['quantity'] * $row['price']); ?></span></h5>
+                                            </div>
                                         </div>
                                     </div>
-                                    <h5 class="mb-3">Your Cart is Empty!</h5>
-                                    <a href="apps-ecommerce-products.html" class="btn btn-success w-md mb-3">Shop Now</a>
-                                </div>
-                                <div class="d-block dropdown-item dropdown-item-cart text-wrap px-3 py-2">
-                                    <div class="d-flex align-items-center">
-                                        <img src="assets/images/products/img-1.png" class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
-                                        <div class="flex-1">
-                                            <h6 class="mt-0 mb-1 fs-14">
-                                                <a href="apps-ecommerce-product-details.html" class="text-reset">Branded
-                                                    T-Shirts</a>
-                                            </h6>
-                                            <p class="mb-0 fs-12 text-muted">
-                                                Quantity: <span>10 x $32</span>
-                                            </p>
+                                    <?php 
+                                        }
+                                    $total += ($row['quantity'] * $row['price']);
+                                    $count_items++;
+                                    } ?>
+                                <?php } else { ?>
+                                    <div class="text-center empty-cart" id="empty-cart">
+                                        <div class="avatar-md mx-auto my-3">
+                                            <div class="avatar-title bg-soft-info text-info fs-36 rounded-circle">
+                                                <i class='bx bx-cart'></i>
+                                            </div>
                                         </div>
-                                        <div class="px-2">
-                                            <h5 class="m-0 fw-normal">$<span class="cart-item-price">320</span></h5>
-                                        </div>
-                                        <div class="ps-2">
-                                            <button type="button" class="btn btn-icon btn-sm btn-ghost-secondary remove-item-btn shadow-none"><i class="ri-close-fill fs-16"></i></button>
-                                        </div>
+                                        <h5 class="mb-3">Your Cart is Empty!</h5>
+                                        <a href="apps-ecommerce-products.html" class="btn btn-success w-md mb-3">Shop Now</a>
                                     </div>
-                                </div>
-                                
+                                <?php } ?>                                
                             </div>
                         </div>
                         <div class="p-3 border-bottom-0 border-start-0 border-end-0 border-dashed border" id="checkout-elem">
                             <div class="d-flex justify-content-between align-items-center pb-3">
                                 <h5 class="m-0 text-muted">Total:</h5>
                                 <div class="px-2">
-                                    <h5 class="m-0" id="cart-item-total">$1258.58</h5>
+                                    <h5 class="m-0" id="cart-item-total">$<?php echo $total; ?></h5>
                                 </div>
                             </div>
 
-                            <a href="apps-ecommerce-checkout.html" class="btn btn-success text-center w-100">
+                            <a href="checkout.php" class="btn btn-success text-center w-100">
                                 Checkout
                             </a>
                         </div>

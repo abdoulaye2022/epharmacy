@@ -144,6 +144,8 @@ require_once("./controllers/ProductController.php");
                                                         <th class="sort" data-sort="name">Name</th>
                                                         <th class="sort" data-sort="description">Description</th>
                                                         <th class="sort" data-sort="quantity">Code Product</th>
+                                                        <th class="sort" data-sort="quantity">Price</th>
+                                                        <th class="sort" data-sort="quantity">Minimun Quantity</th>
                                                         <th class="sort" data-sort="quantity">Suplier</th>
                                                         <th class="sort" data-sort="quantity">Warehouse</th>
                                                         <th class="sort" data-sort="quantity">Actions</th>
@@ -161,6 +163,8 @@ require_once("./controllers/ProductController.php");
                                                         <td class="name"><?php echo $row['name']; ?></td>
                                                         <td class="description"><?php echo $row['description']; ?></td>
                                                         <td class="quantity"><?php echo $row['code_product']; ?></td>
+                                                        <td class="quantity"><?php echo $row['price']; ?> $</td>
+                                                        <td class="quantity"><?php echo $row['min_quantity']; ?></td>
                                                         <td class="quantity"><?php echo $row['supplier_name']; ?></td>
                                                         <td class="quantity"><?php echo $row['warehouse_name']; ?></td>
                                                         <td>
@@ -191,6 +195,8 @@ require_once("./controllers/ProductController.php");
                                                                     <h3>Name : <?php echo $row['name']; ?></h3>
                                                                     <p>Description : <?php echo $row['description']; ?></p>
                                                                     <p>Code product : <?php echo $row['code_product']; ?></p>
+                                                                    <p>Code product : <?php echo $row['price']; ?> $</p>
+                                                                    <p>Minimun quantity : <?php echo $row['min_quantity']; ?></p>
                                                                     <p>Supplier : <?php echo $row['supplier_name']; ?></p>
                                                                     <p>Warehouse : <?php echo $row['warehouse_name']; ?></p>
                                                                 </div>
@@ -231,6 +237,18 @@ require_once("./controllers/ProductController.php");
                                                                                             <input type="text" class="form-control" name="code_product" placeholder="Enter code product" id="quantityinput" value="<?php echo $row['code_product']; ?>">
                                                                                         </div>
                                                                                     </div>
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="price" class="form-label">Price <span style="color: red;">*</span></label>
+                                                                                            <input type="text" class="form-control" name="price" placeholder="Enter price" id="price" value="<?php echo $row['price']; ?>">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="min_quantity" class="form-label">Minimun Quantity <span style="color: red;">*</span></label>
+                                                                                            <input type="text" class="form-control" name="min_quantity" placeholder="Enter minimun quantity" id="mini_quantity" value="<?php echo $row['min_quantity']; ?>">
+                                                                                        </div>
+                                                                                    </div>
                                                                                     <!--end col-->
                                                                                     <div class="col-md-12">
                                                                                         <div class="mb-3">
@@ -255,7 +273,7 @@ require_once("./controllers/ProductController.php");
                                                                                             <select class="js-example-basic-single form-control" name="warehouse_id">
                                                                                                 <option value="">select warehouse</option>
                                                                                                 <?php while($warehouse = $warehouses->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                                                                    <option value="<?php echo $warehouse['id']; ?>" <?php echo ($row['id'] == $warehouse['id'] ? "selected" : null); ?>><?php echo $warehouse['name']; ?></option>
+                                                                                                    <option value="<?php echo $warehouse['id']; ?>" <?php echo ($row['warehouse_id'] == $warehouse['id'] ? "selected" : null); ?>><?php echo $warehouse['name']; ?></option>
                                                                                                 <?php } ?>
                                                                                             </select>
                                                                                         </div>
@@ -382,7 +400,18 @@ require_once("./controllers/ProductController.php");
                                                             <input type="text" class="form-control" name="code_product" placeholder="Enter code product" id="quantityinput">
                                                         </div>
                                                     </div>
-                                                    <!--end col-->
+                                                    <div class="col-md-12">
+                                                        <div class="mb-3">
+                                                            <label for="code_product" class="form-label">Price <span style="color: red;">*</span></label>
+                                                            <input type="text" class="form-control" name="price" placeholder="Enter price" id="price">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="mb-3">
+                                                            <label for="min_quantity" class="form-label">Minimun quantity <span style="color: red;">*</span></label>
+                                                            <input type="text" class="form-control" name="min_quantity" placeholder="Enter minimun quantity" id="min_quantity">
+                                                        </div>
+                                                    </div>
                                                     <div class="col-md-12">
                                                         <div class="mb-3">
                                                             <label for="description" class="form-label">Description</label>

@@ -61,6 +61,16 @@ class Helper
 	    
 	    return true;
 	}
+
+	public function isValidPrice($price) {
+	    $pattern = '/^\d+(\.\d{1,2})?$/';
+
+	    return preg_match($pattern, $price);
+	}
+
+	public function formatPrice($price) {
+	    return number_format($price, 2, '.', ',');
+	}
 }
 
 $countries =array(
