@@ -19,12 +19,6 @@ if(isset($_POST['email'], $_POST['password'])) {
 						$_SESSION['login_date'] = $login_date;
 
 						$_SESSION['connection_id'] = $connectionHistory->login($user['id'], $login_date, $logout_date, $onsite_time);
-						$car = $cart->getCart($user['id']);
-						if($car->rowCount()) {
-							$fecth = $car->fetch(PDO::FETCH_ASSOC);
-							$_SESSION['cart_id'] = $fecth['id'];
-						}
-						
 						header("location: dashboard.php");
 						exit();
 					} else {

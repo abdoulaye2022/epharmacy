@@ -165,13 +165,7 @@ require_once("./controllers/UserController.php");
                                                         <td class="date"><?php echo $row['email']; ?></td>
                                                         <td class="phone"><?php echo $row['phone']; ?></td>
                                                         <td class="phone"><?php echo $row['name']; ?></td>
-                                                        <td class="status">
-                                                            <?php if($row['actif']) { ?>
-                                                                <span class="badge badge-soft-success text-uppercase">Active</span>
-                                                            <?php } else { ?>
-                                                                <span class="badge badge-soft-danger text-uppercase">Inactive</span>
-                                                            <?php } ?>
-                                                        </td>
+                                                        <td class="status"><span class="badge badge-soft-success text-uppercase">Active</span></td>
                                                         <td>
                                                             <div class="d-flex gap-2">
                                                                 <div class="edit">
