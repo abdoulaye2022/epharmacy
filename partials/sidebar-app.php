@@ -97,11 +97,20 @@
                 </li>
                 <?php } ?>
 
+                <?php if($auth->isAdmin() || $auth->isAgent() || $auth->isCustomer()) { ?>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="widgets.html">
-                        <i class=" ri-shopping-cart-line"></i> <span>Orders</span>
+                    <a class="nav-link menu-link" href="#sidebarOrder" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarOrder">
+                        <i class="ri-shopping-cart-line"></i> <span>Orders</span>
                     </a>
+                    <div class="collapse menu-dropdown" id="sidebarOrder">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="orders.php" class="nav-link">Order list </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
+                <?php } ?>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="widgets.html">
