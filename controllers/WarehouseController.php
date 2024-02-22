@@ -47,10 +47,13 @@ if(isset($_POST['edit_warehouse'])) {
 	}
 }
 // Delete warehouse
+// Delete warehouse
 if(isset($_POST['delete_warehouse'])) {
     if(isset($_POST['id']) && !empty($_POST['id'])) {
+        // Retrieve and validate warehouse ID
         $id = $helper->validateInteger($_POST['id']);
 
+        // Call the deleteWarehouse method passing the ID
         if($warehouse->deleteWarehouse($id)) {
             $success = "Warehouse has been deleted successfully.";
         } else {
