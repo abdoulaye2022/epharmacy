@@ -1,5 +1,5 @@
 <?php
-require_once("./controllers/WarehouseController.php");
+require_once("./controllers/OrderController.php");
 ?>
 <!doctype html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
@@ -7,7 +7,7 @@ require_once("./controllers/WarehouseController.php");
 <head>
 
     <meta charset="utf-8" />
-    <title>Warehouse List</title>
+    <title>Order List</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -79,7 +79,7 @@ require_once("./controllers/WarehouseController.php");
 					<div class="row">
 					    <div class="col-12">
 					        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-					            <h4 class="mb-sm-0">Warehouse list</h4>
+					            <h4 class="mb-sm-0">Order list</h4>
 
 					            <div class="page-title-right">
 					                <ol class="breadcrumb m-0">
@@ -98,7 +98,7 @@ require_once("./controllers/WarehouseController.php");
                             <div class="card">
 
                                 <div class="card-body">
-                                    <div id="warehouseList">
+                                    <div id="orderList">
                                         <div class="row g-4 mb-3">
                                             <div class="col-sm-auto">
                                                 <div>
@@ -152,7 +152,7 @@ require_once("./controllers/WarehouseController.php");
                                                     
                                                 </tbody>
                                             </table>
-                                            <?php if($warehouses->rowCount() == 0) { ?>
+                                            <?php if($order->rowCount() == 0) { ?>
                                             <div class="noresult" style="display: inline-block; width: 100%;">
                                                 <div class="text-center">
                                                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
@@ -192,7 +192,7 @@ require_once("./controllers/WarehouseController.php");
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> © Velzon.
+                            <script>document.write(new Date().getFullYear())</script> ï¿½ Velzon.
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
