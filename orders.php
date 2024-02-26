@@ -100,27 +100,6 @@ require_once("./controllers/OrderController.php");
                                 <div class="card-body">
                                     <div id="orderList">
                                         <div class="row g-4 mb-3">
-                                            <div class="col-sm-auto">
-                                                <div>
-                                                    <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add</button>
-                                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <?php if($error != "") { ?>
-                                                    <div class="col-lg-12">
-                                                        <div class="alert alert-danger alert-borderless shadow mb-xl-0" role="alert">
-                                                            <?php echo $error; ?>
-                                                        </div>
-                                                    </div>
-                                                <?php } else if($success != "") { ?>
-                                                    <div class="col-lg-12" style="color: green;">
-                                                        <div class="alert alert-success alert-borderless shadow" role="alert">
-                                                            <?php echo $success; ?>
-                                                        </div>
-                                                    </div>
-                                                <?php } ?>
-                                            </div>
                                             <div class="col-sm">
                                                 <div class="d-flex justify-content-sm-end">
                                                     <div class="search-box ms-2">
@@ -140,29 +119,15 @@ require_once("./controllers/OrderController.php");
                                                                 <input class="form-check-input" type="checkbox" id="checkAll" value="option">
                                                             </div>
                                                         </th>
-                                                        <th class="sort" data-sort="name">Name</th>
-                                                        <th class="sort" data-sort="adress">Adress</th>
-                                                         <th class="sort" data-sort="city">City</th>
-                                                         <th class="sort" data-sort="province">Province</th>
-                                                         <th class="sort" data-sort="country">Country</th>
-                                                         <th class="sort" data-sort="country">Action</th>
+                                                        <th class="sort" data-sort="order_date">Order Date</th>
+                                                        <th class="sort" data-sort="total_amount">Total Amount</th>
+                                                         <th class="sort" data-sort="status">Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="form-check-all">
                                                     
                                                 </tbody>
                                             </table>
-                                            <?php if($order->rowCount() == 0) { ?>
-                                            <div class="noresult" style="display: inline-block; width: 100%;">
-                                                <div class="text-center">
-                                                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
-                                                    </lord-icon>
-                                                    <h5 class="mt-2">Sorry! No Result Found</h5>
-                                                    <p class="text-muted mb-0">We've searched more than 150+ Orders We did not find any
-                                                        orders for you search.</p>
-                                                </div>
-                                            </div>
-                                            <?php } ?>
                                         </div>
 
                                         <div class="d-flex justify-content-end">
