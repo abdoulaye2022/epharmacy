@@ -19,11 +19,6 @@ class Order
         if ($stmt->execute()) {
             return true;
         }
-        if ($stmt->execute()) {
-            if($stmt->rowCount() > 0) {
-                return true;
-            }
-        }
     }
 }
 
