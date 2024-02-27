@@ -47,9 +47,7 @@ require_once("./controllers/ProfilController.php");
             <div class="page-content">
                 <form  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
                 <div class="container-fluid">
-
                     <div class="position-relative mx-n4 mt-n4">
-                        <div class="profile-wid-bg profile-setting-img">
                             <img src="assets/images/profile-bg.jpg" class="profile-wid-img" alt="">
                             <div class="overlay-content">
                                 <div class="text-end p-3">
@@ -61,7 +59,6 @@ require_once("./controllers/ProfilController.php");
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
 
                     <div class="row">
@@ -133,7 +130,7 @@ require_once("./controllers/ProfilController.php");
                             <!--end card-->
                         </div>
                         <!--end col-->
-                        <div class="col-xxl-9">
+                        
                             <div class="card mt-xxl-n5">
                                 <div class="card-header">
                                     <ul class="nav nav-tabs-custom rounded card-header-tabs border-bottom-0" role="tablist">
@@ -324,7 +321,7 @@ require_once("./controllers/ProfilController.php");
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        
                         <!--end col-->
                     </div>
                     <!--end row-->
