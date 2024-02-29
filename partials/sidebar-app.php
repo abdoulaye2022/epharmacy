@@ -98,21 +98,22 @@
                 <?php } ?>
 
                 <?php if($auth->isAdmin() || $auth->isAgent() || $auth->isCustomer()) { ?>
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarOrders" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarOrders">
-                        <i class="ri-stock-line"></i> <span>Orders</span>
-                    </a>
-                    <div class="collapse menu-dropdown" id="sidebarOrders">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="orders.php" class="nav-link">Orders list</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="new_order.php" class="nav-link">Make Order</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#sidebarOrders" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarOrders">
+                            <i class="ri-stock-line"></i> <span>Orders</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="sidebarOrders">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="orders.php" class="nav-link">Orders list</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="new_order.php" class="nav-link">Make Order</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
                 <?php } ?>
 
                 <li class="nav-item">
@@ -124,7 +125,7 @@
                 <li class="menu-title"><i class="ri-more-fill"></i> <span>Settings</span></li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="widgets.html">
+                    <a class="nav-link menu-link" href="settings.php">
                         <i class="ri-settings-2-line"></i> <span>Settings</span>
                     </a>
                 </li>

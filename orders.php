@@ -7,7 +7,11 @@ require_once("./controllers/OrderController.php");
 <head>
 
     <meta charset="utf-8" />
+<<<<<<< HEAD
     <title>Orders List</title>
+=======
+    <title>Order List</title>
+>>>>>>> dc1372d7776dee88bb668eafcc1fd73d73737d88
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -75,52 +79,31 @@ require_once("./controllers/OrderController.php");
             <div class="page-content">
                 <div class="container-fluid">
 
-                	<!-- start page title -->
-					<div class="row">
-					    <div class="col-12">
-					        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-					            <h4 class="mb-sm-0">Warehouse list</h4>
+                    <!-- start page title -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                <h4 class="mb-sm-0">Order list</h4>
 
-					            <div class="page-title-right">
-					                <ol class="breadcrumb m-0">
-					                    <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-					                    <li class="breadcrumb-item active">Orders</li>
-					                </ol>
-					            </div>
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+                                        <li class="breadcrumb-item active">Orders</li>
+                                    </ol>
+                                </div>
 
-					        </div>
-					    </div>
-					</div>
-					<!-- end page title -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end page title -->
 
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
 
                                 <div class="card-body">
-                                    <div id="warehouseList">
+                                    <div id="orderList">
                                         <div class="row g-4 mb-3">
-                                            <div class="col-sm-auto">
-                                                <div>
-                                                    <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add</button>
-                                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <?php if($error != "") { ?>
-                                                    <div class="col-lg-12">
-                                                        <div class="alert alert-danger alert-borderless shadow mb-xl-0" role="alert">
-                                                            <?php echo $error; ?>
-                                                        </div>
-                                                    </div>
-                                                <?php } else if($success != "") { ?>
-                                                    <div class="col-lg-12" style="color: green;">
-                                                        <div class="alert alert-success alert-borderless shadow" role="alert">
-                                                            <?php echo $success; ?>
-                                                        </div>
-                                                    </div>
-                                                <?php } ?>
-                                            </div>
                                             <div class="col-sm">
                                                 <div class="d-flex justify-content-sm-end">
                                                     <div class="search-box ms-2">
@@ -140,18 +123,33 @@ require_once("./controllers/OrderController.php");
                                                                 <input class="form-check-input" type="checkbox" id="checkAll" value="option">
                                                             </div>
                                                         </th>
-                                                        <th class="sort" data-sort="name">Name</th>
-                                                        <th class="sort" data-sort="adress">Adress</th>
-                                                         <th class="sort" data-sort="city">City</th>
-                                                         <th class="sort" data-sort="province">Province</th>
-                                                         <th class="sort" data-sort="country">Country</th>
-                                                         <th class="sort" data-sort="country">Action</th>
+                                                        <th class="sort" data-sort="order_date">Order Date</th>
+                                                        <th class="sort" data-sort="total_amount">Total Amount</th>
+                                                        <th class="sort" data-sort="status">Status</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="form-check-all">
-                                                    
+                                                    <?php foreach ($orders as $order): ?>
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                                </div>
+                                                            </td>
+                                                            <td><?= $order['order_date'] ?></td>
+                                                            <td><?= $order['total_amount'] ?></td>
+                                                            <td class="status">
+                                                            <?php if($order['status']) { ?>
+                                                                <span class="badge badge-soft-success text-uppercase">Done</span>
+                                                            <?php } else { ?>
+                                                                <span class="badge badge-soft-danger text-uppercase">In progress</span>
+                                                            <?php } ?>
+                                                        </td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
                                                 </tbody>
                                             </table>
+<<<<<<< HEAD
                                             <?php if(false) { ?>
                                             <div class="noresult" style="display: inline-block; width: 100%;">
                                                 <div class="text-center">
@@ -163,6 +161,8 @@ require_once("./controllers/OrderController.php");
                                                 </div>
                                             </div>
                                             <?php } ?>
+=======
+>>>>>>> dc1372d7776dee88bb668eafcc1fd73d73737d88
                                         </div>
 
                                         <div class="d-flex justify-content-end">
@@ -192,7 +192,7 @@ require_once("./controllers/OrderController.php");
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> © Velzon.
+                            <script>document.write(new Date().getFullYear())</script> ï¿½ Velzon.
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
@@ -208,8 +208,6 @@ require_once("./controllers/OrderController.php");
 
     </div>
     <!-- END layout-wrapper -->
-
-
 
     <!--start back-to-top-->
     <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
