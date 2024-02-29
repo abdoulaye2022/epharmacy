@@ -164,7 +164,7 @@ require_once("./controllers/UserController.php");
                                                                     <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
                                                                 </div>
                                                                 <div class="delete">
-                                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
+                                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Delete</button>
                                                                 </div>                                                     
                                                                 
                                                             </div>
