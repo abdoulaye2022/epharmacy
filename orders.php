@@ -1,5 +1,5 @@
 <?php
-require_once("./controllers/WarehouseController.php");
+require_once("./controllers/OrderController.php");
 ?>
 <!doctype html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
@@ -7,7 +7,7 @@ require_once("./controllers/WarehouseController.php");
 <head>
 
     <meta charset="utf-8" />
-    <title>Warehouse List</title>
+    <title>Orders List</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -152,7 +152,7 @@ require_once("./controllers/WarehouseController.php");
                                                     
                                                 </tbody>
                                             </table>
-                                            <?php if($warehouses->rowCount() == 0) { ?>
+                                            <?php if(false) { ?>
                                             <div class="noresult" style="display: inline-block; width: 100%;">
                                                 <div class="text-center">
                                                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">

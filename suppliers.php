@@ -102,8 +102,7 @@ require_once("./controllers/UserController.php");
                                         <div class="row g-4 mb-3">
                                             <div class="col-sm-auto">
                                                 <div>
-                                                    <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add</button>
-                                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
+                                                    <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add</button>
                                                 </div>
                                             </div>
                                             <div class="col-sm-8">
@@ -135,11 +134,6 @@ require_once("./controllers/UserController.php");
                                             <table class="table align-middle table-nowrap">
                                                 <thead class="table-light">
                                                     <tr>
-                                                        <!-- <th scope="col" style="width: 50px;"> -->
-                                                            <!-- <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" id="checkAll" value="option">
-                                                            </div> -->
-                                                        </th>
                                                         <th class="sort" data-sort="customer_name">ID</th>
                                                         <th class="sort" data-sort="customer_name">Name</th>
                                                          <th class="sort" data-sort="date">Address</th>
@@ -153,11 +147,6 @@ require_once("./controllers/UserController.php");
                                                 <tbody>
                                                     <?php while($row = $users->fetch(PDO::FETCH_ASSOC)) { ?>
                                                     <tr>
-                                                        <!-- <th scope="row">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" name="chk_child" value="option1">
-                                                            </div>
-                                                        </th> -->
                                                         <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
                                                         <td class="firstname"><?php echo $row['firstname']; ?></td>
                                                         <td class="lastname"><?php echo $row['lastname']; ?></td>
@@ -169,18 +158,14 @@ require_once("./controllers/UserController.php");
                                                         <td>
                                                             <div class="d-flex gap-2">
                                                                 <div class="edit">
-                                                                    <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
+                                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#viewModal_<?php echo $row['id']; ?>">View</button>
                                                                 </div>
-                                                                <?php if($row['actif']) { ?>
-                                                                    <div class="remove">
-                                                                    <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteModal_<?php echo $row['id']; ?>"><i class="bx bxs-trash"></i> Delete</button>
+                                                                <div class="edit">
+                                                                    <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
                                                                 </div>
-                                                                <?php } else { ?>
-                                                                    <div class="remove">
-                                                                    <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteModal_<?php echo $row['id']; ?>"><i class="bx bxs-trash"></i> Delete</button>
-                                                                </div>
-                                                                <?php } ?>
-                                                               
+                                                                <div class="delete">
+                                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
+                                                                </div>                                                     
                                                                 
                                                             </div>
                                                         </td>

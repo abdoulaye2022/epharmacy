@@ -107,8 +107,6 @@ if(isset($_POST['pay_now'])) {
 	}
 }
 
-$products = $product->getAll();
-
 // Search
 if(isset($_POST['btn_search'])) {
 	if(isset($_POST['search'], $_POST['sort'])) {
@@ -120,4 +118,6 @@ if(isset($_POST['btn_search'])) {
 		 }
 	}
 }
+
+$products = $product->getAll();	
 ?>
