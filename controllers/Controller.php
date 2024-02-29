@@ -102,7 +102,6 @@ require_once "models/Warehouse.php";
 require_once "models/Stock.php";
 require_once "models/StockProduct.php";
 require_once "models/Order.php";
-require_once "models/OrderList.php";
 require_once "models/Cart.php";
 require_once "models/CartProduct.php";
 
@@ -127,7 +126,6 @@ $stockProduct = new StockProduct($cn);
 $order = new Order($cn);
 $cart = new Cart($cn);
 $cartProduct = new CartProduct($cn);
-$orderList = new OrderList($cn);
 
 $error = "";
 

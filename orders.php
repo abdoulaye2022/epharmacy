@@ -1,5 +1,5 @@
 <?php
-require_once("./controllers/OrderListController.php");
+require_once("./controllers/OrderController.php");
 ?>
 <!doctype html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
@@ -134,7 +134,13 @@ require_once("./controllers/OrderListController.php");
                                                             </td>
                                                             <td><?= $order['order_date'] ?></td>
                                                             <td><?= $order['total_amount'] ?></td>
-                                                            <td><?= $order['status'] ?></td>
+                                                            <td class="status">
+                                                            <?php if($order['status']) { ?>
+                                                                <span class="badge badge-soft-success text-uppercase">Done</span>
+                                                            <?php } else { ?>
+                                                                <span class="badge badge-soft-danger text-uppercase">In progress</span>
+                                                            <?php } ?>
+                                                        </td>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 </tbody>

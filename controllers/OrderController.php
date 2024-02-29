@@ -120,4 +120,7 @@ if(isset($_POST['btn_search'])) {
 		 }
 	}
 }
+
+$orders = $order->getOrdersByCustomerId($_SESSION['id']);
+
 ?>

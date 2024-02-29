@@ -20,6 +20,14 @@ class Order
             return true;
         }
     }
+    public function getOrdersByCustomerId($customer_id)
+    {
+        $stmt = $this->_cn->prepare("SELECT * FROM orders WHERE customer_id = :customer_id");
+        $stmt->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
 
 ?>
