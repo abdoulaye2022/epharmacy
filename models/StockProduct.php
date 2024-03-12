@@ -56,5 +56,64 @@ class StockProduct
             return true;
         }
     }
+
+    public function getStocksProducs ($product_id) {
+        $stmt = $this->_cn->prepare("
+            SELECT `stock_product`.*, `stocks`.`name`, `stocks`.`expire_date` FROM `stock_product` 
+            INNER JOIN `products` ON `products`.`id` = `stock_product`.`product_id`
+            INNER JOIN `stocks` ON `stocks`.`id` = `stock_product`.`stock_id`
+            WHERE `stock_product`.`product_id` = :product_id
+        ");
+
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+    }
+
+    public function checkAvailableProduct ($stock_id, $product_id, $quantity) {
+        $stmt = $this->_cn->prepare("
+            SELECT * FROM `stock_product` 
+            WHERE `stock_id` = :stock_id AND `product_id` = :product_id AND `quantity` >= :quantity;
+        ");
+
+        $stmt->bindParam(':stock_id', $stock_id, PDO::PARAM_INT);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+        $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+    }
+
+    public function getQuantity ($stock_id, $product_id) {
+        $stmt = $this->_cn->prepare("
+            SELECT * FROM `stock_product` 
+            WHERE `stock_id` = :stock_id AND `product_id` = :product_id;
+        ");
+
+        $stmt->bindParam(':stock_id', $stock_id, PDO::PARAM_INT);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+    }
+
+    public function soustractFromStock ($stock_id, $product_id, $quantity) {
+        $stmt = $this->_cn->prepare("
+            UPDATE `stock_product` SET `quantity` = :quantity
+            WHERE `stock_id` = :stock_id AND `product_id` = :product_id;
+        ");
+
+        $stmt->bindParam(':quantity', $quantity, PDO::PARAM_INT);
+        $stmt->bindParam(':stock_id', $stock_id, PDO::PARAM_INT);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+    }
 }
 ?>

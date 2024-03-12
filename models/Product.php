@@ -103,5 +103,11 @@ class Product
             return $stmt;
         }
     }
+
+    public function getTotalProducts()
+    {
+        return $this->_cn->query("SELECT * FROM products");
+    }
+
 }
 ?>

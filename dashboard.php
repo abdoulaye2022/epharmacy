@@ -136,7 +136,7 @@ require_once("./controllers/DashboardController.php");
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                                     <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="38">0</span></h4>
+                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="<?php echo $total_products; ?>">0</span></h4>
                                                         <a href="" class="text-decoration-underline">View all products</a>
                                                     </div>
                                                     <div class="avatar-sm flex-shrink-0">
@@ -165,7 +165,7 @@ require_once("./controllers/DashboardController.php");
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                                     <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="20">0</span></h4>
+                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="<?php echo $total_orders; ?>">0</span></h4>
                                                         <a href="" class="text-decoration-underline">View all products</a>
                                                     </div>
                                                     <div class="avatar-sm flex-shrink-0">
@@ -194,7 +194,7 @@ require_once("./controllers/DashboardController.php");
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                                     <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="87">0</span></h4>
+                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="<?php echo $total_customers; ?>">0</span></h4>
                                                         <a href="" class="text-decoration-underline">View all customers</a>
                                                     </div>
                                                     <div class="avatar-sm flex-shrink-0">
@@ -223,7 +223,7 @@ require_once("./controllers/DashboardController.php");
                                                 </div>
                                                 <div class="d-flex align-items-end justify-content-between mt-4">
                                                     <div>
-                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="16">0</span></h4>
+                                                        <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="<?php echo $total_balances; ?>">0</span> $</h4>
                                                         <a href="" class="text-decoration-underline">See details</a>
                                                     </div>
                                                     <div class="avatar-sm flex-shrink-0">

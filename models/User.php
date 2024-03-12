@@ -114,5 +114,12 @@ class User
 		}
 	}
 
+	public function getTotalCustomers () {
+		$stmt = $this->_cn->prepare("SELECT * FROM `users` WHERE `actif` = 1 AND `role_id` = 3");
+		if ($stmt->execute()) {
+			return $stmt;
+		}
+	}
+
 }
 ?>

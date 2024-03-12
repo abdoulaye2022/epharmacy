@@ -85,5 +85,34 @@ class CartProduct
             return $stmt;
         }
     }
+
+    public function updateQuantityReminder ($cart_id, $product_id, $quantity_remainder) {
+        $stmt = $this->_cn->prepare("
+            UPDATE `cart_product` SET `quantity_remainder` = :quantity_remainder
+            WHERE `cart_id` = :cart_id AND `product_id` = :product_id;
+        ");
+
+        $stmt->bindParam(':quantity_remainder', $quantity_remainder, PDO::PARAM_INT);
+        $stmt->bindParam(':cart_id', $cart_id, PDO::PARAM_INT);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        }
+    }
+
+    public function getQuantity ($cart_id, $product_id) {
+        $stmt = $this->_cn->prepare("
+            SELECT * FROM `cart_product` 
+            WHERE `cart_id` = :cart_id AND `product_id` = :product_id;
+        ");
+
+        $stmt->bindParam(':cart_id', $cart_id, PDO::PARAM_INT);
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+    }
 }
 ?>
