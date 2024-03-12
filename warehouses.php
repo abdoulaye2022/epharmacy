@@ -103,7 +103,6 @@ require_once("./controllers/WarehouseController.php");
                                             <div class="col-sm-auto">
                                                 <div>
                                                     <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add</button>
-                                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i class="ri-delete-bin-2-line"></i></button>
                                                 </div>
                                             </div>
                                             <div class="col-sm-8">
@@ -163,14 +162,34 @@ require_once("./controllers/WarehouseController.php");
                                                         <td class="province"><?php echo $row['province']; ?></td>
                                                         <td class="country"><?php echo $row['country']; ?></td>
                                                         <td>
-                                                            <div class="d-flex gap-2">
-                                                                <div class="edit">
-                                                                    <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
-                                                                </div>
-                                                            </div>
+                                                        <button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#viewModal_<?php echo $row['id']; ?>">View</button>
+                                                        <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
+                                                        <button class="btn btn-danger" type="submit" name="btn_remove_to_cart">Delete</button>
+
+
+                                                        
                                                         </td>
+                                                        
                                                     </tr>
 
+                                                    <!-- Modal view user -->
+                                                    <div class="modal fade" id="viewModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-light p-3">
+                                                                    <h5 class="modal-title">View product</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                                                </div>
+                                                                <div style="display: flex; align-items: center;flex-direction: column;">
+                                                                    <h3>Name : <?php echo $row['name']; ?></h3>
+                                                                    <p>Adress : <?php echo $row['adress']; ?></p>
+                                                                    <p>City : <?php echo $row['city']; ?></p>
+                                                                    <p>Province : <?php echo $row['province']; ?> $</p>
+                                                                    <p>Country : <?php echo $row['country']; ?></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <!-- Modal edit Warehouse -->
                                                     <div class="modal fade" id="eidtModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
@@ -235,7 +254,6 @@ require_once("./controllers/WarehouseController.php");
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <div class="hstack gap-2 justify-content-end">
-                                                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                                                             <button type="submit" class="btn btn-success" name="edit_warehouse" id="edit-btn">Save</button>
                                                                         </div>
                                                                     </div>

@@ -136,16 +136,34 @@ require_once("./controllers/OrderController.php");
                                                             <td><?= $order['order_date'] ?></td>
                                                             <td><?= $order['total_amount'] ?></td>
                                                             <td class="status">
-                                                                <?php if($order['status']) { ?>
-                                                                    <span class="badge badge-soft-success text-uppercase">Done</span>
-                                                                <?php } else { ?>
-                                                                    <span class="badge badge-soft-danger text-uppercase">In progress</span>
-                                                                <?php } ?>
-                                                            </td>
-                                                            <td>
-                                                                <a href="handle_order.php?order_id=<?php echo $order['id'] ?>" type="button" class="btn btn-sm btn-success">To handle</button>
-                                                            </td>
+                                                            <?php if($order['status']) { ?>
+                                                                <span class="badge badge-soft-success text-uppercase">Done</span>
+                                                            <?php } else { ?>
+                                                                <span class="badge badge-soft-danger text-uppercase">In progress</span>
+                                                            <?php } ?>
+                                                            
+                                                        </td>
+                                                        <td>
+                                                        <button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#viewModal_">View</button>
+                                                        </td>
                                                         </tr>
+                                                    <!-- Modal view user -->
+                                                    <div class="modal fade" id="viewModal_" tabindex="-1" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header bg-light p-3">
+                                                                    <h5 class="modal-title">View order</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
+                                                                </div>
+                                                                <div style="display: flex; align-items: center;flex-direction: column;">
+                                                                    <p>Order date : <?php echo $order['order_date']; ?></p>
+                                                                    <p>Total amount : <?php echo $order['total_amount']; ?></p>
+                                                                    <p>Status : <?php echo $order['status']; ?> $</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                        
                                                     <?php endforeach; ?>
                                                 </tbody>
                                             </table>
