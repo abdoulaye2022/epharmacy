@@ -161,7 +161,8 @@ require_once("./controllers/OrderController.php");
                                                                 <div style="display: flex; align-items: center;flex-direction: column;">
                                                                     <p>Order date : <?php echo $order['order_date']; ?></p>
                                                                     <p>Total amount : <?php echo $order['total_amount']; ?></p>
-                                                                    <p>Status : <?php echo $order['status']; ?> $</p>
+                                                                    <p>Status : <?php echo $order['status']; ?> </p>
+                                                                    <p>Number of items : <?php echo $order['id']; ?> </p>
                                                                 </div>
                                                             </div>
                                                         </div>
