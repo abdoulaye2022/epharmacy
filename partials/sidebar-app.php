@@ -117,7 +117,7 @@
                 <?php } ?>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="widgets.html">
+                    <a class="nav-link menu-link" href="accounting.php">
                         <i class="ri-money-dollar-circle-line "></i> <span>accounting</span>
                     </a>
                 </li>
