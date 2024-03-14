@@ -85,7 +85,7 @@ require_once("./controllers/ProductController.php");
 					            <div class="page-title-right">
 					                <ol class="breadcrumb m-0">
 					                    <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-					                    <li class="breadcrumb-item active">Users</li>
+					                    <li class="breadcrumb-item active">Accounting</li>
 					                </ol>
 					            </div>
 
@@ -101,11 +101,11 @@ require_once("./controllers/ProductController.php");
                                 <div class="card-body">
                                     <div>
                                         <div class="row g-4 mb-3">
-                                            <div class="col-sm-auto">
+                                            <!-- <div class="col-sm-auto">
                                                 <div>
                                                     <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add</button>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-sm-8">
                                                 <?php if($error != "") { ?>
                                                     <div class="col-lg-12">
@@ -135,14 +135,14 @@ require_once("./controllers/ProductController.php");
                                             <table class="table align-middle table-nowrap">
                                                 <thead class="table-light">
                                                     <tr>
-                                                        <th class="sort" data-sort="name">Name</th>
-                                                        <th class="sort" data-sort="description">Description</th>
-                                                        <th class="sort" data-sort="quantity">Code Product</th>
+                                                        <th class="sort" data-sort="description">Invoice Number</th>
+                                                        <th class="sort" data-sort="name">Client Name</th>                                                      
+                                                        <th class="sort" data-sort="quantity">Invoice Date</th>
                                                         <th class="sort" data-sort="quantity">Invoice Amount</th>
-                                                        <th class="sort" data-sort="quantity">Minimun Quantity</th>
+                                                        <!-- <th class="sort" data-sort="quantity">Minimun Quantity</th>
                                                         <th class="sort" data-sort="quantity">Suplier</th>
-                                                        <th class="sort" data-sort="quantity">Warehouse</th>
-                                                        <th class="sort" data-sort="quantity">Actions</th>
+                                                        <th class="sort" data-sort="quantity">Warehouse</th> -->
+                                                        <th class="sort" data-sort="quantity">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="form-check-all">
@@ -150,23 +150,23 @@ require_once("./controllers/ProductController.php");
                                                     <tr>
                                                         <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
                                                         <td class="name"><?php echo $row['name']; ?></td>
-                                                        <td class="description"><?php echo $row['description']; ?></td>
-                                                        <td class="quantity"><?php echo $row['code_product']; ?></td>
-                                                        <td class="quantity"><?php echo $row['price']; ?> $</td>
+                                                        <!-- <td class="description"><?php echo $row['description']; ?></td> -->
+                                                        <td class="quantity"><?php echo $row['code_product']; ?></td>                                                     
                                                         <td class="quantity"><?php echo $row['min_quantity']; ?></td>
-                                                        <td class="quantity"><?php echo $row['supplier_name']; ?></td>
-                                                        <td class="quantity"><?php echo $row['warehouse_name']; ?></td>
+                                                        <td class="quantity"><?php echo $row['price']; ?> $</td>
+                                                        <!-- <td class="quantity"><?php echo $row['supplier_name']; ?></td>
+                                                        <td class="quantity"><?php echo $row['warehouse_name']; ?></td> -->
                                                         <td>
                                                             <div class="d-flex gap-2">
                                                                 <div class="edit">
-                                                                    <button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#viewModal_<?php echo $row['id']; ?>">View</button>
+                                                                    <button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#viewModal_<?php echo $row['id']; ?>">Print</button>
                                                                 </div>
-                                                                <div class="edit">
+                                                                <!-- <div class="edit">
                                                                     <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#edittModal_<?php echo $row['id']; ?>">Edit</button>
                                                                 </div>
                                                                 <div class="remove">
                                                                     <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteModal_<?php echo $row['id']; ?>"><i class="bx bxs-trash"></i> Delete</button>
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -467,7 +467,7 @@ require_once("./controllers/ProductController.php");
                         </div>
                         <div class="col-sm-6">
                             <div class="text-sm-end d-none d-sm-block">
-                                Design & Develop by Themesbrand
+                                Develop by Abdoulaye, Julie and Lucas
                             </div>
                         </div>
                     </div>
