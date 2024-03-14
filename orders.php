@@ -7,11 +7,7 @@ require_once("./controllers/OrderController.php");
 <head>
 
     <meta charset="utf-8" />
-<<<<<<< HEAD
     <title>Orders List</title>
-=======
-    <title>Order List</title>
->>>>>>> dc1372d7776dee88bb668eafcc1fd73d73737d88
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
@@ -126,6 +122,7 @@ require_once("./controllers/OrderController.php");
                                                         <th class="sort" data-sort="order_date">Order Date</th>
                                                         <th class="sort" data-sort="total_amount">Total Amount</th>
                                                         <th class="sort" data-sort="status">Status</th>
+                                                        <th class="sort" data-sort="status">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="form-check-all">

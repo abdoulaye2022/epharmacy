@@ -96,7 +96,7 @@ if(isset($_POST['pay_now'])) {
 
 			$order_date = date('Y-m-d H:i:s');
 
-			if($order->create ($_SESSION['id'], $order_date, $total, 0, 0)) {
+			if($order->create ($_SESSION['id'], $order_date, $total, 0, 0, $_SESSION['cart_id'])) {
 				$cart->closeCart($_SESSION['cart_id'], 0);
 
 				header("location: new_order.php");
@@ -119,7 +119,68 @@ if(isset($_POST['btn_search'])) {
 	}
 }
 
-$products = $product->getAll();	
-$orders = $order->getOrdersByCustomerId($_SESSION['id']);
+if(isset($_POST['btn_soutract'])) {
+	if(isset($_POST['quantity'], $_POST['product_id'], $_POST['stock_id'], $_POST['cart_id'])) {
+		if(!empty($_POST['quantity']) && !empty($_POST['product_id']) && !empty($_POST['stock_id'])) {
+			$quantity = $helper->validateInteger($_POST['quantity']);
+			$product_id = $helper->validateInteger($_POST['product_id']);
+			$stock_id = $helper->validateInteger($_POST['stock_id']);
+			$cart_id = $helper->validateInteger($_POST['cart_id']);
 
+			$stock_pro = $stockProduct->checkAvailableProduct($stock_id, $product_id, $quantity);
+
+			if($stock_pro->rowCount()) {
+				$qtys = $stockProduct->getQuantity($stock_id, $product_id);
+				$qty = $qtys->fetch(PDO::FETCH_ASSOC);
+
+				$qtysr = $cartProduct->getQuantity($cart_id, $product_id);
+				$qtyr = $qtysr->fetch(PDO::FETCH_ASSOC);
+
+				$q = 0;
+				$qr = 0;
+
+				// echo (int)$qty['quantity'] . " - " . (int)$quantity . " - " . $qtyr['quantity'];
+
+				if((int)$qty['quantity'] >= (int)$quantity) {
+					$q = (int)$qty['quantity'] - (int)$quantity;
+					$qr = (int)$qtyr['quantity'] - (int)$quantity;
+
+					// var_dump($qr); die;
+				} else if((int)$qtyr['quantity'] > (int)$qty['quantity']) {
+					$qr = (int)$quantity - (int)$qty['quantity'];
+
+					// echo "Okkkkkkk";
+					// var_dump($qr); die;
+
+					if($stockProduct->soustractFromStock($stock_id, $product_id, $q) && $cartProduct->updateQuantityReminder($cart_id, $product_id, $qr))
+						$success = "Quantity is subtracted from stock successfully.";
+				} else {
+					$error = "An error occurred. Please try again.";
+				}
+			} else {
+				$error = "The quantity in stock is insufficient.";
+			}
+		} else {
+			$error = "Please complete all required fields.";
+		}
+	}
+}
+
+$products = $product->getAll();	
+
+if(isset($_SESSION['role_id']) && $_SESSION['role_id'] == 3) {
+	$orders = $order->getOrdersByCustomerId($_SESSION['id']);
+} else {
+	$orders = $order->getTotalInProgressOrders();
+}
+
+if(isset($_GET['order_id'])) {
+	$intval = intval($_GET['order_id']);
+	$products_order = $order->getOrderProducts($intval);
+
+	if(isset($_GET['product_id'])) {
+		$intval2 = intval($_GET['product_id']);
+		$products_stock = $stockProduct->getStocksProducs($intval2);
+	}
+}
 ?>
