@@ -142,12 +142,16 @@ require_once("./controllers/OrderController.php");
                                                                 <span class="badge badge-soft-danger text-uppercase">In progress</span>
                                                             <?php } ?>
                                                             
-                                                        </td>
-                                                        <td>
-                                                        <button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#viewModal_">View</button>
-                                                        </td>
-                                                        </tr>
-                                                    <!-- Modal view user -->
+                                                            </td>
+                                                            <?php if($auth->isAdmin() || $auth->isAgent()) { ?>
+                                                            <td>
+                                                                 <a href="handle_order.php?order_id=<?php echo $order['id'] ?>" type="button" class="btn btn-sm btn-success">To handle</button>
+                                                            </td>
+                                                        <?php } else { ?>
+                                                            <td>
+                                                                <button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#viewModal_">View</button>
+                                                            </td>
+                                                            <!-- Modal view user -->
                                                     <div class="modal fade" id="viewModal_" tabindex="-1" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
                                                             <div class="modal-content">
@@ -163,7 +167,8 @@ require_once("./controllers/OrderController.php");
                                                             </div>
                                                         </div>
                                                     </div>
-                                                        
+                                                        <?php } ?>
+                                                        </tr>
                                                     <?php endforeach; ?>
                                                 </tbody>
                                             </table>

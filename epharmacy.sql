@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 22, 2024 at 05:06 AM
+-- Generation Time: Mar 12, 2024 at 11:57 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.2.0
 
@@ -33,16 +33,14 @@ CREATE TABLE IF NOT EXISTS `carts` (
   `user_id` int NOT NULL,
   `actif` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `carts`
 --
 
 INSERT INTO `carts` (`id`, `user_id`, `actif`) VALUES
-(1, 2, 1),
-(2, 4, 0),
-(3, 4, 0);
+(1, 4, 0);
 
 -- --------------------------------------------------------
 
@@ -56,18 +54,17 @@ CREATE TABLE IF NOT EXISTS `cart_product` (
   `product_id` int NOT NULL,
   `quantity` int NOT NULL,
   `total` double(15,2) NOT NULL,
-  `tax` double(15,2) NOT NULL
+  `tax` double(15,2) NOT NULL,
+  `quantity_remainder` int NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `cart_product`
 --
 
-INSERT INTO `cart_product` (`cart_id`, `product_id`, `quantity`, `total`, `tax`) VALUES
-(2, 1, 11, 253.00, 37.95),
-(1, 1, 2, 46.80, 0.00),
-(2, 2, 2, 0.00, 0.00),
-(3, 1, 2, 46.00, 6.90);
+INSERT INTO `cart_product` (`cart_id`, `product_id`, `quantity`, `total`, `tax`, `quantity_remainder`) VALUES
+(1, 1, 1, 23.40, 0.00, 0),
+(1, 3, 1, 43.87, 0.00, 0);
 
 -- --------------------------------------------------------
 
@@ -83,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `connection_history` (
   `onsite_time` time DEFAULT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `connection_history`
@@ -116,7 +113,29 @@ INSERT INTO `connection_history` (`id`, `login_date`, `logout_date`, `onsite_tim
 (24, '2024-02-21 22:40:44', '2024-02-21 22:54:07', '00:13:23', 4),
 (25, '2024-02-21 22:54:15', '2024-02-22 01:03:59', '02:09:44', 4),
 (26, '2024-02-22 01:04:06', '2024-02-22 01:04:23', '00:00:17', 2),
-(27, '2024-02-22 01:04:39', '2024-02-22 01:05:00', '00:00:21', 2);
+(27, '2024-02-22 01:04:39', '2024-02-22 01:05:00', '00:00:21', 2),
+(28, '2024-02-22 09:12:18', '2024-02-22 09:12:18', '00:00:00', 2),
+(29, '2024-02-22 09:47:56', '2024-02-22 09:47:56', '00:00:00', 2),
+(30, '2024-02-24 22:17:10', '2024-02-24 22:17:10', '00:00:00', 2),
+(31, '2024-02-25 03:46:41', '2024-02-25 03:46:41', '00:00:00', 2),
+(32, '2024-02-28 22:47:52', '2024-02-28 22:48:07', '00:00:15', 3),
+(33, '2024-02-28 22:48:21', '2024-02-28 23:41:59', '00:53:38', 4),
+(34, '2024-02-28 23:42:05', '2024-02-28 23:49:39', '00:07:34', 2),
+(35, '2024-02-28 23:49:58', '2024-02-28 23:50:07', '00:00:09', 2),
+(36, '2024-02-28 23:50:33', '2024-02-28 23:50:38', '00:00:05', 4),
+(37, '2024-02-28 23:51:22', '2024-02-28 23:51:26', '00:00:04', 3),
+(38, '2024-02-28 23:52:46', '2024-02-28 23:59:40', '00:06:54', 2),
+(39, '2024-02-28 23:59:48', '2024-02-29 00:19:05', '00:19:17', 2),
+(40, '2024-02-29 00:19:18', '2024-02-29 00:43:56', '00:24:38', 4),
+(41, '2024-02-29 00:44:07', '2024-02-29 02:14:52', '01:30:45', 2),
+(42, '2024-02-29 02:15:02', '2024-02-29 02:16:19', '00:01:17', 4),
+(43, '2024-02-29 02:16:27', '2024-02-29 03:07:36', '00:51:09', 2),
+(44, '2024-02-29 03:07:45', '2024-02-29 03:08:28', '00:00:43', 4),
+(45, '2024-02-29 03:08:37', '2024-02-29 03:08:37', '00:00:00', 2),
+(46, '2024-03-12 04:27:00', '2024-03-12 04:27:30', '00:00:30', 3),
+(47, '2024-03-12 04:27:43', '2024-03-12 04:28:40', '00:00:57', 4),
+(48, '2024-03-12 04:28:52', '2024-03-12 04:35:21', '00:06:29', 3),
+(49, '2024-03-12 04:35:31', '2024-03-12 04:35:31', '00:00:00', 4);
 
 -- --------------------------------------------------------
 
@@ -164,21 +183,16 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `total_amount` decimal(15,2) NOT NULL,
   `status` int NOT NULL,
   `user_id` int NOT NULL DEFAULT '0',
+  `cart_id` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `customer_id`, `order_date`, `total_amount`, `status`, `user_id`) VALUES
-(2, 4, '2024-02-22 00:57:13', '253.00', 0, 0),
-(3, 4, '2024-02-22 00:57:47', '253.00', 0, 0),
-(4, 4, '2024-02-22 00:58:18', '253.00', 0, 0),
-(5, 4, '2024-02-22 00:59:01', '253.00', 0, 0),
-(6, 4, '2024-02-22 00:59:34', '253.00', 0, 0),
-(7, 4, '2024-02-22 01:00:07', '253.00', 0, 0),
-(8, 4, '2024-02-22 01:01:30', '46.00', 0, 0);
+INSERT INTO `orders` (`id`, `customer_id`, `order_date`, `total_amount`, `status`, `user_id`, `cart_id`) VALUES
+(1, 4, '2024-03-12 04:28:33', '67.27', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -208,9 +222,9 @@ CREATE TABLE IF NOT EXISTS `products` (
 
 INSERT INTO `products` (`id`, `name`, `description`, `code_product`, `supplier_id`, `warehouse_id`, `image`, `min_quantity`, `price`) VALUES
 (1, 'Tilenol', '', 'T4567', 1, 1, NULL, 5, 23.40),
-(2, 'Paracetamol2', 'Test', 'P768', 1, 2, 'last4.png', 0, 0.00),
-(3, 'Advile', 'Anti inflamatoire', 'A678', 2, 1, 'advile.jfif', 0, 0.00),
-(4, 'Bon Koga', '', 'B456', 1, 1, NULL, 10, 0.00),
+(2, 'Paracetamol2', 'Test', 'P768', 1, 2, NULL, 5, 12.19),
+(3, 'Advile', 'Anti inflamatoire', 'A678', 2, 1, NULL, 5, 43.87),
+(4, 'Bon Koga', '', 'B456', 1, 1, NULL, 10, 35.10),
 (5, 'Trinid', 'Un produit de test', 'tt35', 2, 2, NULL, 10, 10.00);
 
 -- --------------------------------------------------------
@@ -278,10 +292,13 @@ CREATE TABLE IF NOT EXISTS `stock_product` (
 --
 
 INSERT INTO `stock_product` (`stock_id`, `product_id`, `quantity`) VALUES
-(1, 1, 22),
-(2, 2, 8),
-(1, 2, 10),
-(1, 3, 5);
+(1, 1, 0),
+(1, 4, 33),
+(1, 3, 0),
+(2, 1, 47),
+(2, 5, 85),
+(2, 2, 0),
+(2, 3, 25);
 
 -- --------------------------------------------------------
 
