@@ -165,9 +165,6 @@ require_once("./controllers/WarehouseController.php");
                                                         <button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#viewModal_<?php echo $row['id']; ?>">View</button>
                                                         <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
                                                         <button class="btn btn-danger" type="submit" name="btn_remove_to_cart">Delete</button>
-
-
-                                                        
                                                         </td>
                                                         
                                                     </tr>

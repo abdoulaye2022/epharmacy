@@ -56,13 +56,17 @@ class Warehouse
 		}
 	}
 
-	public function deleteWarehouse(int $id): bool
-    {
-        $stmt = $this->_cn->prepare("DELETE FROM `warehouses` WHERE `id` = :id");
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        
-        return $stmt->execute();
-    }
+	public function deleteWarehouse($id) {
+		$stmt = $this->_cn->prepare("DELETE FROM `warehouses` WHERE `id` = :id");
+		$stmt->bindParam(':id', $id, PDO::PARAM_INT);
+	
+		if ($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	
 
 	public function updateImages ($id, $image) {

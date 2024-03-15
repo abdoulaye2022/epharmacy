@@ -121,6 +121,23 @@
                         <i class="ri-money-dollar-circle-line "></i> <span>accounting</span>
                     </a>
                 </li>
+                <?php if($auth->isAdmin()) { ?>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="#sidebarStatistics" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarStatistics">
+                        <i class=" ri-team-line"></i> <span>Statistics</span>
+                    </a>
+                    <div class="collapse menu-dropdown" id="sidebarStatistics">
+                        <ul class="nav nav-sm flex-column">
+                            <li class="nav-item">
+                                <a href="statistics.php?type=customers" class="nav-link"> Clients</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="statistics.php?type=orders" class="nav-link"> Orders</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <?php } ?>
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span>Settings</span></li>
 

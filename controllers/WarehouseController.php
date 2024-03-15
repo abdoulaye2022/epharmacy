@@ -47,23 +47,18 @@ if(isset($_POST['edit_warehouse'])) {
 	}
 }
 // Delete warehouse
-if(isset($_POST['id']) && isset($_POST['id'])) {
-    $warehouse_ids = $_POST['id'];
+if(isset($_POST['delete_warehouse'])) {
+    if(isset($_POST['id']) && !empty($_POST['id'])) {
+        $id = $helper->validateInteger($_POST['id']);
 
-    foreach ($warehouse_ids as $id) {
-        // Validate each ID
-        $id = $helper->validateInteger($id);
-
-        // Delete the warehouse
-        if(!$warehouse->deleteWarehouse($id)) {
-            // If deletion fails for any warehouse, set an error message
-            $error = "An error occurred while deleting warehouse with ID: $id. Please try again.";
-            // Optionally, you can break the loop here if you want to stop deleting further warehouses upon encountering an error.
-        }
+        if($warehouse->deleteWarehouse($id)) {
+            $success = "Warehouse has been deleted successfully.";
+        } else {
+            $error = "An error occurred. Please try again.";
+        } 
+    } else {
+        $error = "Please provide a valid warehouse ID.";
     }
-
-    // If all warehouses are deleted successfully, set a success message
-    $success = "Selected warehouses have been deleted successfully.";
 }
 
 
