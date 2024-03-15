@@ -100,11 +100,6 @@ require_once("./controllers/UserController.php");
                                 <div class="card-body">
                                     <div id="customerList">
                                         <div class="row g-4 mb-3">
-                                            <div class="col-sm-auto">
-                                                <div>
-                                                    <button type="button" class="btn btn-primary add-btn" data-bs-toggle="modal" id="create-btn" data-bs-target="#showModal"><i class="ri-add-line align-bottom me-1"></i> Add</button>
-                                                </div>
-                                            </div>
                                             <div class="col-sm-8">
                                                 <?php if($error != "") { ?>
                                                     <div class="col-lg-12">
@@ -131,63 +126,48 @@ require_once("./controllers/UserController.php");
                                         </div>
 
                                         <div class="table-responsive table-card mt-3 mb-1">
-                                        <table class="table align-middle table-nowrap">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="mb-3 col-md-6">
-                                                            <select class="form-control" id="customerInput1" name="customer">
-                                                                <option>Please select a customer</option>
-                                                                <?php foreach ($customers as $key => $value) { ?>
-                                                                    <option value="<?php echo $key; ?>" <?php $_SESSION['customer'] == $key ? "selected" : null ?>><?php echo $value; ?></option>
-                                                                <?php } ?>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                        <table class="table align-middle table-nowrap">
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="mb-3 col-md-6"> 
-                                                            <select class="form-control" id="customerInput2" name="customer">
-                                                                <option>Select an order status</option>
-                                                                <?php foreach ($orders as $key => $value) { ?>
-                                                                    <option value="<?php echo $key; ?>" <?php $_SESSION['status'] == $key ? "selected" : null ?>><?php echo $value; ?></option>
-                                                                <?php } ?>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                </thead>
-                                                <tbody class="form-check-all">
-                                                    <?php while($row = $users->fetch(PDO::FETCH_ASSOC)) { ?>
+                                            <table class="table align-middle table-nowrap">
+                                                <tbody>
                                                     <tr>
-                                                        <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
-                                                        <td class="firstname"><?php echo $row['firstname']; ?></td>
-                                                        <td class="lastname"><?php echo $row['lastname']; ?></td>
-                                                        <td class="price"><?php echo $row['price']; ?></td>
-                                                        <td class="date"><?php echo $row['date']; ?></td>
-                                                        <td class="status">
-                                                            <?php if($row['actif']) { ?>
-                                                                <span class="badge badge-soft-success text-uppercase">Active</span>
-                                                            <?php } else { ?>
-                                                                <span class="badge badge-soft-danger text-uppercase">Inactive</span>
-                                                            <?php } ?>
-                                                        </td>
                                                         <td>
-                                                            <div class="d-flex gap-2">
-                                                                <div class="edit">
-                                                                    <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#eidtModal_<?php echo $row['id']; ?>">Edit</button>
-                                                                </div>
-                                                               
-                                                                
+                                                            <div class="mb-3 col-md-6">
+                                                                <select class="form-control" id="customerInput1" name="customer">
+                                                                    <option>Please select a customer</option>
+                                                                    <?#php foreach ($customers as $customer) { ?>
+                                                                        <option value="<?#php echo $customer['id']; ?>" <?#php echo ($_SESSION['customer'] == $customer['id']) ? "selected" : ""; ?>><?#php echo $customer['firstname'] . ' ' . $customer['lastname']; ?></option>
+                                                                    <?php #} ?>
+                                                                </select>
                                                             </div>
                                                         </td>
                                                     </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="mb-3 col-md-6"> 
+                                                                <select class="form-control" id="customerInput2" name="customer">
+                                                                    <option>Select an order status</option>
+                                                                    <?#php foreach ($orders as $key => $value) { ?>
+                                                                        <option value="<?#php echo $key; ?>" <?#php echo ($_SESSION['status'] == $key) ? "selected" : ""; ?>><?#php echo $value; ?></option>
+                                                                    <?php #} ?>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+                                        <div class="table-responsive table-card mt-3 mb-1">
+                                            <table class="table align-middle table-nowrap">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th class="sort" data-sort="firstname">Firstname</th>
+                                                        <th class="sort" data-sort="lastname">Lastname</th>
+                                                        <th class="sort" data-sort="price">Price</th>
+                                                        <th class="sort" data-sort="status">Status</th>
+                                                        <th class="sort" data-sort="action">Actions</th>
+                                                    </tr>
+                                                </thead>
 
                                                     <!-- Modal -->
                                                     <div class="modal fade zoomIn" id="blockModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
@@ -218,7 +198,7 @@ require_once("./controllers/UserController.php");
                                                         </div>
                                                     </div>
                                                     <!--end modal -->
-                                                    <?php } ?>
+                                                    <?php #} ?>
                                                 </tbody>
                                             </table>
                                             <?php if($users->rowCount() == 0) { ?>
