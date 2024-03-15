@@ -49,6 +49,15 @@ class Order
         }
     }
 
+    public function getAllOrders()
+    {
+        $stmt = $this->_cn->prepare("SELECT * FROM orders");
+
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+    }
+
     public function getOrderProducts($cart_id)
     {
         $stmt = $this->_cn->prepare("SELECT `products`.*, `cart_product`.`quantity`, `cart_product`.`quantity_remainder`, `cart_product`.`cart_id` FROM `cart_product` INNER JOIN `products` ON `products`.`id` = `cart_product`.`product_id` WHERE `cart_product`.`cart_id` = :cart_id");
@@ -57,6 +66,16 @@ class Order
 
         if ($stmt->execute()) {
             return $stmt;
+        }
+    }
+
+    public function doneOrder($order_id) {
+        $stmt = $this->_cn->prepare("UPDATE `orders` SET `status` = 1 WHERE `id` = :order_id");
+        $stmt->bindParam(':order_id', $order_id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($stmt->execute()) {
+            return true;
         }
     }
 

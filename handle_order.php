@@ -130,7 +130,7 @@ require_once("./controllers/OrderController.php");
                                             <tr>
                                                 <td>
                                                     <a href="<?php echo "handle_order.php?order_id=".$_GET['order_id']."&cart_id=".$row['cart_id']."&product_id=" . $row['id']; ?>" style="display: inline-block; width: 90%; height: 100%;"><?php echo $row['name']; ?></a>
-                                                    <span class="badge text-bg-primary"><?php echo ($row['quantity_remainder'] > 0 ? $row['quantity_remainder'] : $row['quantity']); ?></span>
+                                                    <span class="badge text-bg-primary"><?php echo ((int)$row['quantity'] - (int)$row['quantity_remainder']); ?></span>
                                                     
                                                 </td>
                                             </tr>
@@ -157,7 +157,7 @@ require_once("./controllers/OrderController.php");
                                                 <td><?php echo $row['name']; ?></td>
                                                 <td><?php echo $row['expire_date']; ?></td>
                                                 <td><?php echo $row['quantity']; ?></td>
-                                                <form form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?order_id=".$_GET['order_id']."&cart_id=".$_GET['order_id']."&product_id=" . $_GET['product_id']; ?>" method="post" class="tablelist-form">
+                                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?order_id=".$_GET['order_id']."&cart_id=".$_GET['order_id']."&product_id=" . $_GET['product_id']; ?>" method="post" class="tablelist-form">
                                                     <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
                                                     <input type="hidden" name="stock_id" value="<?php echo $row['stock_id']; ?>">
                                                     <input type="hidden" name="cart_id" value="<?php echo $_GET['order_id']; ?>">
@@ -176,9 +176,6 @@ require_once("./controllers/OrderController.php");
                         </div>
                     </div>
                 </div>
-
-                    
-
                 </div>
                 <!-- container-fluid -->
             </div>

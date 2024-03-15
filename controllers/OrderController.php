@@ -133,30 +133,29 @@ if(isset($_POST['btn_soutract'])) {
 				$qtys = $stockProduct->getQuantity($stock_id, $product_id);
 				$qty = $qtys->fetch(PDO::FETCH_ASSOC);
 
+
 				$qtysr = $cartProduct->getQuantity($cart_id, $product_id);
 				$qtyr = $qtysr->fetch(PDO::FETCH_ASSOC);
 
 				$q = 0;
 				$qr = 0;
 
-				// echo (int)$qty['quantity'] . " - " . (int)$quantity . " - " . $qtyr['quantity'];
+				//echo "QT en stock : " . $qty['quantity'] . " <br/> QT demande : " . $quantity . " <br/>QT du panier : " . ((int)$qtyr['quantity'] - (int)$qtyr['quantity_remainder']); die;
 
-				if((int)$qty['quantity'] >= (int)$quantity) {
+				if((int)$qty['quantity'] >= (int)$quantity && (int)$qtyr['quantity'] > (int)$qtyr['quantity_remainder'] && ((int)$qtyr['quantity'] - (int)$qtyr['quantity_remainder']) >= (int)$quantity) {
 					$q = (int)$qty['quantity'] - (int)$quantity;
-					$qr = (int)$qtyr['quantity'] - (int)$quantity;
+					$qr = (int)$qtyr['quantity_remainder'] + (int)$quantity;
 
-					// var_dump($qr); die;
-				} else if((int)$qtyr['quantity'] > (int)$qty['quantity']) {
-					$qr = (int)$quantity - (int)$qty['quantity'];
+					// echo $q . " <=> " . $qr; die;
 
-					// echo "Okkkkkkk";
-					// var_dump($qr); die;
-
-					if($stockProduct->soustractFromStock($stock_id, $product_id, $q) && $cartProduct->updateQuantityReminder($cart_id, $product_id, $qr))
-						$success = "Quantity is subtracted from stock successfully.";
+					if($stockProduct->soustractFromStock($stock_id, $product_id, $q) && $cartProduct->updateQuantityReminder($cart_id, $product_id, $qr)) {
+							$success = "Quantity is subtracted from stock successfully.";
+					} else {
+						$error = "An error occurred. Please try again.";
+					}
 				} else {
-					$error = "An error occurred. Please try again.";
-				}
+					$error = "The quantity must be greater than the quantity to subtract.";
+				}				
 			} else {
 				$error = "The quantity in stock is insufficient.";
 			}
@@ -166,12 +165,25 @@ if(isset($_POST['btn_soutract'])) {
 	}
 }
 
+if(isset($_POST['approuved']))
+{
+	if(isset($_POST['order_id']) && !empty($_POST['order_id'])) {
+		$order_id = $helper->validateInteger($_POST['order_id']);
+
+		if($order->doneOrder($order_id)) {
+			$success = "This order has been successfully approved.";
+		} else {
+			$error = "An error occurred. Please try again.";
+		}
+	}
+}
+
 $products = $product->getAll();	
 
 if(isset($_SESSION['role_id']) && $_SESSION['role_id'] == 3) {
 	$orders = $order->getOrdersByCustomerId($_SESSION['id']);
 } else {
-	$orders = $order->getTotalInProgressOrders();
+	$orders = $order->getAllOrders();
 }
 
 if(isset($_GET['order_id'])) {

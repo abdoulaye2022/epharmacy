@@ -145,7 +145,20 @@ require_once("./controllers/OrderController.php");
                                                             </td>
                                                             <?php if($auth->isAdmin() || $auth->isAgent()) { ?>
                                                             <td>
-                                                                 <a href="handle_order.php?order_id=<?php echo $order['id'] ?>" type="button" class="btn btn-sm btn-success">To handle</button>
+                                                                <?php if($order['status'] == 0) { ?>
+                                                                 <a href="handle_order.php?order_id=<?php echo $order['id'] ?>" type="button" class="btn btn-sm btn-warning">To handle</a>
+                                                                 <?php
+                                                                    $remainder = $cartProduct->isOrderReceivedAllProduct($order['id']);
+                                                                    $remainder_fetch = $remainder->fetch(PDO::FETCH_ASSOC);
+                                                                 ?>
+                                                                 
+                                                                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" class="tablelist-form" style="display: inline-block;">
+                                                                 <input type="hidden" name="order_id" value="<?php echo $order['id'] ?>">
+                                                                 <button class="btn btn-sm btn-success" type="submit" name="approuved" <?php echo ((int)$remainder_fetch['remainder'] > 0 ? "disabled" : null); ?>>Appouved</button>
+                                                                </form>
+                                                                <?php } else { ?>
+                                                                    <button class="btn btn-sm btn-info" type="submit" name="approuved">Oppen</button>
+                                                                <?php } ?>
                                                             </td>
                                                         <?php } else { ?>
                                                             <td>

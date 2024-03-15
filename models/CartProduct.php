@@ -114,5 +114,18 @@ class CartProduct
             return $stmt;
         }
     }
+
+    public function isOrderReceivedAllProduct($cart_id) {
+        $stmt = $this->_cn->prepare("
+            SELECT (SUM(quantity) - SUM(quantity_remainder)) as remainder FROM `cart_product` 
+            WHERE `cart_id` = :cart_id GROUP BY cart_id;
+        ");
+
+        $stmt->bindParam(':cart_id', $cart_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+    }
 }
 ?>
