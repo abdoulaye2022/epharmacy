@@ -17,6 +17,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["btnUpdate"])) {
+        $id = $_POST["id"];
+        $total_amount = $_POST["total_amount"];
+        $order_date = $_POST["order_date"];
+        $status = $_POST["status"];
+        
+        if ($statistic->updateName($id, $total_amount, $order_date, $status)) {
+            $success = "Order has been updated successfully.";
+        } else {
+            $error = "Failed to update the order.";
+        }
+    }
+}
+$orders = $order->getAllOrders();
 $customers = $user->getTotalCustomers();
 ?>
