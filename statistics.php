@@ -1,5 +1,5 @@
 <?php
-require_once("./controllers/UserController.php");
+require_once("./controllers/StatisticController.php");
 ?>
 <!doctype html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
@@ -93,6 +93,11 @@ require_once("./controllers/UserController.php");
 					</div>
 					<!-- end page title -->
 
+
+                    <!-- CUSTOMERS PAGE -->
+
+                    <?php if($_GET['type']=='customers') { ?>
+                        
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
@@ -115,14 +120,7 @@ require_once("./controllers/UserController.php");
                                                     </div>
                                                 <?php } ?>
                                             </div>
-                                            <div class="col-sm">
-                                                <div class="d-flex justify-content-sm-end">
-                                                    <div class="search-box ms-2">
-                                                        <input type="text" class="form-control search" placeholder="Search...">
-                                                        <i class="ri-search-line search-icon"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                         </div>
 
                                         <div class="table-responsive table-card mt-3 mb-1">
@@ -130,12 +128,13 @@ require_once("./controllers/UserController.php");
                                                 <tbody>
                                                     <tr>
                                                         <td>
+                                        
                                                             <div class="mb-3 col-md-6">
                                                                 <select class="form-control" id="customerInput1" name="customer">
                                                                     <option>Please select a customer</option>
-                                                                    <?#php foreach ($customers as $customer) { ?>
-                                                                        <option value="<?#php echo $customer['id']; ?>" <?#php echo ($_SESSION['customer'] == $customer['id']) ? "selected" : ""; ?>><?#php echo $customer['firstname'] . ' ' . $customer['lastname']; ?></option>
-                                                                    <?php #} ?>
+                                                                    <?php while ($customer = $customers->fetch(PDO::FETCH_ASSOC)) { ?>
+                                                                        <option value="<?php echo $customer['id']; ?>" ><?php echo $customer['firstname'] . ' ' . $customer['lastname']; ?></option>
+                                                                    <?php } ?>
                                                                 </select>
                                                             </div>
                                                         </td>
@@ -145,12 +144,22 @@ require_once("./controllers/UserController.php");
                                                             <div class="mb-3 col-md-6"> 
                                                                 <select class="form-control" id="customerInput2" name="customer">
                                                                     <option>Select an order status</option>
-                                                                    <?#php foreach ($orders as $key => $value) { ?>
-                                                                        <option value="<?#php echo $key; ?>" <?#php echo ($_SESSION['status'] == $key) ? "selected" : ""; ?>><?#php echo $value; ?></option>
-                                                                    <?php #} ?>
+                                                                    <option>In progress</option>
+                                                                    <option>Done</option>
+                                
                                                                 </select>
                                                             </div>
                                                         </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                        <div> 
+                                                            <button class="btn btn-primary">
+                                                                Search
+                                                            </button>
+                                                        
+                                                        </div>
+                                                                    </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -168,6 +177,8 @@ require_once("./controllers/UserController.php");
                                                         <th class="sort" data-sort="action">Actions</th>
                                                     </tr>
                                                 </thead>
+
+                                                
 
                                                     <!-- Modal -->
                                                     <div class="modal fade zoomIn" id="blockModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
@@ -230,7 +241,153 @@ require_once("./controllers/UserController.php");
                             <!-- end col -->
                         </div>
                     </div>
-                    
+
+                    <!-- ORDERS PAGE -->
+
+                    <?php }else if ($_GET['type']=='orders') { ?>
+                        <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <div id="orderList">
+                                        <div class="row g-4 mb-3">
+                                            <div class="col-sm-8">
+                                                <?php if($error != "") { ?>
+                                                    <div class="col-lg-12">
+                                                        <div class="alert alert-danger alert-borderless shadow mb-xl-0" role="alert">
+                                                            <?php echo $error; ?>
+                                                        </div>
+                                                    </div>
+                                                <?php } else if($success != "") { ?>
+                                                    <div class="col-lg-12" style="color: green;">
+                                                        <div class="alert alert-success alert-borderless shadow" role="alert">
+                                                            <?php echo $success; ?>
+                                                        </div>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                            
+                                        </div>
+
+                                        <div class="table-responsive table-card mt-3 mb-1">
+                                            <table class="table align-middle table-nowrap">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                        
+                                                            <div class="mb-3 col-md-6">
+                                                                <select class="form-control" id="orderInput1" name="order">
+                                                                    <option>Please select an order</option>
+                                                                    <?php while ($order = $orders->fetch(PDO::FETCH_ASSOC)) { ?>
+                                                                        <option value="<?php echo $order['id']; ?>" ><?php echo $order['order_date'] . ' ' . $order['total_amount'] . ' ' . $order['status'] ; ?></option>
+                                                                    <?php } ?>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="mb-3 col-md-6"> 
+                                                                <select class="form-control" id="customerInput2" name="customer">
+                                                                    <option>Select an order status</option>
+                                                                    <option>In progress</option>
+                                                                    <option>Done</option>
+                                
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                        <div> 
+                                                            <button class="btn btn-primary">
+                                                                Search
+                                                            </button>
+                                                        
+                                                        </div>
+                                                                    </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+                                        <div class="table-responsive table-card mt-3 mb-1">
+                                            <table class="table align-middle table-nowrap">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th class="sort" data-sort="firstname">Total Amount</th>
+                                                        <th class="sort" data-sort="lastname">Date</th>
+                                                        <th class="sort" data-sort="status">Status</th>
+                                                    </tr>
+                                                </thead>
+
+                                                
+
+                                                    <!-- Modal -->
+                                                    <div class="modal fade zoomIn" id="blockModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="mt-2 text-center">
+                                                                        <lord-icon src="https://cdn.lordicon.com/vihyezfv.json" trigger="loop" colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
+                                                                        <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                                                                            <h4>Are you Sure ?</h4>
+                                                                            <p class="text-muted mx-4 mb-0">
+                                                                            <?php echo ($row['actif'] ? 'Are you sure you want to block this user account ?' : 'Are you sure you want to unlock this user account ?'); ?>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                                                                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                                                                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                                                                            <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
+                                                                                <?php echo ($row['actif'] ? 'Yes, Blocked It!' : 'Yes, Unlocked It!'); ?></button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--end modal -->
+                                                    <?php #} ?>
+                                                </tbody>
+                                            </table>
+                                            <?php if($users->rowCount() == 0) { ?>
+                                            <div class="noresult" style="display: inline-block; width: 100%;">
+                                                <div class="text-center">
+                                                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
+                                                    </lord-icon>
+                                                    <h5 class="mt-2">Sorry! No Result Found</h5>
+                                                    <p class="text-muted mb-0">We've searched more than 150+ Customers... We did not find the customer you are looking for.</p>
+                                                </div>
+                                            </div>
+                                            <?php } ?>
+                                        </div>
+
+                                        <div class="d-flex justify-content-end">
+                                            <div class="pagination-wrap hstack gap-2">
+                                                <a class="page-item pagination-prev disabled" href="#">
+                                                    Previous
+                                                </a>
+                                                <ul class="pagination listjs-pagination mb-0"></ul>
+                                                <a class="page-item pagination-next" href="#">
+                                                    Next
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- end card -->
+                            </div>
+                            <!-- end col -->
+                        </div>
+                    </div>
+
+                    <?php }?>
                 <!-- container-fluid -->
             </div>
             <!-- End Page-content -->

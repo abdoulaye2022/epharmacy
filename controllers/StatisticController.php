@@ -4,8 +4,6 @@ require_once("Controller.php");
 $error = "";
 $success = "";
 
-$customers = $customer->getAllCustomers();
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["btnUpdate"])) {
         $userId = $_POST["user_id"];
@@ -20,5 +18,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-$users = $customer->getAll();
+$customers = $user->getTotalCustomers();
 ?>
