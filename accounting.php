@@ -519,69 +519,23 @@ require_once("./controllers/ProductController.php");
     <!--jquery cdn-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     
-    <script>
+<script>
 $(document).ready(function(){
     $(".search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
-        $(".table tbody tr").each(function() {
-            var $row = $(this);
-            var rowText = $row.text().toLowerCase();
-            if (rowText.includes(value)) {
-                $row.show();
-                $row.find('td').each(function() {
-                    var cellText = $(this).text();
-                    var regex = new RegExp('(' + value + ')', 'gi');
-                    $(this).html(cellText.replace(regex, '<span class="highlight">$1</span>'));
-                });
-            } else {
-                $row.hide();
-            }
+        $(".table tbody tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
 });
 </script>
-
-<style>
-    .highlight {
-        background-color: yellow;
-        font-weight: bold;
-    }
-</style>
 
     <!--select2 cdn-->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
 
-<!-- <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const searchInputs = document.querySelectorAll('.search');
 
-    searchInputs.forEach(searchInput => {
-        searchInput.addEventListener('input', function() {
-            const searchTerm = this.value.trim().toLowerCase();
-            const table = document.querySelector('.table'); // Assuming the table class is 'table'
-
-            const tableRows = table.querySelectorAll('tbody tr');
-            tableRows.forEach(row => {
-                const columns = row.querySelectorAll('td');
-                let found = false;
-                columns.forEach(column => {
-                    const text = column.textContent.trim().toLowerCase();
-                    if (text.includes(searchTerm)) {
-                        found = true;
-                    }
-                });
-                if (found) {
-                    row.style.display = ''; // Show the row if the search term is found
-                } else {
-                    row.style.display = 'none'; // Hide the row if the search term is not found
-                }
-            });
-        });
-    });
-});
-</script> -->
 
 </body>
 
