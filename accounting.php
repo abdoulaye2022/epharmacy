@@ -523,12 +523,30 @@ require_once("./controllers/ProductController.php");
 $(document).ready(function(){
     $(".search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
-        $(".table tbody tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        $(".table tbody tr").each(function() {
+            var $row = $(this);
+            var rowText = $row.text().toLowerCase();
+            if (rowText.includes(value)) {
+                $row.show();
+                $row.find('td').each(function() {
+                    var cellText = $(this).text();
+                    var regex = new RegExp('(' + value + ')', 'gi');
+                    $(this).html(cellText.replace(regex, '<span class="highlight">$1</span>'));
+                });
+            } else {
+                $row.hide();
+            }
         });
     });
 });
 </script>
+
+<style>
+    .highlight {
+        background-color: yellow;
+        font-weight: bold;
+    }
+</style>
 
     <!--select2 cdn-->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
