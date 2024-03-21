@@ -98,6 +98,7 @@ if(isset($_POST['pay_now'])) {
 
 			if($order->create ($_SESSION['id'], $order_date, $total, 0, 0, $_SESSION['cart_id'])) {
 				$cart->closeCart($_SESSION['cart_id'], 0);
+				$_SESSION['cart_id'] = 0;
 
 				$usersAdministration = $user->getAdministrationUsers();
 				while ($u= $usersAdministration->fetch(PDO::FETCH_ASSOC)) {
@@ -182,7 +183,7 @@ if(isset($_POST['approuved']))
 			$fetch = $customers->fetch(PDO::FETCH_ASSOC);
 			$notification->notify($fetch['customer_id'], "Order", "Your order has been processed.");
 
-			$accounting->create($fetch['customer_id'], $order_id);
+			$accounting->create($order_id, $fetch['customer_id']);
 
 			$success = "This order has been successfully approved.";
 		} else {

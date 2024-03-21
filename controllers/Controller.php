@@ -10,9 +10,9 @@ $client = new Google_Client();
 $client->setClientId($_ENV['CLIENT_ID_GOOGLE']);
 $client->setClientSecret($_ENV['SECRET_CLIENT_GOOGLE']);
 $client->setRedirectUri($_ENV['REDIRECT_URL_GOOGLE']);
-$client->setClientId($_ENV['CLIENT_ID_OUTLOOK']);
-$client->setClientSecret($_ENV['SECRET_ID_OUTLOOK']);
-$client->setRedirectUri($_ENV['REDIRECT_URL_OUTLOOK']);
+// $client->setClientId($_ENV['CLIENT_ID_OUTLOOK']);
+// $client->setClientSecret($_ENV['SECRET_ID_OUTLOOK']);
+// $client->setRedirectUri($_ENV['REDIRECT_URL_OUTLOOK']);
 
 $client->addScope('openid profile email');
 
@@ -144,7 +144,7 @@ if(isset($sso_email) && !empty($sso_email)) {
 		if($user) {
 			if(!$auth->userAccountIsBlock($email)) {
 				if($user['role_id'] == 1 || $user['role_id'] == 2 || $user['role_id'] == 3) {
-					$connectionHistory->login($user['id']);
+					//$connectionHistory->login($user['id']);
 					header("location: dashboard.php");
 					exit();
 				} else {

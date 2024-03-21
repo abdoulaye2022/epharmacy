@@ -569,9 +569,11 @@ $notifications = $notification->getNotification($_SESSION['id']);
                             </div> -->
                             <form method="POST" action="">
                             <div class="tab-pane fade show active p-4" id="alerts-tab" role="tabpanel" aria-labelledby="alerts-tab">
+                                <?php while($fetch = $notifications->fetch(PDO::FETCH_ASSOC)) { ?>
                                 <div class="text-reset notification-item d-block dropdown-item position-relative">
-                                    <div class="d-flex">
-                                        <?php while($fetch = $notifications->fetch(PDO::FETCH_ASSOC)) { ?>
+                                    
+                                    <div class="d-flex" style="margin-bottom: 10px;">
+                                        
                                         <div class="flex-1">
                                             <a href="orders.php" class="stretched-link">
                                                 <h6 class="mt-0 mb-1 fs-13 fw-semibold"><?php echo $fetch['type']; ?></h6>
@@ -584,9 +586,11 @@ $notifications = $notification->getNotification($_SESSION['id']);
                                             </p>
                                         </div>
                                         <input type="hidden" name="notification_id[]" value="<?php echo $fetch['id']; ?>">
-                                        <?php } ?>
+                                        
                                     </div>
+                                    
                                 </div>
+                                <?php } ?>
                                 <?php if($notifications->rowCount() > 0) { ?>
                                     <button class="btn btn-success btn-sm" type="submit" name="viewAll" style="width: 100%; margin-top: 10px;">View All</button>
                                 <?php } ?>

@@ -144,10 +144,10 @@ require_once("./controllers/OrderController.php");
                                                                  
                                                                  <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post" class="tablelist-form" style="display: inline-block;">
                                                                  <input type="hidden" name="order_id" value="<?php echo $order['id'] ?>">
-                                                                 <button class="btn btn-sm btn-success" type="submit" name="approuved" <?php echo ((int)$remainder_fetch['remainder'] > 0 ? "disabled" : null); ?>>Appouved</button>
+                                                                 <button class="btn btn-sm btn-success" type="submit" name="approuved" <?php echo (((int)$remainder_fetch['remainder'] > 0) ? "disabled" : null); ?>>Appouved</button>
                                                                 </form>
                                                                 <?php } else { ?>
-                                                                    <button class="btn btn-sm btn-info" type="submit" name="approuved">Oppen</button>
+                                                                    <button class="btn btn-sm btn-info" type="submit" name="approuved">Open</button>
                                                                 <?php } ?>
                                                             </td>
                                                         <?php } else { ?>
