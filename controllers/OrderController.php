@@ -99,6 +99,11 @@ if(isset($_POST['pay_now'])) {
 			if($order->create ($_SESSION['id'], $order_date, $total, 0, 0, $_SESSION['cart_id'])) {
 				$cart->closeCart($_SESSION['cart_id'], 0);
 
+				$usersAdministration = $user->getAdministrationUsers();
+				while ($u= $usersAdministration->fetch(PDO::FETCH_ASSOC)) {
+					$notification->notify($u['id'], "Order", "You have a new order placed.");
+				}
+
 				header("location: new_order.php");
 			} else {
 				$error = "An error occurred. Please try again.";
@@ -110,12 +115,14 @@ if(isset($_POST['pay_now'])) {
 // Search
 if(isset($_POST['btn_search'])) {
 	if(isset($_POST['search'], $_POST['sort'])) {
-		 $search = $helper->validateString($_POST['search']);
-		 $sort = $helper->validateString($_POST['sort']);
+		if(!empty($_POST['search']) && !empty($_POST['sort'])) {
+			$search = $helper->validateString($_POST['search']);
+			$sort = $helper->validateString($_POST['sort']);
 
-		 if($product->getAllByFilter($search, $sort)) {
-		 	$products = $product->getAllByFilter($search, $sort);
-		 }
+			if($product->getAllByFilter($search, $sort)) {
+			 	$products = $product->getAllByFilter($search, $sort);
+			}
+		}
 	}
 }
 
@@ -171,6 +178,12 @@ if(isset($_POST['approuved']))
 		$order_id = $helper->validateInteger($_POST['order_id']);
 
 		if($order->doneOrder($order_id)) {
+			$customers = $order->getOrderCustomer($order_id);
+			$fetch = $customers->fetch(PDO::FETCH_ASSOC);
+			$notification->notify($fetch['customer_id'], "Order", "Your order has been processed.");
+
+			$accounting->create($fetch['customer_id'], $order_id);
+
 			$success = "This order has been successfully approved.";
 		} else {
 			$error = "An error occurred. Please try again.";

@@ -104,6 +104,9 @@ require_once "models/StockProduct.php";
 require_once "models/Order.php";
 require_once "models/Cart.php";
 require_once "models/CartProduct.php";
+require_once "models/Notification.php";
+require_once "models/Company.php";
+require_once "models/Accounting.php";
 
 if (!isset($_SESSION['id']) && $_SERVER['REQUEST_URI'] != "/epharmacy/index.php" && isset($_GET['code']) && $_GET['code'] == null) {
    	header("location: index.php");
@@ -126,6 +129,9 @@ $stockProduct = new StockProduct($cn);
 $order = new Order($cn);
 $cart = new Cart($cn);
 $cartProduct = new CartProduct($cn);
+$notification = new Notification($cn);
+$company = new Company($cn);
+$accounting = new Accounting($cn);
 
 $error = "";
 

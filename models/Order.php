@@ -79,6 +79,15 @@ class Order
         }
     }
 
+    public function getOrderCustomer ($order_id) {
+        $stmt = $this->_cn->prepare("SELECT * FROM `orders` WHERE `id` = :order_id");
+        $stmt->bindParam(':order_id', $order_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return $stmt;
+        }
+    }
+
 }
 
 ?>

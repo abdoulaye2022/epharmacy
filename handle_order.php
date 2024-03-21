@@ -128,11 +128,17 @@ require_once("./controllers/OrderController.php");
                                     <tbody>
                                         <?php while ($row = $products_order->fetch(PDO::FETCH_ASSOC)) { ?>
                                             <tr>
-                                                <td>
+                                                <?php if(isset($_GET['product_id']) && $_GET['product_id'] == $row['id']) { ?>
+                                                <td style="background-color: #299cdb;">
+                                                    <a href="<?php echo "handle_order.php?order_id=".$_GET['order_id']."&cart_id=".$row['cart_id']."&product_id=" . $row['id']; ?>" style="display: inline-block; width: 90%; height: 100%;"><span style="color: white;"><?php echo $row['name']; ?></span></a>
+                                                    <span class="badge text-bg-primary"><?php echo ((int)$row['quantity'] - (int)$row['quantity_remainder']); ?></span>
+                                                </td>
+                                                <?php } else { ?>
+                                                    <td>
                                                     <a href="<?php echo "handle_order.php?order_id=".$_GET['order_id']."&cart_id=".$row['cart_id']."&product_id=" . $row['id']; ?>" style="display: inline-block; width: 90%; height: 100%;"><?php echo $row['name']; ?></a>
                                                     <span class="badge text-bg-primary"><?php echo ((int)$row['quantity'] - (int)$row['quantity_remainder']); ?></span>
-                                                    
                                                 </td>
+                                                <?php } ?>
                                             </tr>
                                         <?php }?>
                                     </tbody>

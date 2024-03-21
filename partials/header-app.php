@@ -6,6 +6,15 @@ $carts = $cart->getCart($_SESSION['id']);
 if(isset($_SESSION['cart_id'])) {
     $countCartProduct = $cartProduct->countCartProduct($_SESSION['cart_id']);
 }
+
+if(isset($_POST['viewAll'])) {
+    if(isset($_POST['notification_id']) && !empty($_POST['notification_id'])) {
+        foreach ($_POST['notification_id'] as $value) {
+            $notification->closeNotification($value);
+        }
+    }
+}
+$notifications = $notification->getNotification($_SESSION['id']);
 ?>
 <script>
   window.addEventListener('beforeunload', function() {
@@ -154,29 +163,7 @@ if(isset($_SESSION['cart_id'])) {
                     </div>
                 </div>
 
-                <div class="dropdown ms-1 topbar-head-dropdown header-item">
-                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img id="header-lang-img" src="assets/images/flags/us.svg" alt="Header Language" height="20" class="rounded">
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end">
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item language py-2" data-lang="en" title="English">
-                            <img src="assets/images/flags/us.svg" alt="user-image" class="me-2 rounded" height="18">
-                            <span class="align-middle">English</span>
-                        </a>
-
-                        <!-- item-->
-                        <a href="javascript:void(0);" class="dropdown-item notify-item language" data-lang="fr" title="French">
-                            <img src="assets/images/flags/french.svg" alt="user-image" class="me-2 rounded" height="18">
-                            <span class="align-middle">français</span>
-                        </a>
-
-                        
-                    </div>
-                </div>
-
-                <div class="dropdown topbar-head-dropdown ms-1 header-item">
+               <!--  <div class="dropdown topbar-head-dropdown ms-1 header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class='bx bx-category-alt fs-22'></i>
                     </button>
@@ -237,7 +224,7 @@ if(isset($_SESSION['cart_id'])) {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="dropdown topbar-head-dropdown ms-1 header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" id="page-header-cart-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
@@ -327,22 +314,10 @@ if(isset($_SESSION['cart_id'])) {
                     </div>
                 </div>
 
-                <div class="ms-1 header-item d-none d-sm-flex">
-                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" data-toggle="fullscreen">
-                        <i class='bx bx-fullscreen fs-22'></i>
-                    </button>
-                </div>
-
-                <div class="ms-1 header-item d-none d-sm-flex">
-                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode shadow-none">
-                        <i class='bx bx-moon fs-22'></i>
-                    </button>
-                </div>
-
                 <div class="dropdown topbar-head-dropdown ms-1 header-item" id="notificationDropdown">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none" id="page-header-notifications-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                         <i class='bx bx-bell fs-22'></i>
-                        <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger">3<span class="visually-hidden">unread messages</span></span>
+                        <span class="position-absolute topbar-badge fs-10 translate-middle badge rounded-pill bg-danger"><?php echo $notifications->rowCount(); ?><span class="visually-hidden">unread messages</span></span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0" aria-labelledby="page-header-notifications-dropdown">
 
@@ -353,14 +328,14 @@ if(isset($_SESSION['cart_id'])) {
                                         <h6 class="m-0 fs-16 fw-semibold text-white"> Notifications </h6>
                                     </div>
                                     <div class="col-auto dropdown-tabs">
-                                        <span class="badge badge-soft-light fs-13"> 4 New</span>
+                                        <span class="badge badge-soft-light fs-13"> <?php echo $notifications->rowCount(); ?> New</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="px-2 pt-2">
                                 <ul class="nav nav-tabs dropdown-tabs nav-tabs-custom" data-dropdown-tabs="true" id="notificationItemsTab" role="tablist">
-                                    <li class="nav-item waves-effect waves-light">
+                                    <!-- <li class="nav-item waves-effect waves-light">
                                         <a class="nav-link active" data-bs-toggle="tab" href="#all-noti-tab" role="tab" aria-selected="true">
                                             All (4)
                                         </a>
@@ -369,9 +344,9 @@ if(isset($_SESSION['cart_id'])) {
                                         <a class="nav-link" data-bs-toggle="tab" href="#messages-tab" role="tab" aria-selected="false">
                                             Messages
                                         </a>
-                                    </li>
+                                    </li> -->
                                     <li class="nav-item waves-effect waves-light">
-                                        <a class="nav-link" data-bs-toggle="tab" href="#alerts-tab" role="tab" aria-selected="false">
+                                        <a class="nav-link active" data-bs-toggle="tab" href="#alerts-tab" role="tab" aria-selected="false">
                                             Alerts
                                         </a>
                                     </li>
@@ -381,7 +356,7 @@ if(isset($_SESSION['cart_id'])) {
                         </div>
 
                         <div class="tab-content position-relative" id="notificationItemsTabContent">
-                            <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
+                            <!-- <div class="tab-pane fade show active py-2 ps-2" id="all-noti-tab" role="tabpanel">
                                 <div data-simplebar style="max-height: 300px;" class="pe-2">
                                     <div class="text-reset notification-item d-block dropdown-item position-relative">
                                         <div class="d-flex">
@@ -591,14 +566,32 @@ if(isset($_SESSION['cart_id'])) {
                                             All Messages <i class="ri-arrow-right-line align-middle"></i></button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade p-4" id="alerts-tab" role="tabpanel" aria-labelledby="alerts-tab"></div>
-
-                            <div class="notification-actions" id="notification-actions">
-                                <div class="d-flex text-muted justify-content-center">
-                                    Select <div id="select-content" class="text-body fw-semibold px-1">0</div> Result <button type="button" class="btn btn-link link-danger p-0 ms-3" data-bs-toggle="modal" data-bs-target="#removeNotificationModal">Remove</button>
+                            </div> -->
+                            <form method="POST" action="">
+                            <div class="tab-pane fade show active p-4" id="alerts-tab" role="tabpanel" aria-labelledby="alerts-tab">
+                                <div class="text-reset notification-item d-block dropdown-item position-relative">
+                                    <div class="d-flex">
+                                        <?php while($fetch = $notifications->fetch(PDO::FETCH_ASSOC)) { ?>
+                                        <div class="flex-1">
+                                            <a href="orders.php" class="stretched-link">
+                                                <h6 class="mt-0 mb-1 fs-13 fw-semibold"><?php echo $fetch['type']; ?></h6>
+                                            </a>
+                                            <div class="fs-13 text-muted">
+                                                <p class="mb-1"><?php echo $fetch['description']; ?></p>
+                                            </div>
+                                            <p class="mb-0 fs-11 fw-medium text-uppercase text-muted">
+                                                <span><i class="mdi mdi-clock-outline"></i> <?php echo $helper->minuteAgo($fetch['date_notification']); ?> min ago</span>
+                                            </p>
+                                        </div>
+                                        <input type="hidden" name="notification_id[]" value="<?php echo $fetch['id']; ?>">
+                                        <?php } ?>
+                                    </div>
                                 </div>
+                                <?php if($notifications->rowCount() > 0) { ?>
+                                    <button class="btn btn-success btn-sm" type="submit" name="viewAll" style="width: 100%; margin-top: 10px;">View All</button>
+                                <?php } ?>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -71,6 +71,22 @@ class Helper
 	public function formatPrice($price) {
 	    return number_format($price, 2, '.', ',');
 	}
+
+	public function minuteAgo ($date) {
+		// Current date and time
+		$currentDateTime = new DateTime();
+
+		// Date and time of the past moment
+		$pastDateTime = new DateTime($date);
+
+		// Calculate the difference
+		$interval = $currentDateTime->diff($pastDateTime);
+
+		// Extract minutes from the difference
+		$minutesAgo = $interval->format('%i');
+
+		return $minutesAgo;
+	}
 }
 
 $countries =array(

@@ -1,6 +1,5 @@
 <?php
-require_once("./controllers/ProductController.php");
-#require_once("./controllers/ProductsController.php");
+require_once("./controllers/AccountingController.php");
 ?>
 <!doctype html>
 <html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
@@ -139,195 +138,27 @@ require_once("./controllers/ProductController.php");
                                                         <th class="sort" data-sort="name">Client Name</th>                                                      
                                                         <th class="sort" data-sort="quantity">Invoice Date</th>
                                                         <th class="sort" data-sort="quantity">Invoice Amount</th>
-                                                        <!-- <th class="sort" data-sort="quantity">Minimun Quantity</th>
-                                                        <th class="sort" data-sort="quantity">Suplier</th>
-                                                        <th class="sort" data-sort="quantity">Warehouse</th> -->
                                                         <th class="sort" data-sort="quantity">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody class="form-check-all">
-                                                    <?php while($row = $products->fetch(PDO::FETCH_ASSOC)) { ?>
+                                                    <?php while($row = $accountings->fetch(PDO::FETCH_ASSOC)) { ?>
                                                     <tr>
                                                         <td class="id" style="display:none;"><a href="javascript:void(0);" class="fw-medium link-primary">#VZ2101</a></td>
-                                                        <td class="name"><?php echo $row['name']; ?></td>
-                                                        <!-- <td class="description"><?php echo $row['description']; ?></td> -->
-                                                        <td class="quantity"><?php echo $row['code_product']; ?></td>                                                     
-                                                        <td class="quantity"><?php echo $row['min_quantity']; ?></td>
-                                                        <td class="quantity"><?php echo $row['price']; ?> $</td>
-                                                        <!-- <td class="quantity"><?php echo $row['supplier_name']; ?></td>
-                                                        <td class="quantity"><?php echo $row['warehouse_name']; ?></td> -->
+                                                        <td class="name"><?php echo $row['id']; ?></td>
+                                                        <td class="quantity"><?php echo $row['firstname'] . " " . $row['lastname']; ?></td>                                                     
+                                                        <td class="quantity"><?php echo $row['date_created']; ?></td>
+                                                        <td class="quantity"><?php echo $row['total_amount']; ?> $</td>
                                                         <td>
-                                                            <div class="d-flex gap-2">
-                                                                <div class="edit">
-                                                                    <button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#viewModal_<?php echo $row['id']; ?>">Print</button>
-                                                                </div>
-                                                                <!-- <div class="edit">
-                                                                    <button class="btn btn-sm btn-success edit-item-btn" data-bs-toggle="modal" data-bs-target="#edittModal_<?php echo $row['id']; ?>">Edit</button>
-                                                                </div>
-                                                                <div class="remove">
-                                                                    <button class="btn btn-sm btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#deleteModal_<?php echo $row['id']; ?>"><i class="bx bxs-trash"></i> Delete</button>
-                                                                </div> -->
-                                                            </div>
+                                                            <a target="_blank" href="bill.php?bill_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-warning edit-item-btn">Print</a>
                                                         </td>
                                                     </tr>
 
-                                                     <!-- Modal view user -->
-                                                    <div class="modal fade" id="viewModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header bg-light p-3">
-                                                                    <h5 class="modal-title">View product</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-                                                                </div>
-                                                                <div style="display: flex; align-items: center;flex-direction: column;">
-                                                                    <img src="assets/images/products/<?php echo ($row['image'] != '' ? $row['image'] : "no_image.jpg"); ?>" class="figure-img img-fluid rounded" alt="..." style="height: 250px; width: 80%;">
-                                                                    <h3>Name : <?php echo $row['name']; ?></h3>
-                                                                    <p>Description : <?php echo $row['description']; ?></p>
-                                                                    <p>Code product : <?php echo $row['code_product']; ?></p>
-                                                                    <p>Code product : <?php echo $row['price']; ?> $</p>
-                                                                    <p>Minimun quantity : <?php echo $row['min_quantity']; ?></p>
-                                                                    <p>Supplier : <?php echo $row['supplier_name']; ?></p>
-                                                                    <p>Warehouse : <?php echo $row['warehouse_name']; ?></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Modal edit user -->
-                                                    <div class="modal fade" id="edittModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header bg-light p-3">
-                                                                    <h5 class="modal-title">Edit product</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-                                                                </div>
-                                                                <?php $role = new Profil($cn); $roles = $role->getAll(); ?>
-                                                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="tablelist-form" autocomplete="off" enctype="multipart/form-data">
-                                                                    <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                                    <?php
-                                                                    $supplier = new Supplier($cn);
-                                                                    $warehouse = new Warehouse($cn);
-                                                                    $suppliers = $supplier->getAll();
-                                                                    $warehouses = $warehouse->getAll();
-                                                                    ?>
-                                                                    <div class="modal-body">
-                                                                        <div class="card-body">
-                                                                            <div class="live-preview">
-                                                                                <div class="row">
-                                                                                    <div class="col-md-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="name" class="form-label">Name <span style="color: red;">*</span></label>
-                                                                                            <input type="text" class="form-control" name="name" placeholder="Enter the product name" id="nameinput" value="<?php echo $row['name']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="code_product" class="form-label">Code product <span style="color: red;">*</span></label>
-                                                                                            <input type="text" class="form-control" name="code_product" placeholder="Enter code product" id="quantityinput" value="<?php echo $row['code_product']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="price" class="form-label">Price <span style="color: red;">*</span></label>
-                                                                                            <input type="text" class="form-control" name="price" placeholder="Enter price" id="price" value="<?php echo $row['price']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="min_quantity" class="form-label">Minimun Quantity <span style="color: red;">*</span></label>
-                                                                                            <input type="text" class="form-control" name="min_quantity" placeholder="Enter minimun quantity" id="mini_quantity" value="<?php echo $row['min_quantity']; ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <!--end col-->
-                                                                                    <div class="col-md-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="description" class="form-label">Description</label>
-                                                                                            <textarea type="text" class="form-control" name="description" placeholder="Enter description" id="description"><?php echo $row['description']; ?></textarea>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="supplier_id" class="form-label">Supplier <span style="color: red;">*</span></label>
-                                                                                            <select class="js-example-basic-single form-control" name="supplier_id">
-                                                                                                <option value="">select supplier</option>
-                                                                                                <?php while($supplier = $suppliers->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                                                                    <option value="<?php echo $supplier['id']; ?>" <?php echo ($row['supplier_id'] == $supplier['id'] ? "selected" : null); ?>><?php echo $supplier['name']; ?></option>
-                                                                                                <?php } ?>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="warehouse_id" class="form-label">Warehouse <span style="color: red;">*</span></label>
-                                                                                            <select class="js-example-basic-single form-control" name="warehouse_id">
-                                                                                                <option value="">select warehouse</option>
-                                                                                                <?php while($warehouse = $warehouses->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                                                                    <option value="<?php echo $warehouse['id']; ?>" <?php echo ($row['warehouse_id'] == $warehouse['id'] ? "selected" : null); ?>><?php echo $warehouse['name']; ?></option>
-                                                                                                <?php } ?>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <div class="mb-3">
-                                                                                            <label for="product_img" class="form-label">Images</label>
-                                                                                            <?php if($row['image'] != "") { ?>
-                                                                                            <input type="text" class="form-control" value="<?php echo $row['image']; ?>" readonly>
-                                                                                            <?php } ?>
-                                                                                            <input type="file" name="product_img" class="form-control">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            <div class="d-none code-view">
-                                                                                <pre class="language-markup" style="height: 375px;"></pre>
-                                                                            </div>
-                                                                        </div>
-                                                                        
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <div class="hstack gap-2 justify-content-end">
-                                                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                                                            <button type="submit" class="btn btn-success" name="edit_product" id="add-edi">Save</button>
-                                                                            <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade zoomIn" id="deleteModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="mt-2 text-center">
-                                                                        <lord-icon src="https://cdn.lordicon.com/vihyezfv.json" trigger="loop" colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
-                                                                        <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                                                                            <h4>Are you Sure ?</h4>
-                                                                            <p class="text-muted mx-4 mb-0">
-                                                                            Are you sure you want to block
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                                                                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                                                                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                                            <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                                                                            <button type="submit" name="btnblock" class="btn w-sm btn-danger">Yes, Delete It!</button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end modal -->
+                                                    
                                                     <?php } ?>
                                                 </tbody>
                                             </table>
-                                            <?php if($products->rowCount() == 0) { ?>
+                                            <?php if($accountings->rowCount() == 0) { ?>
                                             <div class="noresult" style="display: inline-block; width: 100%;">
                                                 <div class="text-center">
                                                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
@@ -355,102 +186,6 @@ require_once("./controllers/ProductController.php");
                                 </div><!-- end card -->
                             </div>
                             <!-- end col -->
-                        </div>
-                    </div>
-
-                    <!-- Modal add user -->
-                    <div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header bg-light p-3">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add product</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal"></button>
-                                </div>
-                                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="tablelist-form" autocomplete="off" enctype="multipart/form-data">
-                                    <?php
-                                    $supplier = new Supplier($cn);
-                                    $warehouse = new Warehouse($cn);
-                                    $suppliers = $supplier->getAll();
-                                    $warehouses = $warehouse->getAll();
-                                    ?>
-                                    <div class="modal-body">
-                                        <div class="card-body">
-                                            <div class="live-preview">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="name" class="form-label">Name <span style="color: red;">*</span></label>
-                                                            <input type="text" class="form-control" name="name" placeholder="Enter the product name" id="nameinput">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="code_product" class="form-label">Code product <span style="color: red;">*</span></label>
-                                                            <input type="text" class="form-control" name="code_product" placeholder="Enter code product" id="quantityinput">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="code_product" class="form-label">Price <span style="color: red;">*</span></label>
-                                                            <input type="text" class="form-control" name="price" placeholder="Enter price" id="price">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="min_quantity" class="form-label">Minimun quantity <span style="color: red;">*</span></label>
-                                                            <input type="text" class="form-control" name="min_quantity" placeholder="Enter minimun quantity" id="min_quantity">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="description" class="form-label">Description</label>
-                                                            <textarea type="text" class="form-control" name="description" placeholder="Enter description" id="description"></textarea>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="supplier_id" class="form-label">Supplier <span style="color: red;">*</span></label>
-                                                            <select class="js-example-basic-single form-control" name="supplier_id">
-                                                                <option value="">select supplier</option>
-                                                                <?php while($supplier = $suppliers->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                                    <option value="<?php echo $supplier['id']; ?>"><?php echo $supplier['name']; ?></option>
-                                                                <?php } ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="warehouse_id" class="form-label">Warehouse <span style="color: red;">*</span></label>
-                                                            <select class="js-example-basic-single form-control" name="warehouse_id">
-                                                                <option value="">select warehouse</option>
-                                                                <?php while($warehouse = $warehouses->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                                    <option value="<?php echo $warehouse['id']; ?>"><?php echo $warehouse['name']; ?></option>
-                                                                <?php } ?>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="mb-3">
-                                                            <label for="product_img" class="form-label">Images</label>
-                                                            <input type="file" name="product_img" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            <div class="d-none code-view">
-                                                <pre class="language-markup" style="height: 375px;"></pre>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="modal-footer">
-                                        <div class="hstack gap-2 justify-content-end">
-                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-success" name="add_product" id="add-btn">Save</button>
-                                            <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                         </div>
                     </div>
 

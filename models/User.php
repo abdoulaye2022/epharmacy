@@ -121,5 +121,12 @@ class User
 		}
 	}
 
+	public function getAdministrationUsers() {
+		$stmt = $this->_cn->prepare("SELECT * FROM `users` WHERE `actif` = 1 AND `role_id` IN (1,2)");
+		if ($stmt->execute()) {
+			return $stmt;
+		}
+	}
+
 }
 ?>

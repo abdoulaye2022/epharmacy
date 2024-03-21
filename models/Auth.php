@@ -33,6 +33,7 @@ class Auth
             $_SESSION['password'] = $user['password'];
             $_SESSION['name'] = $user['name'];
             $_SESSION['image'] = $user['image'];
+            $_SESSION['company_id'] = $user['company_id'];
 
             return $user;
         }

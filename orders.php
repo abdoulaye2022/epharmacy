@@ -114,11 +114,6 @@ require_once("./controllers/OrderController.php");
                                             <table class="table align-middle table-nowrap">
                                                 <thead class="table-light">
                                                     <tr>
-                                                        <th scope="col" style="width: 50px;">
-                                                            <div class="form-check">
-                                                                <input class="form-check-input" type="checkbox" id="checkAll" value="option">
-                                                            </div>
-                                                        </th>
                                                         <th class="sort" data-sort="order_date">Order Date</th>
                                                         <th class="sort" data-sort="total_amount">Total Amount</th>
                                                         <th class="sort" data-sort="status">Status</th>
@@ -128,13 +123,8 @@ require_once("./controllers/OrderController.php");
                                                 <tbody class="form-check-all">
                                                     <?php foreach ($orders as $order): ?>
                                                         <tr>
-                                                            <td>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                                </div>
-                                                            </td>
                                                             <td><?= $order['order_date'] ?></td>
-                                                            <td><?= $order['total_amount'] ?></td>
+                                                            <td><?= $order['total_amount'] ?> $</td>
                                                             <td class="status">
                                                             <?php if($order['status']) { ?>
                                                                 <span class="badge badge-soft-success text-uppercase">Done</span>

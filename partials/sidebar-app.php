@@ -142,6 +142,12 @@
                 <li class="menu-title"><i class="ri-more-fill"></i> <span>Settings</span></li>
 
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="company.php">
+                        <i class="bx bx-home"></i> <span>Company</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="settings.php">
                         <i class="ri-settings-2-line"></i> <span>Settings</span>
                     </a>
