@@ -175,44 +175,70 @@ require_once("./controllers/StatisticController.php");
                                                         <th class="sort" data-sort="price">Price</th>
                                                         <th class="sort" data-sort="status">Status</th>
                                                         <th class="sort" data-sort="action">Actions</th>
+                                                        <?php foreach ($orders as $order): ?>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                        </div>
+                                                    </td>
+                                                    <td><?= $order['order_date'] ?></td>
+                                                    <td><?= $order['total_amount'] ?></td>
+                                                    <td class="status">
+                                                        <?php if($order['status']) { ?>
+                                                            <span class="badge badge-soft-success text-uppercase">Done</span>
+                                                        <?php } else { ?>
+                                                        <span class="badge badge-soft-danger text-uppercase">In progress</span>
+                                                    <?php } ?>
+                                                    <td>
+    <button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#editModal_<?php echo $order['id']; ?>">Edit</button>
+</td>
+
+<!-- Modal edit order -->
+<div class="modal fade" id="editModal_<?php echo $order['id']; ?>" tabindex="-1" aria-labelledby="editModalLabel_<?php echo $order['id']; ?>" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="editModalLabel_<?php echo $order['id']; ?>">Edit Order Info</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="update_order.php" method="post" class="tablelist-form" autocomplete="off">
+                <div class="modal-body">
+                    <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
+                    <div class="mb-3">
+                        <label for="priceInput" class="form-label">Price</label>
+                        <input type="text" class="form-control" name="price" id="priceInput" value="<?php echo $order['total_amount']; ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="statusInput" class="form-label">Status</label>
+                        <select class="form-select" name="status" id="statusInput">
+                            <option value="0" <?php if ($order['status'] == 0) echo 'selected'; ?>>In Progress</option>
+                            <option value="1" <?php if ($order['status'] == 1) echo 'selected'; ?>>Done</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" name="update_order">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+                                            <?php endforeach; ?>
+                                                            
+                                                        </th>
                                                     </tr>
                                                 </thead>
 
-                                                
-
-                                                    <!-- Modal -->
-                                                    <div class="modal fade zoomIn" id="blockModal_<?php echo $row['id']; ?>" tabindex="-1" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div class="mt-2 text-center">
-                                                                        <lord-icon src="https://cdn.lordicon.com/vihyezfv.json" trigger="loop" colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
-                                                                        <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-                                                                            <h4>Are you Sure ?</h4>
-                                                                            <p class="text-muted mx-4 mb-0">
-                                                                            <?php echo ($row['actif'] ? 'Are you sure you want to block this user account ?' : 'Are you sure you want to unlock this user account ?'); ?>
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                                                                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                                                                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                                                                            <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                                                                                <?php echo ($row['actif'] ? 'Yes, Blocked It!' : 'Yes, Unlocked It!'); ?></button>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--end modal -->
                                                     <?php #} ?>
                                                 </tbody>
                                             </table>
-                                            <?php if($users->rowCount() == 0) { ?>
+
+
+
+                                            <?php if($customers->rowCount() == 0) { ?>
                                             <div class="noresult" style="display: inline-block; width: 100%;">
                                                 <div class="text-center">
                                                     <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">

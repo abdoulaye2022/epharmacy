@@ -129,7 +129,8 @@
                     <div class="collapse menu-dropdown" id="sidebarStatistics">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="statistics.php?type=type" class="nav-link"> Clients</a>
+                                <a href="statistics.php?type=customers" class="nav-link"> Clients</a>
+                                <a href="statistics.php?type=customers?type=type" class="nav-link"> Clients</a>
                             </li>
                             <li class="nav-item">
                                 <a href="statistics.php?type=orders" class="nav-link"> Orders</a>
