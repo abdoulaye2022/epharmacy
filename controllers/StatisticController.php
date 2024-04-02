@@ -4,33 +4,19 @@ require_once("Controller.php");
 $error = "";
 $success = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["btnUpdate"])) {
-        $userId = $_POST["user_id"];
-        $firstName = $_POST["firstname"];
-        $lastName = $_POST["lastname"];
-        
-        if ($statistic->updateName($userId, $firstName, $lastName)) {
-            $success = "User's name updated successfully.";
-        } else {
-            $error = "Failed to update user's name.";
-        }
-    }
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search_orders"])) {
+    // Retrieve the selected date range
+    $start_date = $_POST["start_date"];
+    $end_date = $_POST["end_date"];
+
+    // Fetch orders within the specified date range
+    $orders = $order->getOrdersByDateRange($start_date, $end_date);
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST["btnUpdate"])) {
-        $id = $_POST["id"];
-        $total_amount = $_POST["total_amount"];
-        $order_date = $_POST["order_date"];
-        $status = $_POST["status"];
-        
-        if ($statistic->updateName($id, $total_amount, $order_date, $status)) {
-            $success = "Order has been updated successfully.";
-        } else {
-            $error = "Failed to update the order.";
-        }
-    }
+
+// Fetch all orders if not searching by date range
+if (!isset($orders)) {
+    $orders = $order->getAllOrders();
 }
-$orders = $order->getAllOrders();
+
 $customers = $user->getTotalCustomers();
 ?>

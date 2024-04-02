@@ -21,7 +21,22 @@ class Order
             return true;
         }
     }
-    public function getOrdersByCustomerId($customer_id)
+    public function getOrdersByDateRange($start_date, $end_date)
+    {
+        try {
+            $query = "SELECT * FROM orders WHERE order_date BETWEEN :start_date AND :end_date";
+            $stmt = $this->_cn->prepare($query);
+            $stmt->bindParam(':start_date', $start_date);
+            $stmt->bindParam(':end_date', $end_date);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Log or handle the exception
+            error_log("Error fetching orders by date range: " . $e->getMessage());
+            return false;
+        }
+    }
+        public function getOrdersByCustomerId($customer_id)
     {
         $stmt = $this->_cn->prepare("SELECT * FROM orders WHERE customer_id = :customer_id");
         $stmt->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);

@@ -96,7 +96,7 @@ require_once("./controllers/StatisticController.php");
 
                     <!-- CUSTOMERS PAGE -->
 
-                    <?php if($_GET['type']=='customers') { ?>
+                    <?php if (isset($_GET['type']) && $_GET['type'] == 'customers') { ?>
                         
                     <div class="row">
                         <div class="col-lg-12">
@@ -194,37 +194,6 @@ require_once("./controllers/StatisticController.php");
     <button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#editModal_<?php echo $order['id']; ?>">Edit</button>
 </td>
 
-<!-- Modal edit order -->
-<div class="modal fade" id="editModal_<?php echo $order['id']; ?>" tabindex="-1" aria-labelledby="editModalLabel_<?php echo $order['id']; ?>" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-light p-3">
-                <h5 class="modal-title" id="editModalLabel_<?php echo $order['id']; ?>">Edit Order Info</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="update_order.php" method="post" class="tablelist-form" autocomplete="off">
-                <div class="modal-body">
-                    <input type="hidden" name="order_id" value="<?php echo $order['id']; ?>">
-                    <div class="mb-3">
-                        <label for="priceInput" class="form-label">Price</label>
-                        <input type="text" class="form-control" name="price" id="priceInput" value="<?php echo $order['total_amount']; ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="statusInput" class="form-label">Status</label>
-                        <select class="form-select" name="status" id="statusInput">
-                            <option value="0" <?php if ($order['status'] == 0) echo 'selected'; ?>>In Progress</option>
-                            <option value="1" <?php if ($order['status'] == 1) echo 'selected'; ?>>Done</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" name="update_order">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
                                             <?php endforeach; ?>
                                                             
@@ -232,7 +201,7 @@ require_once("./controllers/StatisticController.php");
                                                     </tr>
                                                 </thead>
 
-                                                    <?php #} ?>
+                                                    
                                                 </tbody>
                                             </table>
 
@@ -267,59 +236,39 @@ require_once("./controllers/StatisticController.php");
                             <!-- end col -->
                         </div>
                     </div>
+                    <?php }?>
+
+                    
 
                     <!-- ORDERS PAGE -->
 
-                    <?php } else if ($_GET['type'] == 'orders') { ?>
+                    <?php if (isset($_GET['type']) && $_GET['type'] == 'orders') : ?>
+
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <div id="orderList">
                                             <div class="row g-4 mb-3">
-                                                <div class="col-sm-8">
-                                                    <?php if ($error != "") { ?>
-                                                        <div class="col-lg-12">
-                                                            <div class="alert alert-danger alert-borderless shadow mb-xl-0" role="alert">
-                                                                <?php echo $error; ?>
-                                                            </div>
-                                                        </div>
-                                                    <?php } else if ($success != "") { ?>
-                                                        <div class="col-lg-12" style="color: green;">
-                                                            <div class="alert alert-success alert-borderless shadow" role="alert">
-                                                                <?php echo $success; ?>
-                                                            </div>
-                                                        </div>
-                                                    <?php } ?>
-                                                </div>
-                                            </div>
+                                            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <!-- Input fields for start and end dates -->
+    <div class="row g-3 mb-0 align-items-center">
+        <p class="fs-16 mb-1">Specify the date range for reviewing orders :</p>
+        <div class="col-sm-auto">
+            <div class="input-group">
+                <input type="text" name="start_date" class="form-control border-0 dash-filter-picker shadow" data-provider="flatpickr" data-range-date="true" data-date-format="d M, Y" data-deafult-date="01 Jan 2022 to 31 Jan 2022">
+                <div class="input-group-text bg-primary border-primary text-white">
+                    <i class="ri-calendar-2-line"></i>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                                            <div class="row g-4 mb-3">
-                                                <div class="col-md-6">
-                                                    <select class="form-control" id="orderInput1" name="order">
-                                                        <option>Please select a start date</option>
-                                                        <?php while ($order = $orders->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                            <option value="<?php echo $order['id']; ?>"><?php echo $order['order_date'] . ' ' . $order['total_amount'] . ' ' . $order['status']; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <select class="form-control" id="orderInput1" name="order">
-                                                        <option>Please select an end date</option>
-                                                        <?php while ($order = $orders->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                            <option value="<?php echo $order['id']; ?>"><?php echo $order['order_date'] . ' ' . $order['total_amount'] . ' ' . $order['status']; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="row g-4 mb-3">
-                                                <div class="col-md-12">
-                                                    <button class="btn btn-primary">
-                                                        Search
-                                                    </button>
-                                                </div>
-                                            </div>
+    <!-- Search button -->
+    <button type="submit" name="search_orders" class="btn btn-primary">
+        Search
+    </button>
+</form>
                                                                     </td>
                                                     </tr>
                                                 </tbody>
@@ -373,7 +322,9 @@ require_once("./controllers/StatisticController.php");
                         </div>
                     </div>
 
-                    <?php }?>
+                    <?php else : ?>
+    <p>Invalid page type or missing parameter.</p>
+<?php endif; ?>
                 <!-- container-fluid -->
             </div>
             <!-- End Page-content -->
