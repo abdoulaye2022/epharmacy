@@ -128,5 +128,13 @@ class User
 		}
 	}
 
+	public function getUserById($user_id)
+    {
+        $stmt = $this->_cn->prepare("SELECT * FROM users WHERE id = :user_id");
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt;
+    }
+
 }
 ?>

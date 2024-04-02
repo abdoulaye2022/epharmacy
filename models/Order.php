@@ -67,12 +67,14 @@ class Order
     public function getAllOrders()
     {
         $stmt = $this->_cn->prepare("SELECT * FROM orders");
-
+    
         if ($stmt->execute()) {
             return $stmt;
+        } else {
+            return false;
         }
     }
-
+    
     public function getOrderProducts($cart_id)
     {
         $stmt = $this->_cn->prepare("SELECT `products`.*, `cart_product`.`quantity`, `cart_product`.`quantity_remainder`, `cart_product`.`cart_id` FROM `cart_product` INNER JOIN `products` ON `products`.`id` = `cart_product`.`product_id` WHERE `cart_product`.`cart_id` = :cart_id");
@@ -103,6 +105,21 @@ class Order
         }
     }
 
+    public function getOrdersByCustomerIdAndStatus($customer_id, $status) {
+        $query = "SELECT orders.*, CONCAT(users.firstname, ' ', users.lastname) AS customer_name, orders.status AS order_status FROM orders ";
+        $query .= "JOIN users ON orders.customer_id = users.id ";
+        $query .= "WHERE orders.customer_id = :customer_id AND orders.status = :status";
+        $stmt = $this->_cn->prepare($query);
+        $stmt->bindParam(':customer_id', $customer_id);
+        $stmt->bindParam(':status', $status);
+    
+        if ($stmt->execute()) {
+            return $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all rows
+        } else {
+            return false;
+        }
+    }
+                
 }
 
 ?>

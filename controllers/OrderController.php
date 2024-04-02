@@ -196,8 +196,26 @@ $products = $product->getAll();
 
 if(isset($_SESSION['role_id']) && $_SESSION['role_id'] == 3) {
 	$orders = $order->getOrdersByCustomerId($_SESSION['id']);
+} //else {
+// 	$orders = $order->getAllOrders();
+// }
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search_orders"])) {
+    // Retrieve the selected date range
+    $start_date = $_POST["start_date"];
+    $end_date = $_POST["end_date"];
+
+    // Fetch orders within the specified date range
+    $orders = $order->getOrdersByDateRange($start_date, $end_date);
+} elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["search_customer_orders"])) {
+    // Retrieve the selected customer ID and status
+    $customer_id = $_POST["customer_id"];
+    $status = $_POST["status"];
+
+    // Fetch orders for the selected customer and status
+    $orders = $order->getOrdersByCustomerIdAndStatus($customer_id, $status);
 } else {
-	$orders = $order->getAllOrders();
+    // Fetch all orders if not searching by date range or customer
+    $orders = $order->getAllOrders();
 }
 
 if(isset($_GET['order_id'])) {

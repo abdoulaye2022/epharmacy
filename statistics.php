@@ -94,237 +94,162 @@ require_once("./controllers/StatisticController.php");
 					<!-- end page title -->
 
 
-                    <!-- CUSTOMERS PAGE -->
-
-                    <?php if (isset($_GET['type']) && $_GET['type'] == 'customers') { ?>
-                        
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-
-                                <div class="card-body">
-                                    <div id="customerList">
-                                        <div class="row g-4 mb-3">
-                                            <div class="col-sm-8">
-                                                <?php if($error != "") { ?>
-                                                    <div class="col-lg-12">
-                                                        <div class="alert alert-danger alert-borderless shadow mb-xl-0" role="alert">
-                                                            <?php echo $error; ?>
-                                                        </div>
-                                                    </div>
-                                                <?php } else if($success != "") { ?>
-                                                    <div class="col-lg-12" style="color: green;">
-                                                        <div class="alert alert-success alert-borderless shadow" role="alert">
-                                                            <?php echo $success; ?>
-                                                        </div>
-                                                    </div>
-                                                <?php } ?>
-                                            </div>
-                                            
-                                        </div>
-
-                                        <div class="table-responsive table-card mt-3 mb-1">
-                                            <table class="table align-middle table-nowrap">
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                        
-                                                            <div class="mb-3 col-md-6">
-                                                                <select class="form-control" id="customerInput1" name="customer">
-                                                                    <option>Please select a customer</option>
-                                                                    <?php while ($customer = $customers->fetch(PDO::FETCH_ASSOC)) { ?>
-                                                                        <option value="<?php echo $customer['id']; ?>" ><?php echo $customer['firstname'] . ' ' . $customer['lastname']; ?></option>
-                                                                    <?php } ?>
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <div class="mb-3 col-md-6"> 
-                                                                <select class="form-control" id="customerInput2" name="customer">
-                                                                    <option>Select an order status</option>
-                                                                    <option>In progress</option>
-                                                                    <option>Done</option>
-                                
-                                                                </select>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                        <div> 
-                                                            <button class="btn btn-primary">
-                                                                Search
-                                                            </button>
-                                                        
-                                                        </div>
-                                                                    </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-
-                                        <div class="table-responsive table-card mt-3 mb-1">
-                                            <table class="table align-middle table-nowrap">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th class="sort" data-sort="firstname">Firstname</th>
-                                                        <th class="sort" data-sort="lastname">Lastname</th>
-                                                        <th class="sort" data-sort="price">Price</th>
-                                                        <th class="sort" data-sort="status">Status</th>
-                                                        <th class="sort" data-sort="action">Actions</th>
-                                                        <?php foreach ($orders as $order): ?>
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                        </div>
-                                                    </td>
-                                                    <td><?= $order['order_date'] ?></td>
-                                                    <td><?= $order['total_amount'] ?></td>
-                                                    <td class="status">
-                                                        <?php if($order['status']) { ?>
-                                                            <span class="badge badge-soft-success text-uppercase">Done</span>
-                                                        <?php } else { ?>
-                                                        <span class="badge badge-soft-danger text-uppercase">In progress</span>
-                                                    <?php } ?>
-                                                    <td>
-    <button class="btn btn-sm btn-warning edit-item-btn" data-bs-toggle="modal" data-bs-target="#editModal_<?php echo $order['id']; ?>">Edit</button>
-</td>
-
-
-                                            <?php endforeach; ?>
-                                                            
-                                                        </th>
-                                                    </tr>
-                                                </thead>
-
-                                                    
-                                                </tbody>
-                                            </table>
-
-
-
-                                            <?php if($customers->rowCount() == 0) { ?>
-                                            <div class="noresult" style="display: inline-block; width: 100%;">
-                                                <div class="text-center">
-                                                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
-                                                    </lord-icon>
-                                                    <h5 class="mt-2">Sorry! No Result Found</h5>
-                                                    <p class="text-muted mb-0">We've searched more than 150+ Customers... We did not find the customer you are looking for.</p>
-                                                </div>
-                                            </div>
-                                            <?php } ?>
-                                        </div>
-
-                                        <div class="d-flex justify-content-end">
-                                            <div class="pagination-wrap hstack gap-2">
-                                                <a class="page-item pagination-prev disabled" href="#">
-                                                    Previous
-                                                </a>
-                                                <ul class="pagination listjs-pagination mb-0"></ul>
-                                                <a class="page-item pagination-next" href="#">
-                                                    Next
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- end card -->
+<!-- CUSTOMERS PAGE -->
+<?php if (isset($_GET['type']) && $_GET['type'] == 'customers') { ?>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Form to search orders by customer and status -->
+                    <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?type=customers">
+                        <div class="row g-4 mb-3">
+                            <div class="col-md-6">
+                                <select class="form-control" name="customer_id">
+                                    <option value="">Please select a customer</option>
+                                    <?php while ($customer = $customers->fetch(PDO::FETCH_ASSOC)) { ?>
+                                        <option value="<?php echo $customer['id']; ?>"><?php echo $customer['firstname'] . ' ' . $customer['lastname']; ?></option>
+                                    <?php } ?>
+                                </select>
                             </div>
-                            <!-- end col -->
+                            <div class="col-md-6">
+                                <select class="form-control" name="status">
+                                    <option value="">Select an order status</option>
+                                    <option value="in_progress">In progress</option>
+                                    <option value="done">Done</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" name="search_customer_orders" class="btn btn-primary">Search</button>
+                            </div>
                         </div>
-                    </div>
-                    <?php }?>
+                    </form>
 
-                    
-
-                    <!-- ORDERS PAGE -->
-
-                    <?php if (isset($_GET['type']) && $_GET['type'] == 'orders') : ?>
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div id="orderList">
-                                            <div class="row g-4 mb-3">
-                                            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-    <!-- Input fields for start and end dates -->
-    <div class="row g-3 mb-0 align-items-center">
-        <p class="fs-16 mb-1">Specify the date range for reviewing orders :</p>
-        <div class="col-sm-auto">
-            <div class="input-group">
-                <input type="text" name="start_date" class="form-control border-0 dash-filter-picker shadow" data-provider="flatpickr" data-range-date="true" data-date-format="d M, Y" data-deafult-date="01 Jan 2022 to 31 Jan 2022">
-                <div class="input-group-text bg-primary border-primary text-white">
-                    <i class="ri-calendar-2-line"></i>
-                </div>
-            </div>
+<!-- Table to display orders -->
+<?php if(isset($orders) && $orders > 0) { ?>
+    <div class="table-responsive table-card mt-3 mb-1">
+        <table class="table align-middle table-nowrap">
+            <thead class="table-light">
+                <tr>
+                    <th>Customer Name</th>
+                    <th>Order Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($orders as $order): ?>
+                    <?php
+                    // Fetch customer's first name and last name
+                    $customer_id = $order['customer_id'];
+                    $stmt = $user->getUserById($customer_id);
+                    $customer = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $customer_name = $customer['firstname'] . ' ' . $customer['lastname'];
+                    ?>
+                    <tr>
+                        <td><?= $customer_name ?></td>
+                        <td><?= $order['order_date'] ?></td>
+                        <td>
+                            <?php if ($order['status'] == 'in_progress'): ?>
+                                <span class="badge badge-soft-danger text-uppercase">In Progress</span>
+                            <?php elseif ($order['status'] == 'done'): ?>
+                                <span class="badge badge-soft-success text-uppercase">Done</span>
+                            <?php endif; ?>
+                        </td>
+                                            </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php } else { ?>
+    <!-- No results found -->
+    <div class="noresult" style="display: inline-block; width: 100%;">
+        <div class="text-center">
+            <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px"></lord-icon>
+            <h5 class="mt-2">No Results Found</h5>
+            <p class="text-muted mb-0">There are no orders matching the selected criteria.</p>
         </div>
     </div>
+<?php } ?>
+                </div>
+            </div><!-- end card -->
+        </div><!-- end col -->
+    </div><!-- end row -->
 
-    <!-- Search button -->
-    <button type="submit" name="search_orders" class="btn btn-primary">
-        Search
-    </button>
-</form>
-                                                                    </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+<!-- ORDERS PAGE -->
+<?php } elseif (isset($_GET['type']) && $_GET['type'] == 'orders') { ?>
 
-
-                                        <div class="table-responsive table-card mt-3 mb-1">
-                                            <table class="table align-middle table-nowrap">
-                                                <thead class="table-light">
-                                                    <tr>
-                                                        <th class="sort" data-sort="firstname">Total Amount</th>
-                                                        <th class="sort" data-sort="lastname">Date</th>
-                                                        <th class="sort" data-sort="status">Status</th>
-                                                    </tr>
-                                                </thead>
-
-                                                
-
-                                                    
-                                                    <?php #} ?>
-                                                </tbody>
-                                            </table>
-                                            <?php if($orders->rowCount() == 0) { ?>
-                                            <div class="noresult" style="display: inline-block; width: 100%;">
-                                                <div class="text-center">
-                                                    <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
-                                                    </lord-icon>
-                                                    <h5 class="mt-2">Sorry! No Result Found</h5>
-                                                    <p class="text-muted mb-0">We've searched more than 150+ Orders... We did not find the order you are looking for.</p>
-                                                </div>
-                                            </div>
-                                            <?php } ?>
-                                        </div>
-
-                                        <div class="d-flex justify-content-end">
-                                            <div class="pagination-wrap hstack gap-2">
-                                                <a class="page-item pagination-prev disabled" href="#">
-                                                    Previous
-                                                </a>
-                                                <ul class="pagination listjs-pagination mb-0"></ul>
-                                                <a class="page-item pagination-next" href="#">
-                                                    Next
-                                                </a>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div id="orderList">
+                        <div class="row g-4 mb-3">
+                            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?type=orders">
+                                <!-- Input fields for start and end dates -->
+                                <div class="row g-3 mb-0 align-items-center">
+                                    <p class="fs-16 mb-1">Specify the date range for reviewing orders :</p>
+                                    <div class="col-sm-auto">
+                                        <div class="input-group">
+                                            <input type="text" name="start_date" class="form-control border-0 dash-filter-picker shadow" data-provider="flatpickr" data-range-date="true" data-date-format="d M, Y" data-deafult-date="01 Jan 2022 to 31 Jan 2022">
+                                            <div class="input-group-text bg-primary border-primary text-white">
+                                                <i class="ri-calendar-2-line"></i>
                                             </div>
                                         </div>
                                     </div>
-                                </div><!-- end card -->
-                            </div>
-                            <!-- end col -->
+                                </div>
+                                <!-- Search button -->
+                                <button type="submit" name="search_orders" class="btn btn-primary">
+                                    Search
+                                </button>
+                            </form>
+                        </div>
+                        <div class="table-responsive table-card mt-3 mb-1">
+                            <table class="table align-middle table-nowrap">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="sort" data-sort="firstname">Total Amount</th>
+                                        <th class="sort" data-sort="lastname">Date</th>
+                                        <th class="sort" data-sort="status">Status</th>
+                                    </tr>
+                                </thead>
+                                <?php if($orders->rowCount() == 0) { ?>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="3">
+                                                <div class="noresult" style="display: inline-block; width: 100%;">
+                                                    <div class="text-center">
+                                                        <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#121331,secondary:#08a88a" style="width:75px;height:75px">
+                                                        </lord-icon>
+                                                        <h5 class="mt-2">Sorry! No Result Found</h5>
+                                                        <p class="text-muted mb-0">We've searched more than 150+ Orders... We did not find the order you are looking for.</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                <?php } ?>
+                            </table>
                         </div>
                     </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="pagination-wrap hstack gap-2">
+                            <a class="page-item pagination-prev disabled" href="#">
+                                Previous
+                            </a>
+                            <ul class="pagination listjs-pagination mb-0"></ul>
+                            <a class="page-item pagination-next" href="#">
+                                Next
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end card -->
+        </div><!-- end col -->
+    </div><!-- end row -->
 
-                    <?php else : ?>
+<?php } else { ?>
     <p>Invalid page type or missing parameter.</p>
-<?php endif; ?>
+<?php } ?>
+
                 <!-- container-fluid -->
             </div>
             <!-- End Page-content -->
